@@ -1,13 +1,12 @@
 import React from 'react';
+import logo from '../.././images/logo.svg';
 
 const Footer = () => {
     return (
         <div>
             <footer className="footer p-10 bg-base-200 text-base-content">
                 <div>
-                    <span className='text-3xl font-medium text-success'>
-                        OneBitPay
-                    </span>
+                        <img src={logo} alt='logo' className='w-52'/>
                     <p>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     </p>
@@ -34,14 +33,14 @@ const Footer = () => {
                     <a className="link link-hover">Cookie policy</a>
                 </div>
                 <div>
-                    <span className="text-3xl font-medium">Let's Join With Us !</span>
+                    <span className="text-3xl font-semibold text-[#00AAFF]">Let's Join With Us !</span>
                     <div className="form-control w-80">
                         <label className="label">
                             <span className="label-text">Enter your email address</span>
                         </label>
                         <div className="relative">
                             <input type="text" placeholder="username@site.com" className="input input-bordered w-full pr-16" />
-                            <button className="btn btn-success absolute top-0 right-0 rounded-l-none">Subscribe</button>
+                            <button className="btn bg-[#00AAFF] absolute top-0 right-0 rounded-l-none border-0">Subscribe</button>
                         </div>
                     </div>
                 </div>
