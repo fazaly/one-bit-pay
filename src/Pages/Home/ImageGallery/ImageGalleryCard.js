@@ -1,5 +1,6 @@
 import React from 'react';
-import './ImageGalleryCard.css'
+import './ImageGalleryCard.css';
+
 const ImageGalleryCard = ({ imageInfo }) => {
     console.log(imageInfo)
     return (
