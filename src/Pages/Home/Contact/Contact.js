@@ -3,7 +3,6 @@ import React from 'react';
 const Contact = () => {
     return (
         <div>
-<<<<<<< HEAD
             <section className='py-3 mb-10' id='Contact'>
                 <h3 className="text-center text-black text-3xl font-bold mt-5 mb-5">Want to talk to us?</h3>
                 <h3 className='text-center text-black text-2xl mt-3 mb-5'>Feel free to knock anytime for any queries regarding 1BitPay.</h3>
@@ -12,16 +11,6 @@ const Contact = () => {
                         <div className="py-6 md:py-0 md:px-6">
                             <h1 className="text-6xl font-bold text-[#00AAFF]">Get in touch</h1>
                             <p className="pt-2 text-3xl pb-4">Fill in the form to start a conversation</p>
-=======
-            <section className='py-3 mb-20' id='Contact'>
-                <h3 className="text-center text-black text-3xl font-semibold mt-5 mb-5">Contact Us</h3>
-                <h3 className='text-center text-black text-xl mt-3 mb-5'>Want to talk to us? Feel free to knock anytime for any queries regarding 1BitPay.</h3>
-                <section className="py-10 mx-10 rounded-xl bg-gray-800 shadow-2xl text-white">
-                    <div className="grid grid-cols-1 mt-5 px-10 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
-                        <div className="py-6 md:py-0 md:px-6">
-                            <h1 className="text-4xl font-bold">Get in touch</h1>
-                            <p className="pt-2 text-xl pb-4">Fill in the form to start a conversation</p>
->>>>>>> 1b639047d2bf3fb7cba3a9fd091b78c311c662ac
                             <div className="space-y-4">
                                 <p className="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-10 h-10 mr-2 sm:mr-6">
@@ -57,11 +46,7 @@ const Contact = () => {
                                 <span className="mb-1">Message</span>
                                 <textarea name='message' rows="3" className="block w-full rounded-md focus:ring focus:ring-opacity-75 px-5 text-black" placeholder='Type Your Message' required></textarea>
                             </label>
-<<<<<<< HEAD
                             <button type="button" className=" w-full btn rounded text-lg hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF] transition-all hover:from-[#8759f1] text-white">Send Email</button>
-=======
-                            <button type="button" className="flex justify-center items-center w-full self-center px-5 py-3 text-xl rounded  hover:text-gray-100 bg-gradient-to-r from-[#4070F4] to-[#2A42DD] text-white">Send Email</button>
->>>>>>> 1b639047d2bf3fb7cba3a9fd091b78c311c662ac
                         </form>
                     </div>
                 </section>
