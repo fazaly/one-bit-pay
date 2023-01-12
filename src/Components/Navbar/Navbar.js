@@ -8,7 +8,7 @@ const Navbar = () => {
         const header = document.querySelector(".header")
         header.classList.toggle("active", window.scrollY > 100)
     })
-    // Toogle Menu
+    // Toggle Menu
     const [Mobile, setMobile] = useState(false);
     return (
         <>
@@ -22,22 +22,22 @@ const Navbar = () => {
                 <ul className={Mobile ? "nav-links-mobile" : "link f_flex uppercase"} onClick={() => setMobile(false)}>
                 {/*<ul className='link f_flex uppercase {Mobile ? "nav-links-mobile" : "nav-links"} onClick={() => setMobile(false)}'>*/}
                     <li>
-                        <Link href="/home">home</Link>
+                        <Link to="/home">home</Link>
                     </li>
                     <li>
-                        <Link href="/about">about</Link>
+                        <Link to="/about">about</Link>
                     </li>
                     <li>
-                        <Link href="/blog">blog</Link>
+                        <Link to="/blog">blog</Link>
                     </li>
                     <li>
-                        <Link href="/contact">contact</Link>
+                        <Link to="/contact">contact</Link>
                     </li>
                     <li>
-                        <Link href="/login">login</Link>
+                        <Link to="/login">login</Link>
                     </li>
                     <li>
-                        <Link href="/SignUp">Sign up</Link>
+                        <Link to="/signUp">Sign up</Link>
                     </li>
                 </ul>
 
