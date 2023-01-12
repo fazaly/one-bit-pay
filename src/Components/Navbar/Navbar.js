@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
+import logo from '../.././images/logo.svg';
 
 const Navbar = () => {
     // const {user, logOut} = useContext(AuthContext);
@@ -47,7 +48,9 @@ const Navbar = () => {
                     {menuItems}
                 </ul>
                 </div>
-                <Link to='/' className="btn btn-ghost capitalize text-xl">OneBitPay</Link>
+                <Link to='/' className="">
+                    <img src={logo} alt='' className='w-36 btn bg-transparent border-0'/>
+                </Link>
             </div>
             <div className="navbar-end hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
