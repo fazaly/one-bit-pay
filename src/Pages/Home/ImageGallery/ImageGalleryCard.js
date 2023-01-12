@@ -2,7 +2,6 @@ import React from 'react';
 import './ImageGalleryCard.css';
 
 const ImageGalleryCard = ({ imageInfo }) => {
-    console.log(imageInfo)
     return (
         <>
             <div style={{
@@ -17,8 +16,6 @@ const ImageGalleryCard = ({ imageInfo }) => {
                 <figure><img className='w-full md:w-full h-full' src={imageInfo.Img} alt="Shoes" /></figure>
             </div> */}
         </>
-
-
 
     );
 };

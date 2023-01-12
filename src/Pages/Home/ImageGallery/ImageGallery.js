@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ImageGalleryCard from './ImageGalleryCard';
 
+
 const gallery = [
     {
         'id': '1',
