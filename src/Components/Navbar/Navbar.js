@@ -1,53 +1,60 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
-    // fixed Header
-    window.addEventListener("scroll", function () {
-        const header = document.querySelector(".header")
-        header.classList.toggle("active", window.scrollY > 100)
-    })
-    // Toggle Menu
-    const [Mobile, setMobile] = useState(false);
-    return (
-        <>
-        <header className='header'>
-            <div className='container d_flex'>
-            <div className='logo'>
-                <h1>OneBitPay</h1>
-            </div>
+    // const {user, logOut} = useContext(AuthContext);
 
-            <div className='navlink'>
-                <ul className={Mobile ? "nav-links-mobile" : "link f_flex uppercase"} onClick={() => setMobile(false)}>
-                {/*<ul className='link f_flex uppercase {Mobile ? "nav-links-mobile" : "nav-links"} onClick={() => setMobile(false)}'>*/}
-                    <li>
-                        <Link to="/home">home</Link>
-                    </li>
-                    <li>
-                        <Link to="/about">about</Link>
-                    </li>
-                    <li>
-                        <Link to="/blog">blog</Link>
-                    </li>
-                    <li>
-                        <Link to="/contact">contact</Link>
-                    </li>
-                    <li>
-                        <Link to="/login">login</Link>
-                    </li>
-                    <li>
-                        <Link to="/signUp">Sign up</Link>
-                    </li>
-                </ul>
+    // // logOut
+    // const handleLogOut = () => {
+    //     logOut()
+    //     .then( result => {
+    //         // const user = result.user;
+    //         // console.log(user);
+    //     })
+    //     .catch( error => console.error(error))
+    // }
 
-                <button className='toggle' onClick={() => setMobile(!Mobile)}>
-                {Mobile ? <i className='fas fa-times close home-btn'></i> : <i className='fas fa-bars open'></i>}
-                </button>
-            </div>
-            </div>
-        </header>
+    const menuItems = <>
+        <li className='font-semibold mr-5'><Link to='/'>Home</Link></li>
+        <li className='font-semibold mr-5'><Link to='/about'>About</Link></li>
+        <li><Link to='/blog' className='font-semibold mr-5'>Blog</Link></li>
+        <li className='font-semibold mr-5'><Link to='/login'>Login</Link></li>
+        <li className='font-semibold mr-5'><Link to='/signUp'>Sign Up</Link></li>
+        {/* {
+            user?.email ?
+            <>
+                <li className='font-semibold'>
+                    <button onClick={handleLogOut} className='btn btn-ghost'>Sign Out</button>
+                </li>
+            </>
+            :
+            <>
+                <li className='font-semibold mr-5'><Link to='/login'>Login</Link></li>
+                <li className='font-semibold'><Link to='/signup'>Sign Up</Link></li>
+            </>
+            } */}
         </>
+
+    return (
+        <div className="navbar bg-[#ecf0f3] p-4">
+            <div className="navbar-start">
+                <div className="dropdown">
+                <label tabIndex={0} className="btn btn-ghost lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                </label>
+                <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                    {menuItems}
+                </ul>
+                </div>
+                <Link to='/' className="btn btn-ghost capitalize text-xl">OneBitPay</Link>
+            </div>
+            <div className="navbar-end hidden lg:flex">
+                <ul className="menu menu-horizontal p-0">
+                {menuItems}
+                </ul>
+            </div>
+        </div>
     );
 };
 
