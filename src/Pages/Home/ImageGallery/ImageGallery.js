@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ImageGalleryCard from './ImageGalleryCard';
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
+
 
 const gallery = [
     {
