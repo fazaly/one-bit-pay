@@ -4,6 +4,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+// Firebase Config
 const firebaseConfig = {
     apiKey:process.env.REACT_APP_apiKey,
     authDomain:process.env.REACT_APP_authDomain,
