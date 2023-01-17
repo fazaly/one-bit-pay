@@ -1,6 +1,24 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
+import { toast } from 'react-hot-toast';
 
 const Contact = () => {
+
+    const form = useRef();
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+
+        emailjs.sendForm('service_w6svlhk', 'template_xzkrtc7', form.current, 'q_62p3f56iW_fG_dP')
+        .then((result) => {
+            console.log(result.text);
+            e.target.reset();
+            toast.success('Message send Successfully.');
+        }, (error) => {
+            console.log(error.text);
+        });
+    };
+
     return (
         <div>
             <section className='py-3 mb-10' id='Contact'>
@@ -29,24 +47,24 @@ const Contact = () => {
                                         <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                                         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                                     </svg>
-                                    <span className='text-xl'>oneBitpay@gmail.com</span>
+                                    <span className='text-xl'>Email: onebitpay@gmail.com</span>
                                 </p>
                             </div>
                         </div>
-                        <form className="flex flex-col py-8 space-y-6 md:py-0 md:px-6 ">
+                        <form ref={form} onSubmit={sendEmail} className="flex flex-col py-8 space-y-6 md:py-0 md:px-6 ">
                             <label className="block">
                                 <span className="mb-1">Full name</span>
-                                <input type="text" name="User_name" placeholder="Enter Name" className="block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-75 text-black py-3 px-5" required />
+                                <input type="text" name="user_name" placeholder="Enter Name" className="block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-75 text-black py-3 px-5" required />
                             </label>
                             <label className="block">
                                 <span className="mb-1">Email address</span>
-                                <input type="email" name="User.email" placeholder="Enter Email" className="block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-75 text-black py-3 px-5" required />
+                                <input type="email" name="user_email" placeholder="Enter Email" className="block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-75 text-black py-3 px-5" required />
                             </label>
                             <label className="block">
                                 <span className="mb-1">Message</span>
                                 <textarea name='message' rows="3" className="block w-full rounded-md focus:ring focus:ring-opacity-75 px-5 text-black" placeholder='Type Your Message' required></textarea>
                             </label>
-                            <button type="button" className=" w-full btn rounded text-lg hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF] transition-all hover:from-[#8759f1] text-white">Send Email</button>
+                            <button type="submit" value='send' className=" w-full btn rounded text-lg hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF] transition-all hover:from-[#8759f1] text-white">Send Email</button>
                         </form>
                     </div>
                 </section>
