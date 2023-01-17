@@ -1,29 +1,28 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import logo from '../.././images/logo.svg';
+import { AuthContext } from '../../context/AuthProvider';
 
 const Navbar = () => {
-    // const {user, logOut} = useContext(AuthContext);
+    const {user, logOut} = useContext(AuthContext);
 
     // // logOut
-    // const handleLogOut = () => {
-    //     logOut()
-    //     .then( result => {
-    //         // const user = result.user;
-    //         // console.log(user);
-    //     })
-    //     .catch( error => console.error(error))
-    // }
+    const handleLogOut = () => {
+        logOut()
+        .then( result => {
+            // const user = result.user;
+            // console.log(user);
+        })
+        .catch( error => console.error(error))
+    }
 
     const menuItems = <>
         <li className='font-semibold mr-5'><Link to='/'>Home</Link></li>
         <li className='font-semibold mr-5'><Link to='/about'>About</Link></li>
         <li><Link to='/blog' className='font-semibold mr-5'>Blog</Link></li>
-        <li className='font-semibold mr-5'><Link to='/login'>Login</Link></li>
-        <li className='font-semibold mr-5'><Link to='/signUp'>Sign Up</Link></li>
-        {/* {
-            user?.email ?
+        {
+            user?.uid ?
             <>
                 <li className='font-semibold'>
                     <button onClick={handleLogOut} className='btn btn-ghost'>Sign Out</button>
@@ -32,9 +31,9 @@ const Navbar = () => {
             :
             <>
                 <li className='font-semibold mr-5'><Link to='/login'>Login</Link></li>
-                <li className='font-semibold'><Link to='/signup'>Sign Up</Link></li>
+                <li className='font-semibold mr-5'><Link to='/signUp'>Sign Up</Link></li>
             </>
-            } */}
+            }
         </>
 
     return (
