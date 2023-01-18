@@ -33,7 +33,11 @@ const DashbordLayout = () => {
             {/* <!-- Sidebar content here --> */}
             <div className="flex justify-center items-center border-2 rounded-md p-2">
               <div className="mr-2">
-                <img src={userImage} alt="" className="w-20" />
+
+                <Link to="/dashboard/editProfile">
+                  <img src={userImage} alt="" className="w-20" />
+                </Link>
+
               </div>
               <div>
                 <h1 className="font-bold text-white text-lg">Shamim Sarkar</h1>
@@ -41,9 +45,13 @@ const DashbordLayout = () => {
               </div>
             </div>
             <div className="text-white p-4">
-              <Link className="flex items-center mb-6 mt-4">
+              <Link to="dahsboard/overview" className="flex items-center mb-6 mt-4">
                 <img src={grid} alt="" className="w-7 mr-4" />
                 <p className="text-lg font-semibold">Dashbord</p>
+              </Link>
+              <Link to="/dashboard/editProfile" className="flex items-center mb-6 mt-4">
+                <img src={apply} alt="" className="w-7 mr-4" />
+                <p className="text-lg font-semibold">Update Profile</p>
               </Link>
               <Link to='/dashboard/sendMoney' className="flex items-center mb-6 mt-4">
                 <img src={send} alt="" className="w-7 mr-4" />

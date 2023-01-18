@@ -13,6 +13,7 @@ import Loan from "../Dashbord/Loan/Loan";
 import BillPay from "../Dashbord/BillPay/BillPay";
 import BecomeAgent from "../Dashbord/BecomeAgent/BecomeAgent";
 import MobileRecharge from "../Dashbord/MobileRecharge/MobileRecharge";
+import EditProfile from "../Dashbord/EditProfile/EditProfile";
 
 export const router = createBrowserRouter([
     {
@@ -43,6 +44,14 @@ export const router = createBrowserRouter([
         element: <DashbordLayout />,
         errorElement: <ErrorPage></ErrorPage>,
         children: [
+            {
+                path: "dahsboard/overview",
+                element: <Overview></Overview>
+            },
+            {
+                path: "/dashboard/editProfile",
+                element: <EditProfile></EditProfile>
+            },
             {
                 path: "/dashboard",
                 element: <Overview />
