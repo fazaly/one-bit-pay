@@ -1,4 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
+import Overview from "../Dashbord/Overview/Overview";
+import DashbordLayout from "../Layout/DashbordLayout";
 import Main from "../Layout/Main";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home";
@@ -26,6 +28,17 @@ export const router = createBrowserRouter([
             {
                 path: '/signUp',
                 element: <Signup></Signup>
+            }
+        ]
+    },
+    {
+        path:"/dashboard",
+        element: <DashbordLayout/>,
+        errorElement: <ErrorPage></ErrorPage>,
+        children: [
+            {
+                path:"/dashboard",
+                element: <Overview/>
             }
         ]
     }
