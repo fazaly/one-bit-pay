@@ -6,6 +6,14 @@ import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import Signup from "../Pages/Signup/Signup";
+import SendMoney from "../Dashbord/SendMoney/SendMoney"
+import Withdraw from "../Dashbord/Withdraw/Withdraw";
+import ApplyForAgent from "../Pages/ApplyForAgent/ApplyForAgent"
+import Loan from "../Dashbord/Loan/Loan";
+import BillPay from "../Dashbord/BillPay/BillPay";
+import BecomeAgent from "../Dashbord/BecomeAgent/BecomeAgent";
+import MobileRecharge from "../Dashbord/MobileRecharge/MobileRecharge";
+import EditProfile from "../Dashbord/EditProfile/EditProfile";
 
 export const router = createBrowserRouter([
     {
@@ -32,14 +40,47 @@ export const router = createBrowserRouter([
         ]
     },
     {
-        path:"/dashboard",
-        element: <DashbordLayout/>,
+        path: "/dashboard",
+        element: <DashbordLayout />,
         errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
-                path:"/dashboard",
-                element: <Overview/>
-            }
+                path: "dahsboard/overview",
+                element: <Overview></Overview>
+            },
+            {
+                path: "/dashboard/editProfile",
+                element: <EditProfile></EditProfile>
+            },
+            {
+                path: "/dashboard",
+                element: <Overview />
+            },
+            {
+                path: "/dashboard/sendMoney",
+                element: <SendMoney></SendMoney>
+            },
+            {
+                path: "/dashboard/withdraw",
+                element: <Withdraw></Withdraw>
+            },
+            {
+                path: "/dashboard/applyForAgent",
+                element: <BecomeAgent></BecomeAgent>
+            },
+            {
+                path: "/dashboard/loanRequest",
+                element: <Loan></Loan>
+            },
+            {
+                path: "/dashboard/mobileRecharge",
+                element: <MobileRecharge></MobileRecharge>
+            },
+            {
+                path: "/dashboard/billPay",
+                element: <BillPay></BillPay>
+            },
+
         ]
     }
 ]);
