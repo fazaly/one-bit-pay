@@ -1,9 +1,50 @@
 import React from 'react';
+import BillCard from './BillCard';
 
 const BillPay = () => {
+
+    const AllBils = [
+        {
+            "id": 1,
+            "name": "Gas Bill"
+        },
+        {
+            "id": 1,
+            "name": "Gas Bill"
+        },
+        {
+            "id": 1,
+            "name": "Electricity Bill"
+        },
+        {
+            "id": 1,
+            "name": "Water Bill"
+        },
+        {
+            "id": 1,
+            "name": "Paper Bill"
+        },
+        {
+            "id": 1,
+            "name": "Gas Bill"
+        },
+
+    ]
+
+
+
+
     return (
         <div>
-            <h2 className='Text-center text-2xl font-bold'>Bill Pay</h2>
+            <div className='grid grid-cols-3 gap-4'>
+
+
+
+                {
+                    AllBils?.map(bill => <BillCard key={bill.id} bill={bill}></BillCard>)
+                }
+
+            </div>
         </div>
     );
 };
