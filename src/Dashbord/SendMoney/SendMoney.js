@@ -3,6 +3,7 @@ import SendMoneyHistory from '../../Components/TransactionHistory/SendMoneyHisto
 import { AuthContext } from '../../context/AuthProvider';
 import sendImage from '../../images/sendIcon.png'
 import sendImage2 from '../../images/sendIcon2.jpg'
+import { MdOutlineSendToMobile } from "react-icons/md";
 
 const SendMoney = () => {
     const [userDetails, setUserDetails] = useState([])
@@ -73,7 +74,7 @@ const SendMoney = () => {
 
                 <form onSubmit={handleSendMoney} className="card-body rounded-xl bg-white   ">
                     <h4 className='text-black font-semibold text-center text-2xl'>Send Money</h4>
-                    <div className='flex gap-4 mx-auto'>
+                    <div className='flex items-center mx-auto'>
                         <div className='drop-shadow-2xl'>
                             <div className="form-control mb-2">
                                 <input type="text"
@@ -89,8 +90,7 @@ const SendMoney = () => {
                         </div>
                         <div className="form-control rounded-full ">
                             <button type='submit'>
-                                <img className='w-16 mt-4 ' src={sendImage} alt="" />
-
+                                <MdOutlineSendToMobile className=' mr-10 h-16 w-16 text-[#5966FF]'></MdOutlineSendToMobile>
                             </button>
                         </div>
                     </div>
