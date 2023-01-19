@@ -6,13 +6,6 @@ const UpdateProfile = () => {
 
             <div className=' shadow-2xl bg-base-100 grid grid-cols-7 my-6 mx-20 rounded-2xl'>
 
-                <div style={{
-                    background: '#5966FF'
-                }} className=' h-full  rounded-l-2xl'>
-                    {/* Left Side */}
-
-                </div>
-
                 <div className='mx-10 mb-10 mt-3  col-span-6 '>
 
                     <div className='mb-8  flex justify-between'>
@@ -90,6 +83,13 @@ const UpdateProfile = () => {
 
 
                     </div>
+
+                </div>
+
+                <div style={{
+                    background: '#5966FF'
+                }} className=' h-full  rounded-l-2xl'>
+                    {/* Left Side */}
 
                 </div>
 
