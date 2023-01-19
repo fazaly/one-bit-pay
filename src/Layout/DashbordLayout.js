@@ -45,7 +45,7 @@ const DashbordLayout = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 bg-[#5966FF] text-base-content relative rounded-lg">
+          <ul className="menu p-4 w-80 bg-[#5966FF] text-base-content relative ">
             <label
               onClick={() => setOpen(!open)}
               htmlFor="my-drawer-2"
