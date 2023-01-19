@@ -12,6 +12,7 @@ import send from '.././images/icons/send.svg';
 import wallet from '.././images/icons/wallet.svg';
 import { AuthContext } from "../context/AuthProvider";
 import Navbar from "../Components/Navbar/Navbar";
+import DashBoardNavbar from "../Components/DashBoardNavbar/DashBoardNavbar";
 
 
 
@@ -19,7 +20,7 @@ const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
   const [userDetails, setUserDetails] = useState([])
   const { user } = useContext(AuthContext)
-  console.log(userDetails)
+
 
   useEffect(() => {
     fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`)
@@ -32,16 +33,14 @@ const DashbordLayout = () => {
 
   }, [])
 
-
-
-
-
-
   return (
     <div>
       <div className="drawer drawer-mobile">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content lg:p-4 p-2">
+          <div>
+            <DashBoardNavbar></DashBoardNavbar>
+          </div>
           <Outlet />
         </div>
         <div className="drawer-side">

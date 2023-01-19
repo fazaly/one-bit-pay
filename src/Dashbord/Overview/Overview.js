@@ -1,6 +1,28 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Overview = () => {
+
+  const [userDetails, setUserDetails] = useState([])
+  const { user } = useContext(AuthContext)
+
+
+
+  useEffect(() => {
+    fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.status) {
+          setUserDetails(data.data)
+        }
+      })
+
+  }, [])
+
+
+
+
+
   return (
     <div>
       <div className="w-full grid lg:grid-cols-3 gap-4">
@@ -13,7 +35,7 @@ const Overview = () => {
                   Main Balance
                 </h1>
                 <h1 className="font-bold text-3xl text-gray-900">
-                  $ 247,567.00
+                  $ {userDetails.balance}
                 </h1>
               </div>
             </div>
