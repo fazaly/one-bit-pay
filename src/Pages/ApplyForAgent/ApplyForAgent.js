@@ -58,7 +58,7 @@ const ApplyForAgent = () => {
                                     <polyline points="22,6 12,13 2,6"></polyline>
                                 </svg>
                             </div>
-                            <div className="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-[#00AAFF]">Message</div>
+                            <div className="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-[#00AAFF]">Business</div>
                         </div>
                         <div className="flex-auto border-t-2 transition duration-500 ease-in-out border-[#5966FF]"></div>
                         <div className="flex items-center text-white relative">
@@ -105,10 +105,30 @@ const ApplyForAgent = () => {
                             <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
                                 <input type='email' name='email' placeholder="jhon@doe.com" className="p-1 px-2 appearance-none outline-none w-full text-gray-800" /> </div>
                         </div>
-                        <div className="w-full mx-2 flex-1 svelte-1l8159u">
+                        {/* <div className="w-full mx-2 flex-1 svelte-1l8159u">
                             <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">Image</div>
                             <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                                <input type='file' name='image' placeholder="Enter NID Number" className="p-1 px-2 appearance-none outline-none w-full text-gray-800" /> </div>
+                                <input type='file' name='image' placeholder="Enter NID Number" className="p-1 px-2 appearance-none outline-none w-full text-gray-800 sr-only" /> </div>
+                        </div> */}
+                        <div>
+                            <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">Image</div>
+                            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                                <div className="space-y-1 text-center">
+                                    <svg className="mx-auto h-12 w-12 text-[#00AAFF]" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                    <div className="flex text-sm text-gray-600">
+                                        <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                                            <span className="">Upload a file</span>
+                                            <input id="file-upload" name="image" type="file" className="sr-only" />
+                                        </label>
+                                        <p className="pl-1 text-gray-700">or drag and drop</p>
+                                    </div>
+                                    <p className="text-xs text-gray-700">
+                                        PNG, JPG, GIF up to 10MB
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="flex p-2 mt-4">
