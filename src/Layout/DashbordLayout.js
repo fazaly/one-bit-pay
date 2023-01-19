@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { HiChevronDoubleRight, HiChevronDoubleLeft } from "react-icons/hi";
 import { Link, Outlet } from "react-router-dom";
-import userImage from '../images/userImage.png';
+import userImage2 from '../images/userImage2.png';
 import grid from '.././images/icons/grid.svg';
 import apply from '.././images/icons/apply.svg';
 import loan from '.././images/icons/loan.svg';
@@ -10,10 +10,33 @@ import receive from '.././images/icons/receive.svg';
 import recharge from '.././images/icons/recharge.svg';
 import send from '.././images/icons/send.svg';
 import wallet from '.././images/icons/wallet.svg';
+import { AuthContext } from "../context/AuthProvider";
+import Navbar from "../Components/Navbar/Navbar";
+
 
 
 const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
+  const [userDetails, setUserDetails] = useState([])
+  const { user } = useContext(AuthContext)
+  console.log(userDetails)
+
+  useEffect(() => {
+    fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.status) {
+          setUserDetails(data.data)
+        }
+      })
+
+  }, [])
+
+
+
+
+
+
   return (
     <div>
       <div className="drawer drawer-mobile">
@@ -23,7 +46,7 @@ const DashbordLayout = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 bg-[#5966FF] text-base-content relative">
+          <ul className="menu p-4 w-80 bg-[#5966FF] text-base-content relative rounded-lg">
             <label
               onClick={() => setOpen(!open)}
               htmlFor="my-drawer-2"
@@ -33,15 +56,25 @@ const DashbordLayout = () => {
             {/* <!-- Sidebar content here --> */}
             <div className="flex justify-center items-center border-2 rounded-md p-2">
               <div className="mr-2">
-
-                <Link to="/dashboard/editProfile">
-                  <img src={userImage} alt="" className="w-20" />
-                </Link>
+                {
+                  user?.userPhoto ?
+                    <>
+                      <Link to="/dashboard/editProfile">
+                        <img src={user?.userPhoto} alt="" className="w-20 rounded-full" />
+                      </Link>
+                    </>
+                    :
+                    <>
+                      <Link to="/dashboard/editProfile">
+                        <img src={userImage2} alt="" className="w-20 rounded-full" />
+                      </Link>
+                    </>
+                }
 
               </div>
               <div>
-                <h1 className="font-bold text-white text-lg">Shamim Sarkar</h1>
-                <h1 className="text-sm text-white">shamimibas@gmail.com</h1>
+                <h1 className="font-bold text-white text-lg">{userDetails?.name}</h1>
+                <h1 className="text-sm text-white">{userDetails?.userEmail}</h1>
               </div>
             </div>
             <div className="text-white p-4">
