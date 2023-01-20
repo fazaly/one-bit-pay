@@ -5,23 +5,34 @@ import sendImage from "../../images/sendIcon.png";
 import sendImage2 from "../../images/sendIcon2.jpg";
 import { MdOutlineSendToMobile } from "react-icons/md";
 import './SendMoney.css';
+import Loader from "../../Components/Loader/Loader";
+import { useQuery } from "@tanstack/react-query";
 
 const SendMoney = () => {
-  const [userDetails, setUserDetails] = useState([]);
+  const [userDetails, setUserDetails] = useState({});
   const { user } = useContext(AuthContext);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data.status) {
           setUserDetails(data.data);
           console.log(data)
-        }
+          setLoading(false);
       });
-  }, [user]);
+  }, [user, userDetails, loading]);
+
+  // const {data:userInfo = []} = useQuery({
+  //   queryKey: ['SendMoney'],
+  //   queryFn: async () => {
+  //     const res = await fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`);
+  //     const data = await res.json();
+  //     return data;
+  //   }
+  // })
+
 
   const handleSendMoney = (event) => {
     event.preventDefault();
@@ -47,7 +58,6 @@ const SendMoney = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setLoading(!loading);
         console.log(data);
       });
   };
@@ -62,7 +72,9 @@ const SendMoney = () => {
                 Main Balance
               </h1>
               <h1 className="font-bold text-3xl text-gray-900">
-                $ {userDetails.balance}
+              {
+                  loading ? <Loader/> : `$ ${userDetails?.balance}`
+                }
               </h1>
             </div>
           </div>
@@ -77,20 +89,20 @@ const SendMoney = () => {
                 <h1 className="font-bold text-xl text-[#5966FF] opacity-50">Send Money</h1>
                 <div className="">
                   <div className="">
-                    <div className="form-control mb-2">
+                    <div className="form-control send-money mb-2">
                       <input
                         type="text"
                         name="receiverEmail"
-                        placeholder="ReceiverEmail"
+                        placeholder="receiver email"
                         className=""
                       />
                     </div>
 
-                    <div className="form-control">
+                    <div className="form-control send-money mb-2">
                       <input
                         type="text"
                         name="amount"
-                        placeholder="Amount"
+                        placeholder="amount"
                         className="input_field"
                       />
                     </div>

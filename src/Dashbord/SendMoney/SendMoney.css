@@ -1,13 +1,7 @@
-/* .form-control input[type=text]{
-
-    border-bottom: 1px solid black;
-    padding: 2px;
-    outline: none;
-    margin-bottom: 2px;
-    font-size: 14px;
-    color: black;
-} */
-.form-control input[type=text]:focus{
+.send-money input[type=text]{
+    border: 1px solid #5966FF;
+}
+.send-money input[type=text]:focus{
     border-bottom: 1px solid #5966FF;
     color: #5966FF;
 }

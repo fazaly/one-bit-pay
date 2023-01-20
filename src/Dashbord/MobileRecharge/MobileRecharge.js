@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import Loader from "../../Components/Loader/Loader";
 import Spinner from "../../Components/Spinner/Spinner";
 import { AuthContext } from "../../context/AuthProvider";
 import "./MobileRecharge.css";
@@ -247,18 +248,17 @@ const cCodes = [
 ];
 
 const MobileRecharge = () => {
-  const [userInfo, setUserInfo] = useState([]);
+  const [userInfo, setUserInfo] = useState({});
   const { user } = useContext(AuthContext);
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data.status) {
           setUserInfo(data.data);
-        }
+          setLoading(false);
       });
   }, [user, loading, userInfo]);
 
@@ -302,7 +302,9 @@ const MobileRecharge = () => {
                 Main Balance
               </h1>
               <h1 className="font-bold text-3xl text-gray-900">
-                ${userInfo?.balance}
+                {
+                  loading ? <Loader/> : `$ ${userInfo?.balance}`
+                }
               </h1>
             </div>
           </div>
