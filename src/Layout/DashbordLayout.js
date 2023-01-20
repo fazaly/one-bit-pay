@@ -31,7 +31,7 @@ const DashbordLayout = () => {
         }
       })
 
-  }, [])
+  }, [user, userDetails])
 
   return (
     <div>

@@ -36,7 +36,7 @@ const SendMoneyHistory = ({ email, loading }) => {
                     <tbody>
                         {
                             transactions?.map((transaction, i) => {
-                                return <tr>
+                                return <tr key={i}>
                                     <th>{i + 1}</th>
                                     <td>{transaction?.receiverEmail}</td>
                                     <td>{transaction?.amount}</td>

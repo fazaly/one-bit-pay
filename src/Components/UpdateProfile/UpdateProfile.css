@@ -1,0 +1,10 @@
+.form-control input[type=text]{
+    border: none;
+    border-radius: 0;
+    outline: none;
+}
+
+.form-control input[type=text]:focus{
+    border-bottom: 1px solid #5966FF;
+    color: #5966FF;
+}

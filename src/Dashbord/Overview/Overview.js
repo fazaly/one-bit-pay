@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/AuthProvider";
 const Overview = () => {
 
   const [userDetails, setUserDetails] = useState([])
-  const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
 
 
@@ -17,7 +17,7 @@ const Overview = () => {
         }
       })
 
-  }, [])
+  }, [user])
 
 
 
