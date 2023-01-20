@@ -95,11 +95,11 @@ const Signup = () => {
                             <div className="form-control">
                                 <input type="password"
                                     placeholder="Confirm Password" className="input input-bordered"
-                                    {...register("confirm",{
+                                    {...register("confirm", {
                                         validate: value =>
                                             value === password.current || "The passwords do not match"
                                     })}
-                                    
+
                                 />
                                 {errors.confirm && <p>{errors.confirm.message}</p>}
                             </div>
@@ -111,7 +111,7 @@ const Signup = () => {
                             </div>
                             <p className='text-xs text-center'>Already have an account? <Link className='text-[#5966FF] font-semibold' to='/login'>&nbsp;Login Here</Link></p>
                         </form>
-                        
+
 
                     </div>
                 </div>
