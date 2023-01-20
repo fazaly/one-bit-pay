@@ -1,0 +1,12 @@
+.select[type=select]{
+    border: none;
+    border-bottom: 1px solid black;
+    color: black;
+    border-radius: 0;
+    padding: 0;
+    height: 8px;
+}
+.select[type=select]:focus{
+    border-bottom: 1px solid #5966FF;
+    color: black;
+}
