@@ -1,4 +1,8 @@
+import { async } from "@firebase/util";
+import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import Loader from "../../Components/Loader/Loader";
 import Spinner from "../../Components/Spinner/Spinner";
 import { AuthContext } from "../../context/AuthProvider";
@@ -250,7 +254,7 @@ const MobileRecharge = () => {
   const [userInfo, setUserInfo] = useState({});
   const { user } = useContext(AuthContext);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetch(`http://localhost:5000/user/${user?.email}`)
@@ -260,6 +264,16 @@ const MobileRecharge = () => {
           setLoading(false);
       });
   }, [user, loading, userInfo]);
+
+  const {data:recharges = [], refetch} = useQuery({
+    queryKey: ['recharge'],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:5000/recharge/${user?.email}`);
+      const data = await res.json();
+      return data;
+    }
+  })
+
 
   const handleRecharge = (event) => {
     event.preventDefault();
@@ -277,7 +291,14 @@ const MobileRecharge = () => {
     }
     console.log(rechargeInfo);
 
-    fetch("http://localhost:5000/mobile/recharge", {
+    if(balance < 5){
+      toast.error('Minimum Recharge $5');
+    }else if(balance > 50){
+      toast.error('Maximum Recharge $50');
+    }else if(balance >= 5 && balance <= 50){
+      setLoading(true);
+
+      fetch("http://localhost:5000/mobile/recharge", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -286,16 +307,18 @@ const MobileRecharge = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setLoading(!loading);
+        setLoading(false);
         console.log(data);
+        toast.success('Recharge Success ✔');
       });
+    }
   };
 
   return (
     <div>
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="">
-          <div className="card lg:w-80 w-96 h-60 bg-white text-primary-content mx-auto shadow-lg">
+          <div className="card lg:w-80 w-96 h-48 bg-white text-primary-content mx-auto shadow-lg">
             <div className="card-body">
               <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
                 Main Balance
@@ -309,7 +332,7 @@ const MobileRecharge = () => {
           </div>
         </div>
         <div>
-          <div className="card lg:w-80 w-96 h-60 bg-white text-primary-content mx-auto shadow-xl">
+          <div className="card lg:w-80 w-96 bg-white text-primary-content mx-auto shadow-xl">
             <div className="">
               <form
                 onSubmit={handleRecharge}
@@ -320,12 +343,12 @@ const MobileRecharge = () => {
                 </h1>
                 <div className="">
                   <div className="">
-                    <div className="form-control mb-2">
+                    <div className="form-control mb-2 flex flex-row gap-2">
                       <select
                       required
                         type="select"
                         name="select"
-                        className="select"
+                        className="w-16 border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
                         defaultValue={"+880"}
                       >
                         {cCodes.map((code, i) => (
@@ -335,14 +358,13 @@ const MobileRecharge = () => {
                           >{`+${code.code} ${code.country}`}</option>
                         ))}
                       </select>
-                    </div>
-                    <div className="form-control mb-2">
+              
                       <input
                       required
                         type="text"
                         name="phone_number"
                         placeholder="Mobile Number"
-                        className="input_field"
+                        className="w-44 border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
                       />
                     </div>
 
@@ -352,7 +374,7 @@ const MobileRecharge = () => {
                         type="text"
                         name="amount"
                         placeholder="Amount"
-                        className="input_field"
+                        className="border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
                       />
                     </div>
                   </div>
@@ -362,7 +384,7 @@ const MobileRecharge = () => {
                       type="submit"
                       className="btn btn-xs w-20 rounded-sm mt-2 hover:bg-[#5966FF] border-none"
                     >
-                      CONFIRM
+                      {loading ? <ButtonSpinner/> : "CONFIRM"}
                     </button>
                   </div>
                 </div>
