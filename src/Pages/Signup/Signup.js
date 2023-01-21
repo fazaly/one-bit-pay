@@ -75,7 +75,6 @@ const Signup = () => {
         toast.error(err.message);
       })
   }
-
   return (
     <div className="hero min-h-screen relative">
       <div className="hero-content flex-col lg:flex-row">
@@ -118,7 +117,6 @@ const Signup = () => {
                   className="input input-bordered border-black"
                 />
               </div>
-
               <div className="form-control">
                 <input
                   {...register("password", {
@@ -172,5 +170,4 @@ const Signup = () => {
     </div>
   );
 };
-
 export default Signup;

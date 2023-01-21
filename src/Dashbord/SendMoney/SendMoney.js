@@ -31,23 +31,20 @@ const SendMoney = () => {
   //     return data;
   //   }
   // })
-
-
-  const handleSendMoney = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const receiverEmail = form.receiverEmail.value;
-    const amount = form.amount.value;
-    const senderEmail = user?.email;
-    const time = new Date().toISOString();
-    const sendMoneyInfo = {
-      senderEmail,
-      receiverEmail,
-      amount: parseInt(amount),
-      time,
-    };
-    console.log(sendMoneyInfo);
-
+    const handleSendMoney = (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const receiverEmail = form.receiverEmail.value;
+        const amount = form.amount.value;
+        const senderEmail = user?.email;
+        const time = new Date().toISOString();
+        const sendMoneyInfo = {
+            senderEmail,
+            receiverEmail,
+            amount: parseInt(amount),
+            time,
+        };
+        // console.log(sendMoneyInfo);
     fetch("http://localhost:5000/sendMoney", {
       method: "PUT",
       headers: {
@@ -79,13 +76,7 @@ const SendMoney = () => {
           </div>
         </div>
         <div>
-          <div className="card lg:w-80 w-96 h-52 bg-white text-primary-content mx-auto shadow-xl">
-            <div className="">
-              <form
-                onSubmit={handleSendMoney}
-                className="card-body rounded-xl bg-white"
-              >
-                <h1 className="font-bold text-xl text-[#5966FF] opacity-50">Send Money</h1>
+            <div className="flex flex-col lg:flex-row gap-4">
                 <div className="">
                   <div className="">
                     <div className="form-control send-money mb-2">
@@ -96,7 +87,25 @@ const SendMoney = () => {
                         className=""
                       />
                     </div>
-
+                </div>
+                <div>
+                    <div className="card lg:w-80 w-96 h-52 bg-white text-primary-content mx-auto shadow-xl">
+                        <div className="">
+                            <form
+                                onSubmit={handleSendMoney}
+                                className="card-body rounded-xl bg-white"
+                            >
+                                <h1 className="font-bold text-xl text-[#5966FF] opacity-50">Send Money</h1>
+                                <div className="">
+                                    <div className="">
+                                        <div className="form-control mb-2">
+                                            <input
+                                                type="text"
+                                                name="receiverEmail"
+                                                placeholder="ReceiverEmail"
+                                                className=""
+                                            />
+                                        </div>
                     <div className="form-control send-money mb-2">
                       <input
                         type="text"
@@ -105,30 +114,20 @@ const SendMoney = () => {
                         className="input_field"
                       />
                     </div>
-                  </div>
-                  <div className="form-control rounded-full ">
-                    <button type="submit" className="btn btn-xs w-20 rounded-sm mt-2 hover:bg-[#5966FF] border-none">
-                      Send
-                    </button>
-                  </div>
                 </div>
-              </form>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <div className="my-4 mt-8">
-        <div>
-          <SendMoneyHistory
-            key={userDetails._id}
-            email={user?.email}
-            loading={loading}
-          ></SendMoneyHistory>
+            <div className="my-4 mt-8">
+                <div>
+                    <SendMoneyHistory
+                        key={userDetails._id}
+                        email={user?.email}
+                        loading={loading}
+                    ></SendMoneyHistory>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default SendMoney;
