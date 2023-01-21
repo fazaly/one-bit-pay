@@ -20,7 +20,9 @@ const Navbar = () => {
     const menuItems = <>
         <li className='font-semibold mr-5'><Link to='/'>Home</Link></li>
         <li className='font-semibold mr-5'><Link to='/about'>About</Link></li>
-        <li className='font-semibold mr-5'><Link to='/dashboard'>Dashboard</Link></li>
+        {
+            user && user.email && <li className='font-semibold mr-5'><Link to='/dashboard'>Dashboard</Link></li>
+        }
         <li><Link to='/blog' className='font-semibold mr-5'>Blog</Link></li>
         {
             user?.uid ?
@@ -32,7 +34,6 @@ const Navbar = () => {
                 :
                 <>
                     <li className='font-semibold mr-5'><Link to='/login'>Login</Link></li>
-                    <li className='font-semibold mr-5'><Link to='/signUp'>Sign Up</Link></li>
                 </>
         }
     </>

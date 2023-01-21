@@ -15,7 +15,7 @@ const SendMoney = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`)
+    fetch(`http://localhost:5000/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
           setUserDetails(data.data);
@@ -27,7 +27,7 @@ const SendMoney = () => {
   // const {data:userInfo = []} = useQuery({
   //   queryKey: ['SendMoney'],
   //   queryFn: async () => {
-  //     const res = await fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`);
+  //     const res = await fetch(`http://localhost:5000/user/${user?.email}`);
   //     const data = await res.json();
   //     return data;
   //   }
@@ -49,7 +49,7 @@ const SendMoney = () => {
     };
     console.log(sendMoneyInfo);
 
-    fetch("https://one-bit-pay-server.vercel.app/sendMoney", {
+    fetch("http://localhost:5000/sendMoney", {
       method: "PUT",
       headers: {
         "content-type": "application/json",

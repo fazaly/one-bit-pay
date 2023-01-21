@@ -254,7 +254,7 @@ const MobileRecharge = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`)
+    fetch(`http://localhost:5000/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
           setUserInfo(data.data);
@@ -278,7 +278,7 @@ const MobileRecharge = () => {
     }
     console.log(rechargeInfo);
 
-    fetch("https://one-bit-pay-server.vercel.app/mobile/recharge", {
+    fetch("http://localhost:5000/mobile/recharge", {
       method: "POST",
       headers: {
         "content-type": "application/json",
