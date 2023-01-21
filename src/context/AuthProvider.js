@@ -8,8 +8,8 @@ const auth = getAuth(app);
 
 const AuthProvider = ({children}) => {
 
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState({});
+    const [loading, setLoading] = useState(false);
 
 
     const createUser = (email, password) => {
@@ -36,11 +36,12 @@ const AuthProvider = ({children}) => {
             setUser(currentUser);
             setLoading(false);
         });
-        return () => unsubscribe();
+        return () => unsubscribe;
     }, [user]);
 
     const authInfo = {
         user,
+        setUser,
         loading,
         createUser,
         signIn,

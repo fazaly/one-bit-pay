@@ -1,23 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
+import Loader from "../../Components/Loader/Loader";
 import { AuthContext } from "../../context/AuthProvider";
 
 const Overview = () => {
 
-  const [userDetails, setUserDetails] = useState([])
+  const [userDetails, setUserDetails] = useState({})
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
 
 
 
   useEffect(() => {
-    fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`)
+    fetch(`http://localhost:5000/user/${user?.email}`)
       .then(res => res.json())
       .then(data => {
-        if (data.status) {
-          setUserDetails(data.data)
-        }
+          setUserDetails(data.data);
+          setLoading(false);
       })
 
-  }, [user])
+  }, [user, userDetails, loading])
 
 
 
@@ -35,7 +36,9 @@ const Overview = () => {
                   Main Balance
                 </h1>
                 <h1 className="font-bold text-3xl text-gray-900">
-                  $ {userDetails.balance}
+                {
+                  loading ? <Loader/> : `$ ${userDetails?.balance}`
+                }
                 </h1>
               </div>
             </div>
