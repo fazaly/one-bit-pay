@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import Loader from "../../Components/Loader/Loader";
 import Spinner from "../../Components/Spinner/Spinner";
 import { AuthContext } from "../../context/AuthProvider";
-import "./MobileRecharge.css";
 
 const cCodes = [
   { country: "Afghanistan", code: "93", iso: "AF" },

@@ -4,7 +4,6 @@ import { AuthContext } from "../../context/AuthProvider";
 import sendImage from "../../images/sendIcon.png";
 import sendImage2 from "../../images/sendIcon2.jpg";
 import { MdOutlineSendToMobile } from "react-icons/md";
-import './SendMoney.css';
 import Loader from "../../Components/Loader/Loader";
 import { useQuery } from "@tanstack/react-query";
 
