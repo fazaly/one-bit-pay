@@ -1,27 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import Loader from "../../Components/Loader/Loader";
 import SendMoneyHistory from "../../Components/TransactionHistory/SendMoneyHistory";
 import { AuthContext } from "../../context/AuthProvider";
+import ChartView from "./Chart/Chart";
+
+
 
 const Overview = () => {
-  const [userDetails, setUserDetails] = useState({});
-  const { user } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch(`http://localhost:5000/user/${user?.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setUserDetails(data.data);
-        setLoading(false);
-      });
-  }, [user, userDetails, loading]);
-
+  const { user, userDetails} = useContext(AuthContext);
+  console.log(userDetails);
   return (
     <div>
       <div>
         <div className="w-full grid lg:grid-cols-3 gap-4">
-          <div className="flex flex-col lg:flex-row gap-4 lg:col-span-2">
+          <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 col-span-2">
             {/* CARD 1 */}
             <div className="">
               <div className="card lg:w-80 w-96 bg-white text-primary-content mx-auto shadow-lg">
@@ -30,7 +21,7 @@ const Overview = () => {
                     Main Balance
                   </h1>
                   <h1 className="font-bold text-3xl text-gray-900">
-                    {loading ? <Loader /> : `$ ${userDetails?.balance}`}
+                    {userDetails?.balance}.00
                   </h1>
                 </div>
               </div>
@@ -43,27 +34,53 @@ const Overview = () => {
                     Loan Balance
                   </h1>
                   <h1 className="font-bold text-3xl text-gray-900">
-                    $ 24,67.00
+                    $24,67.00
                   </h1>
                 </div>
               </div>
             </div>
+            {/* card 3  */}
+            <div>
+              <div className="card lg:w-80 w-96 bg-white text-primary-content mx-auto shadow-lg">
+                <div className="card-body">
+                  <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
+                    Total Overview
+                  </h1>
+                  <div className="text-slate-700">
+                    <h1 className="font-semibold">Total Received</h1>
+                    <h1 className="font-semibold">Total Send</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* card 4  */}
+            <div>
+              <div className="card lg:w-80 w-96 bg-white text-primary-content mx-auto shadow-lg">
+                <div className="card-body">
+                  <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
+                    Total Overview
+                  </h1>
+                  <div className="text-slate-700">
+                    <h1 className="font-semibold">Total Received</h1>
+                    <h1 className="font-semibold">Total Send</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-
           <div className="">
-            <div className="py-4 rounded shadow-md w-60 sm:w-80 animate-pulse bg-white">
-              <div className="p-4 space-y-4 sm:px-8">
-                <div className="w-full h-4 rounded bg-[#5866FF]"></div>
-                <div className="w-full h-4 rounded bg-[#5866FF]"></div>
-                <div className="w-3/4 h-4 rounded bg-[#5866FF]"></div>
+            <div className="py-4 rounded-lg lg:w-80 h-80 shadow-lg bg-white">
+              <div className="card-body">
+              <ChartView/>
               </div>
             </div>
           </div>
         </div>
+
         <div className="mt-4">
           <div className="card bg-white text-primary-content shadow-lg">
             <div className="card-body">
-              <SendMoneyHistory email={user.email} loading={loading} />
+              <SendMoneyHistory email={user.email}/>
             </div>
           </div>
         </div>
