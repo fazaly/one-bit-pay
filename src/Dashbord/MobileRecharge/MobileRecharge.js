@@ -251,19 +251,9 @@ const cCodes = [
 ];
 
 const MobileRecharge = () => {
-  const [userInfo, setUserInfo] = useState({});
-  const { user } = useContext(AuthContext);
-
+  const { user, userDetails } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetch(`http://localhost:5000/user/${user?.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-          setUserInfo(data.data);
-          setLoading(false);
-      });
-  }, [user, loading, userInfo]);
 
   const {data:recharges = [], refetch} = useQuery({
     queryKey: ['recharge'],
@@ -293,6 +283,8 @@ const MobileRecharge = () => {
 
     if(balance < 5){
       toast.error('Minimum Recharge $5');
+    }else if(balance > userDetails.balance){
+      toast.error('insufficient balance');
     }else if(balance > 50){
       toast.error('Maximum Recharge $50');
     }else if(balance >= 5 && balance <= 50){
@@ -307,9 +299,10 @@ const MobileRecharge = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setLoading(false);
         console.log(data);
         toast.success('Recharge Success ✔');
+        form.reset();
+        setLoading(false);
       });
     }
   };
@@ -324,9 +317,7 @@ const MobileRecharge = () => {
                 Main Balance
               </h1>
               <h1 className="font-bold text-3xl text-gray-900">
-                {
-                  loading ? <Loader/> : `$ ${userInfo?.balance}`
-                }
+                  ${userDetails?.balance}.00
               </h1>
             </div>
           </div>
@@ -382,7 +373,7 @@ const MobileRecharge = () => {
                     <button
                       onClick={() => handleRecharge}
                       type="submit"
-                      className="btn btn-xs w-20 rounded-sm mt-2 hover:bg-[#5966FF] border-none"
+                      className="btn w-full btn-xs rounded-sm mt-2 hover:bg-[#5966FF] border-none"
                     >
                       {loading ? <ButtonSpinner/> : "CONFIRM"}
                     </button>
