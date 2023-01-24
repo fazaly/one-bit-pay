@@ -14,6 +14,11 @@ import { AuthContext } from "../context/AuthProvider";
 import Navbar from "../Components/Navbar/Navbar";
 import DashBoardNavbar from "../Components/DashBoardNavbar/DashBoardNavbar";
 import './DashboardLayout.css';
+import { HiViewGridAdd, HiCurrencyDollar } from "react-icons/hi";
+import { IoWalletOutline } from "react-icons/io5";
+import { FaUserEdit, FaMobile } from "react-icons/fa";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDollar, faSackDollar, faFileSignature, faCreditCard, faWallet } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -79,35 +84,35 @@ const DashbordLayout = () => {
             </div>
             <div className="text-white p-4">
               <NavLink to="dahsboard/overview" className="flex items-center mb-6 mt-4">
-                <img src={grid} alt="" className="w-7 mr-4" />
+                <HiViewGridAdd className="text-[30px] mr-4"/>
                 <p className="text-lg font-semibold">Dashbord</p>
               </NavLink>
               <NavLink to="/dashboard/editProfile" className="flex items-center mb-6 mt-4">
-                <img src={apply} alt="" className="w-7 mr-4" />
+                <FaUserEdit className="text-[30px] mr-4"/>
                 <p className="text-lg font-semibold">Update Profile</p>
               </NavLink>
               <NavLink to='/dashboard/sendMoney' className="flex items-center mb-6 mt-4">
-                <img src={send} alt="" className="w-7 mr-4" />
+                <HiCurrencyDollar className="text-[30px] mr-4" />
                 <p className="text-lg font-semibold">Send Money</p>
               </NavLink>
               <NavLink to="/dashboard/withdraw" className="flex items-center mb-6 mt-4">
-                <img src={wallet} alt="" className="w-7 mr-4" />
+                <FontAwesomeIcon icon={faWallet} className="text-[25px] mr-4"/>
                 <p className="text-lg font-semibold">Withdraw</p>
               </NavLink>
               <NavLink to="/dashboard/mobileRecharge" className="flex items-center mb-6 mt-4">
-                <img src={recharge} alt="" className="w-7 mr-4" />
+                <FaMobile className="text-[25px] mr-4" />
                 <p className="text-lg font-semibold">Mobile Recharge</p>
               </NavLink>
               <NavLink to="/dashboard/billPay" className="flex items-center mb-6 mt-4">
-                <img src={payment} alt="" className="w-7 mr-4" />
+                <FontAwesomeIcon icon={faCreditCard} className="text-[25px] mr-4"/>
                 <p className="text-lg font-semibold">Bill Pay</p>
               </NavLink>
               <NavLink to="/dashboard/loanRequest" className="flex items-center mb-6 mt-4">
-                <img src={loan} alt="" className="w-7 mr-4" />
+                <FontAwesomeIcon icon={faSackDollar} className="text-[25px] mr-4"/>
                 <p className="text-lg font-semibold">Loan Request</p>
               </NavLink>
               <NavLink to="/dashboard/applyForAgent" className="flex items-center mb-6 mt-4">
-                <img src={apply} alt="" className="w-7 mr-4" />
+                <FontAwesomeIcon icon={faFileSignature} className="text-[25px] mr-4"/>
                 <p className="text-lg font-semibold">Become An Agent</p>
               </NavLink>
             </div>
