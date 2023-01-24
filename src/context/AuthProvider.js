@@ -47,7 +47,7 @@ const AuthProvider = ({children}) => {
           .then((data) => {
             setUserDetails(data.data);
           });
-      }, [user]);
+      }, [user, userDetails, auth.currentUser]);
 
     const authInfo = {
         user,
