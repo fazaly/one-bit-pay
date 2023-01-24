@@ -4,12 +4,12 @@ import { AuthContext } from '../../context/AuthProvider';
 
 const SendMoneyHistory = ({ email, loading }) => {
     const [transactions, setTransactions] = useState([]);
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     // const [loading2, setLoading2] = useState(false)
 
     useEffect(() => {
-        fetch(`http://localhost:5000/transactionSend/${email}`)
+        fetch(`https://one-bit-pay-server.vercel.app/transactionSend/${email}`)
             .then(res => res.json())
             .then(data => {
                 if (data.status) {
@@ -40,15 +40,15 @@ const SendMoneyHistory = ({ email, loading }) => {
                             transactions?.map((transaction, i) => {
                                 return <tr key={i}>
                                     {
-                                        transaction.senderEmail === user.email && <th><p><HiArrowSmUp className='bg-red-500 text-white rounded-full text-xl'/></p></th>
+                                        transaction.senderEmail === user.email && <th><p><HiArrowSmUp className='bg-red-500 text-white rounded-full text-xl' /></p></th>
                                     }
                                     {
-                                        transaction.receiverEmail === user.email && <th><p><HiArrowSmDown className='bg-green-500 text-white rounded-full text-xl'/></p></th>
+                                        transaction.receiverEmail === user.email && <th><p><HiArrowSmDown className='bg-green-500 text-white rounded-full text-xl' /></p></th>
                                     }
                                     <td>
                                         {
                                             transaction.receiverEmail === user.email ? "You Received" :
-                                            `${transaction?.receiverEmail}`
+                                                `${transaction?.receiverEmail}`
                                         }
                                     </td>
                                     <td>{transaction?.amount}</td>

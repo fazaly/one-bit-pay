@@ -257,18 +257,18 @@ const MobileRecharge = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/user/${user?.email}`)
+    fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
-          setUserInfo(data.data);
-          setLoading(false);
+        setUserInfo(data.data);
+        setLoading(false);
       });
   }, [user, loading, userInfo]);
 
-  const {data:recharges = [], refetch} = useQuery({
+  const { data: recharges = [], refetch } = useQuery({
     queryKey: ['recharge'],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/recharge/${user?.email}`);
+      const res = await fetch(`https://one-bit-pay-server.vercel.app/recharge/${user?.email}`);
       const data = await res.json();
       return data;
     }
@@ -285,32 +285,32 @@ const MobileRecharge = () => {
 
     const rechargeInfo = {
       userEmail: user.email,
-      phone:countryCode + phoneNumber,
+      phone: countryCode + phoneNumber,
       balance,
       time,
     }
     console.log(rechargeInfo);
 
-    if(balance < 5){
+    if (balance < 5) {
       toast.error('Minimum Recharge $5');
-    }else if(balance > 50){
+    } else if (balance > 50) {
       toast.error('Maximum Recharge $50');
-    }else if(balance >= 5 && balance <= 50){
+    } else if (balance >= 5 && balance <= 50) {
       setLoading(true);
 
-      fetch("http://localhost:5000/mobile/recharge", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify( rechargeInfo)
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setLoading(false);
-        console.log(data);
-        toast.success('Recharge Success ✔');
-      });
+      fetch("https://one-bit-pay-server.vercel.app/mobile/recharge", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(rechargeInfo)
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setLoading(false);
+          console.log(data);
+          toast.success('Recharge Success ✔');
+        });
     }
   };
 
@@ -325,7 +325,7 @@ const MobileRecharge = () => {
               </h1>
               <h1 className="font-bold text-3xl text-gray-900">
                 {
-                  loading ? <Loader/> : `$ ${userInfo?.balance}`
+                  loading ? <Loader /> : `$ ${userInfo?.balance}`
                 }
               </h1>
             </div>
@@ -345,7 +345,7 @@ const MobileRecharge = () => {
                   <div className="">
                     <div className="form-control mb-2 flex flex-row gap-2">
                       <select
-                      required
+                        required
                         type="select"
                         name="select"
                         className="w-16 border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
@@ -358,9 +358,9 @@ const MobileRecharge = () => {
                           >{`+${code.code} ${code.country}`}</option>
                         ))}
                       </select>
-              
+
                       <input
-                      required
+                        required
                         type="text"
                         name="phone_number"
                         placeholder="Mobile Number"
@@ -370,7 +370,7 @@ const MobileRecharge = () => {
 
                     <div className="form-control">
                       <input
-                      required
+                        required
                         type="text"
                         name="amount"
                         placeholder="Amount"
@@ -384,7 +384,7 @@ const MobileRecharge = () => {
                       type="submit"
                       className="btn btn-xs w-20 rounded-sm mt-2 hover:bg-[#5966FF] border-none"
                     >
-                      {loading ? <ButtonSpinner/> : "CONFIRM"}
+                      {loading ? <ButtonSpinner /> : "CONFIRM"}
                     </button>
                   </div>
                 </div>

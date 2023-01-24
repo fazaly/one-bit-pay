@@ -54,7 +54,7 @@ const Signup = () => {
 
   //Here save a user to database after register
   const saveUserToDB = (userData, user) => {
-    fetch("http://localhost:5000/addUser", {
+    fetch("https://one-bit-pay-server.vercel.app/addUser", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -148,7 +148,7 @@ const Signup = () => {
               <div className="form-control ">
                 <button type="submit" className="btn bg-black">
                   {
-                    loading ? <ButtonSpinner/> : "SIGN UP"
+                    loading ? <ButtonSpinner /> : "SIGN UP"
                   }
                 </button>
                 {signupError && <p className="text-red-500">{signupError}</p>}
