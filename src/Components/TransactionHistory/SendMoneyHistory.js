@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { HiArrowSmDown, HiArrowSmUp } from "react-icons/hi";
 import { AuthContext } from '../../context/AuthProvider';
 
-const SendMoneyHistory = ({ email, loading }) => {
+const SendMoneyHistory = ({ email}) => {
     const [transactions, setTransactions] = useState([]);
     const { user } = useContext(AuthContext);
 
@@ -13,11 +13,12 @@ const SendMoneyHistory = ({ email, loading }) => {
             .then(res => res.json())
             .then(data => {
                 if (data.status) {
-                    setTransactions(data.data)
+                    setTransactions(data.data);
+                    // console.log(transactions);
                 }
             })
 
-    }, [loading, transactions])
+    }, [transactions, user])
     // console.log(transactions);
 
     return (
@@ -37,7 +38,7 @@ const SendMoneyHistory = ({ email, loading }) => {
                     </thead>
                     <tbody className='text-slate-700'>
                         {
-                            transactions?.map((transaction, i) => {
+                            transactions.slice(0, 10)?.map((transaction, i) => {
                                 return <tr key={i}>
                                     {
                                         transaction.senderEmail === user.email && <th><p><HiArrowSmUp className='bg-red-500 text-white rounded-full text-xl' /></p></th>
@@ -53,7 +54,7 @@ const SendMoneyHistory = ({ email, loading }) => {
                                     </td>
                                     <td>{transaction?.amount}</td>
                                     <td >{transaction?.transactionId}</td>
-                                    <td >{transaction?.transactionId}</td>
+                                    <td >{transaction?.time}</td>
                                 </tr>
                             })
                         }

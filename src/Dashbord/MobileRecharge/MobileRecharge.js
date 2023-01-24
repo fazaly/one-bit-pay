@@ -251,11 +251,10 @@ const cCodes = [
 ];
 
 const MobileRecharge = () => {
-  const [userInfo, setUserInfo] = useState({});
-  const { user } = useContext(AuthContext);
-
+  const { user, userDetails } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
+<<<<<<< HEAD
   useEffect(() => {
     fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`)
       .then((res) => res.json())
@@ -264,6 +263,8 @@ const MobileRecharge = () => {
         setLoading(false);
       });
   }, [user, loading, userInfo]);
+=======
+>>>>>>> 56f87ba9f40c0bade1c179380e8f94c00564d000
 
   const { data: recharges = [], refetch } = useQuery({
     queryKey: ['recharge'],
@@ -293,11 +294,18 @@ const MobileRecharge = () => {
 
     if (balance < 5) {
       toast.error('Minimum Recharge $5');
+<<<<<<< HEAD
     } else if (balance > 50) {
+=======
+    }else if(balance > userDetails.balance){
+      toast.error('insufficient balance');
+    }else if(balance > 50){
+>>>>>>> 56f87ba9f40c0bade1c179380e8f94c00564d000
       toast.error('Maximum Recharge $50');
     } else if (balance >= 5 && balance <= 50) {
       setLoading(true);
 
+<<<<<<< HEAD
       fetch("https://one-bit-pay-server.vercel.app/mobile/recharge", {
         method: "POST",
         headers: {
@@ -311,6 +319,22 @@ const MobileRecharge = () => {
           console.log(data);
           toast.success('Recharge Success ✔');
         });
+=======
+      fetch("http://localhost:5000/mobile/recharge", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify( rechargeInfo)
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        toast.success('Recharge Success ✔');
+        form.reset();
+        setLoading(false);
+      });
+>>>>>>> 56f87ba9f40c0bade1c179380e8f94c00564d000
     }
   };
 
@@ -324,9 +348,13 @@ const MobileRecharge = () => {
                 Main Balance
               </h1>
               <h1 className="font-bold text-3xl text-gray-900">
+<<<<<<< HEAD
                 {
                   loading ? <Loader /> : `$ ${userInfo?.balance}`
                 }
+=======
+                  ${userDetails?.balance}.00
+>>>>>>> 56f87ba9f40c0bade1c179380e8f94c00564d000
               </h1>
             </div>
           </div>
@@ -382,7 +410,7 @@ const MobileRecharge = () => {
                     <button
                       onClick={() => handleRecharge}
                       type="submit"
-                      className="btn btn-xs w-20 rounded-sm mt-2 hover:bg-[#5966FF] border-none"
+                      className="btn w-full btn-xs rounded-sm mt-2 hover:bg-[#5966FF] border-none"
                     >
                       {loading ? <ButtonSpinner /> : "CONFIRM"}
                     </button>

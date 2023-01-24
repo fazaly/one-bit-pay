@@ -10,6 +10,7 @@ const AuthProvider = ({children}) => {
 
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(false);
+    const [userDetails, setUserDetails] = useState({});
 
 
     const createUser = (email, password) => {
@@ -39,10 +40,20 @@ const AuthProvider = ({children}) => {
         return () => unsubscribe;
     }, [user]);
 
+    //Loading user data from database for using in multiple components
+    useEffect(() => {
+        fetch(`http://localhost:5000/user/${user?.email}`)
+          .then((res) => res.json())
+          .then((data) => {
+            setUserDetails(data.data);
+          });
+      }, [user, userDetails, auth.currentUser]);
+
     const authInfo = {
         user,
         setUser,
         loading,
+        userDetails,
         createUser,
         signIn,
         logOut,

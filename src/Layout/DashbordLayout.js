@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { HiChevronDoubleRight, HiChevronDoubleLeft } from "react-icons/hi";
-import { Link, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import userImage2 from '../images/userImage2.png';
 import grid from '.././images/icons/grid.svg';
 import apply from '.././images/icons/apply.svg';
@@ -13,6 +13,12 @@ import wallet from '.././images/icons/wallet.svg';
 import { AuthContext } from "../context/AuthProvider";
 import Navbar from "../Components/Navbar/Navbar";
 import DashBoardNavbar from "../Components/DashBoardNavbar/DashBoardNavbar";
+import './DashboardLayout.css';
+import { HiViewGridAdd, HiCurrencyDollar } from "react-icons/hi";
+import { IoWalletOutline } from "react-icons/io5";
+import { FaUserEdit, FaMobile } from "react-icons/fa";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDollar, faSackDollar, faFileSignature, faCreditCard, faWallet } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -58,15 +64,15 @@ const DashbordLayout = () => {
                 {
                   user?.userPhoto ?
                     <>
-                      <Link to="/dashboard/editProfile">
+                      <NavLink to="/dashboard/editProfile">
                         <img src={user?.userPhoto} alt="" className="w-20 rounded-full" />
-                      </Link>
+                      </NavLink>
                     </>
                     :
                     <>
-                      <Link to="/dashboard/editProfile">
+                      <NavLink to="/dashboard/editProfile">
                         <img src={userImage2} alt="" className="w-20 rounded-full" />
-                      </Link>
+                      </NavLink>
                     </>
                 }
 
@@ -77,38 +83,38 @@ const DashbordLayout = () => {
               </div>
             </div>
             <div className="text-white p-4">
-              <Link to="dahsboard/overview" className="flex items-center mb-6 mt-4">
-                <img src={grid} alt="" className="w-7 mr-4" />
+              <NavLink to="dahsboard/overview" className="flex items-center mb-6 mt-4">
+                <HiViewGridAdd className="text-[30px] mr-4"/>
                 <p className="text-lg font-semibold">Dashbord</p>
-              </Link>
-              <Link to="/dashboard/editProfile" className="flex items-center mb-6 mt-4">
-                <img src={apply} alt="" className="w-7 mr-4" />
+              </NavLink>
+              <NavLink to="/dashboard/editProfile" className="flex items-center mb-6 mt-4">
+                <FaUserEdit className="text-[30px] mr-4"/>
                 <p className="text-lg font-semibold">Update Profile</p>
-              </Link>
-              <Link to='/dashboard/sendMoney' className="flex items-center mb-6 mt-4">
-                <img src={send} alt="" className="w-7 mr-4" />
+              </NavLink>
+              <NavLink to='/dashboard/sendMoney' className="flex items-center mb-6 mt-4">
+                <HiCurrencyDollar className="text-[30px] mr-4" />
                 <p className="text-lg font-semibold">Send Money</p>
-              </Link>
-              <Link to="/dashboard/withdraw" className="flex items-center mb-6 mt-4">
-                <img src={wallet} alt="" className="w-7 mr-4" />
+              </NavLink>
+              <NavLink to="/dashboard/withdraw" className="flex items-center mb-6 mt-4">
+                <FontAwesomeIcon icon={faWallet} className="text-[25px] mr-4"/>
                 <p className="text-lg font-semibold">Withdraw</p>
-              </Link>
-              <Link to="/dashboard/mobileRecharge" className="flex items-center mb-6 mt-4">
-                <img src={recharge} alt="" className="w-7 mr-4" />
+              </NavLink>
+              <NavLink to="/dashboard/mobileRecharge" className="flex items-center mb-6 mt-4">
+                <FaMobile className="text-[25px] mr-4" />
                 <p className="text-lg font-semibold">Mobile Recharge</p>
-              </Link>
-              <Link to="/dashboard/billPay" className="flex items-center mb-6 mt-4">
-                <img src={payment} alt="" className="w-7 mr-4" />
+              </NavLink>
+              <NavLink to="/dashboard/billPay" className="flex items-center mb-6 mt-4">
+                <FontAwesomeIcon icon={faCreditCard} className="text-[25px] mr-4"/>
                 <p className="text-lg font-semibold">Bill Pay</p>
-              </Link>
-              <Link to="/dashboard/loanRequest" className="flex items-center mb-6 mt-4">
-                <img src={loan} alt="" className="w-7 mr-4" />
+              </NavLink>
+              <NavLink to="/dashboard/loanRequest" className="flex items-center mb-6 mt-4">
+                <FontAwesomeIcon icon={faSackDollar} className="text-[25px] mr-4"/>
                 <p className="text-lg font-semibold">Loan Request</p>
-              </Link>
-              <Link to="/dashboard/applyForAgent" className="flex items-center mb-6 mt-4">
-                <img src={apply} alt="" className="w-7 mr-4" />
+              </NavLink>
+              <NavLink to="/dashboard/applyForAgent" className="flex items-center mb-6 mt-4">
+                <FontAwesomeIcon icon={faFileSignature} className="text-[25px] mr-4"/>
                 <p className="text-lg font-semibold">Become An Agent</p>
-              </Link>
+              </NavLink>
             </div>
           </ul>
         </div>
