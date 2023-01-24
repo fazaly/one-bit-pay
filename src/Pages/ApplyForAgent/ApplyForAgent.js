@@ -1,35 +1,52 @@
-import React from 'react';
-import { Form } from 'react-router-dom';
-import './ApplyForAgent.css'
+import React from "react";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { Form } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
+import "./ApplyForAgent.css";
 
 const ApplyForAgent = () => {
+  const {user} = useContext(AuthContext);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-    const handleupdateInfo = (e) => {
-        e.preventDefault()
-        const form = e.target;
-        const UserName = form.userName.value;
-        const businessName = form.businessName.value;
-        const businessLocation = form.businessLocation.value;
-        const businessType = form.businessType.value;
-        const tinNumber = form.tinNumber.value;
-        const email = form.email.value;
-        const image = form.image.files[0]
-        const agentInfo = {
-            AgentName: UserName,
-            BusinessName: businessName,
-            BusinessLocation: businessLocation,
-            BusinessType: businessType,
-            tinId: tinNumber,
-            email,
-            image
-        }
-        console.log(agentInfo);
-    }
-    return (
-        <div>
-            <div className="p-5">
-                <div className="mx-4 p-4">
-                    <div className="flex items-center">
+  const handleupdateInfo = (data) => {
+    console.log(data);
+
+    const userData = {
+      name: data.first_name + data.last_name,
+      email: user?.email,
+      img: data.image[0],
+      nid: data.nidNumber,
+      tin: data.tinNumber,
+      number: data.number,
+    };
+    console.log(userData);
+
+    const image = userData.img;
+
+    const formData = new FormData();
+    formData.append('image', image);
+
+    //Upload user image to imgBB database
+    fetch(`https://api.imgbb.com/1/upload?key=69feaaeadf81acc090617d3a3519dfb4`, {
+      method: "POST",
+      body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+    })
+  };
+  return (
+    <div>
+      <div className="p-5">
+        <div className="mx-4 p-4">
+          {/* <div className="flex items-center">
                         <div className="flex items-center text-[#00AAFF] relative">
                             <div className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-[#5966FF]">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-bookmark ">
@@ -71,83 +88,180 @@ const ApplyForAgent = () => {
                             </div>
                             <div className="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-[#00AAFF]">Confirm</div>
                         </div>
-                    </div>
-                </div>
-                <Form id="user" onSubmit={handleupdateInfo} className="mt-8 p-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
-                        <div className="w-full flex-1 mx-2 svelte-1l8159u">
-                            <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">Your Name</div>
-                            <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                                <input type='text' name='userName' placeholder="Enter Name" className="p-1 px-2 appearance-none outline-none w-full text-gray-800" /> </div>
-                        </div>
-                        <div className="w-full mx-2 flex-1 svelte-1l8159u">
-                            <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">Business Name</div>
-                            <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                                <input type='text' name='businessName' placeholder="Enter Business Name" className="p-1 px-2 appearance-none outline-none w-full text-gray-800" /> </div>
-                        </div>
-                        <div className="w-full mx-2 flex-1 svelte-1l8159u">
-                            <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">Business Location</div>
-                            <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                                <input name="businessLocation" type='text' placeholder="Enter Location" className="p-1 px-2 appearance-none outline-none w-full text-gray-800" /> </div>
-                        </div>
-                        <div className="w-full mx-2 flex-1 svelte-1l8159u">
-                            <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">Business Type</div>
-                            <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                                <input type='text' name='businessType' placeholder="Enter Business type" className="p-1 px-2 appearance-none outline-none w-full text-gray-800" /> </div>
-                        </div>
-                        <div className="w-full mx-2 flex-1 svelte-1l8159u">
-                            <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">TIN ID</div>
-                            <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                                <input type='text' name='tinNumber' placeholder="Enter TIN ID" className="p-1 px-2 appearance-none outline-none w-full text-gray-800" /> </div>
-                        </div>
-                        <div className="w-full mx-2 flex-1 svelte-1l8159u">
-                            <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">Email</div>
-                            <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                                <input type='email' name='email' placeholder="jhon@doe.com" className="p-1 px-2 appearance-none outline-none w-full text-gray-800" /> </div>
-                        </div>
-                        {/* <div className="w-full mx-2 flex-1 svelte-1l8159u">
+                    </div> */}
+          <div className="flex">
+            <span className="min-w-2 min-h-4 mr-2 bg-[#5966FF] text-[#5966FF]">
+              |
+            </span>{" "}
+            <h1 className="text-2xl font-bold uppercase">
+              Please Provide Your All Informations
+            </h1>
+          </div>
+        </div>
+        <Form
+          id="user"
+          onSubmit={handleSubmit(handleupdateInfo)}
+          className="mt-8 p-4"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
+            <div className="w-full flex-1 mx-2 svelte-1l8159u">
+              <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">
+                First Name
+              </div>
+              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+                <input
+                  type="text"
+                  name="first_name"
+                  placeholder="first name"
+                  {...register("first_name", { required: true })}
+                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                />{" "}
+              </div>
+            </div>
+            <div className="w-full mx-2 flex-1 svelte-1l8159u">
+              <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">
+                Last Name
+              </div>
+              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+                <input
+                  type="text"
+                  name="last_name"
+                  placeholder="last name"
+                  {...register("lastname", { required: true })}
+                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                />{" "}
+              </div>
+            </div>
+            <div className="w-full mx-2 flex-1 svelte-1l8159u">
+              <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">
+                Business Location
+              </div>
+              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+                <input
+                  name="businessLocation"
+                  type="text"
+                  placeholder="enter place name"
+                  {...register("businessLocation", { required: true })}
+                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                />{" "}
+              </div>
+            </div>
+            <div className="w-full mx-2 flex-1 svelte-1l8159u">
+              <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">
+                NID Number
+              </div>
+              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+                <input
+                  type="number"
+                  name="nidNumber"
+                  placeholder="enter nid number"
+                  {...register("nidNumber", { required: true })}
+                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                />{" "}
+              </div>
+            </div>
+            <div className="w-full mx-2 flex-1 svelte-1l8159u">
+              <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">
+                TIN ID
+              </div>
+              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+                <input
+                  type="number"
+                  name="tinNumber"
+                  placeholder="enter tin number"
+                  {...register("tinNumber", { required: true })}
+                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                />{" "}
+              </div>
+            </div>
+            <div className="w-full mx-2 flex-1 svelte-1l8159u">
+              <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">
+                Phone Number
+              </div>
+              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+                <input
+                  type="number"
+                  name="number"
+                  placeholder="018XXXXXXXX"
+                  {...register("number", { required: true })}
+                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                />{" "}
+              </div>
+            </div>
+            {/* <div className="w-full mx-2 flex-1 svelte-1l8159u">
                             <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">Image</div>
                             <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
                                 <input type='file' name='image' placeholder="Enter NID Number" className="p-1 px-2 appearance-none outline-none w-full text-gray-800 sr-only" /> </div>
                         </div> */}
-                        <div>
-                            <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">Image</div>
-                            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                                <div className="space-y-1 text-center">
-                                    <svg className="mx-auto h-12 w-12 text-[#00AAFF]" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                    <div className="flex text-sm text-gray-600">
-                                        <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                                            <span className="">Upload a file</span>
-                                            <input id="file-upload" name="image" type="file" className="sr-only" />
-                                        </label>
-                                        <p className="pl-1 text-gray-700">or drag and drop</p>
-                                    </div>
-                                    <p className="text-xs text-gray-700">
-                                        PNG, JPG, GIF up to 10MB
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex p-2 mt-4">
-                        {/* <button className="text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+            <div>
+              <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">
+                Image
+              </div>
+              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                <div className="space-y-1 text-center">
+                  <svg
+                    className="mx-auto h-12 w-12 text-[#00AAFF]"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 48 48"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <div className="flex text-sm text-gray-600">
+                    <label
+                      htmlFor="file-upload"
+                      className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                    >
+                      <span className="">Upload a file</span>
+                      <input
+                        id="file-upload"
+                        name="image"
+                        type="file"
+                        {...register("image", { required: true })}
+                        className="sr-only"
+                      />
+                    </label>
+                    <p className="pl-1 text-gray-700">or drag and drop</p>
+                  </div>
+                  <p className="text-xs text-gray-700">
+                    PNG, JPG, GIF up to 10MB
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex p-2 mt-4">
+            {/* <button className="text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
         hover:bg-gray-200  
         bg-gray-100 
         text-gray-700 
         border duration-200 ease-in-out 
         border-gray-600 transition">Previous</button> */}
-                        <div className="flex-auto flex flex-row-reverse">
-                            <button type='submit'
-                                className="text-base  ml-3  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF]  hover:from-[#8759f1] text-white duration-200 ease-in-out transition">Update Information</button>
-                            <button type='reset' className="text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF]  hover:from-[#8759f1] text-white duration-200 ease-in-out transition">Reset</button>
-                        </div>
-                    </div>
-                </Form>
+            <div className="flex-auto flex flex-row-reverse">
+              <button
+                type="submit"
+                className="text-base  ml-3  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF]  hover:from-[#8759f1] text-white duration-200 ease-in-out transition"
+              >
+                Update Information
+              </button>
+              <button
+                type="reset"
+                className="text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF]  hover:from-[#8759f1] text-white duration-200 ease-in-out transition"
+              >
+                Reset
+              </button>
             </div>
-        </div>
-    );
+          </div>
+        </Form>
+      </div>
+    </div>
+  );
 };
 
 export default ApplyForAgent;
