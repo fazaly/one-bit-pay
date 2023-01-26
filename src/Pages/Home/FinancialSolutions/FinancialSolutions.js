@@ -17,7 +17,7 @@ const FinancialSolutions = () => {
         },
         {
             "id": "3",
-            "title": "Cash Out",
+            "title": "Withdraw",
             "text": "Cash Out anytime from the largest Agent and ATM network",
             "img": "https://i.ibb.co/rM09dtn/cashout.png"
         },
