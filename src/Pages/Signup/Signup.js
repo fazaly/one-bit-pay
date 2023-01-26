@@ -31,7 +31,6 @@ const Signup = () => {
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-
         const userData = {
           name,
           userEmail: email,
@@ -39,42 +38,40 @@ const Signup = () => {
           confirmPass: confirm,
           balance: 10000,
           accountType: "user",
+          isAgent: false,
+          isAdmin: false,
         };
 
-        saveUserToDB(userData, user);
+         //Here save a user to database after register
+        fetch("http://localhost:5000/addUser", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            setUser(user);
+            toast.success("SIGN UP SUCCESS ✔");
+            setLoading(false);
+            navigate("/");
+            console.log(user);
+          })
+          .catch((err) => {
+            console.log(err);
+            setLoading(false);
+            toast.error(err.message);
+          });
       })
       .catch((err) => {
         console.error(err.message);
         setSignupError(err.message);
+        setLoading(false);
       });
-
-    console.log(name, email, password, confirm);
   };
 
-
-  //Here save a user to database after register
-  const saveUserToDB = (userData, user) => {
-    fetch("http://localhost:5000/addUser", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(userData)
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        setUser(user);
-        toast.success('SIGN UP SUCCESS ✔');
-        setLoading(false);
-        navigate('/');
-      })
-      .catch(err => {
-        console.log(err);
-        setLoading(false);
-        toast.error(err.message);
-      })
-  }
   return (
     <div className="hero min-h-screen relative">
       <div className="hero-content flex-col lg:flex-row">
@@ -147,9 +144,7 @@ const Signup = () => {
               </div>
               <div className="form-control ">
                 <button type="submit" className="btn bg-black">
-                  {
-                    loading ? <ButtonSpinner/> : "SIGN UP"
-                  }
+                  {loading ? <ButtonSpinner /> : "SIGN UP"}
                 </button>
                 {signupError && <p className="text-red-500">{signupError}</p>}
               </div>
@@ -164,8 +159,15 @@ const Signup = () => {
         </div>
       </div>
       <div className="tabs rotate-90 absolute top-1/2 left-0">
-        <Link to={'/login'} className="tab tab-bordered font-semibold">SIGN IN</Link>
-        <Link to={'/signUp'} className="tab tab-bordered font-semibold tab-active">SIGN UP</Link>
+        <Link to={"/login"} className="tab tab-bordered font-semibold">
+          SIGN IN
+        </Link>
+        <Link
+          to={"/signUp"}
+          className="tab tab-bordered font-semibold tab-active"
+        >
+          SIGN UP
+        </Link>
       </div>
     </div>
   );

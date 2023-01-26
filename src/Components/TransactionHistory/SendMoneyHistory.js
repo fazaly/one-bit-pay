@@ -4,7 +4,7 @@ import { AuthContext } from '../../context/AuthProvider';
 
 const SendMoneyHistory = ({ email}) => {
     const [transactions, setTransactions] = useState([]);
-    const {user} = useContext(AuthContext);
+    const {user, userDetails} = useContext(AuthContext);
 
     // const [loading2, setLoading2] = useState(false)
 
@@ -31,6 +31,7 @@ const SendMoneyHistory = ({ email}) => {
                         <tr>
                             <th></th>
                             <th>EMAIL</th>
+                            <th>EMAIL</th>
                             <th>AMOUNT</th>
                             <th>TRANSACTION ID</th>
                             <th>DATE & TIME</th>
@@ -38,6 +39,10 @@ const SendMoneyHistory = ({ email}) => {
                     </thead>
                     <tbody className='text-slate-700'>
                         {
+                            transactions.length === 0 ? <>
+                                <h1 className='text-2xl font-bold text-center mt-4 mb-4'>No Transactions</h1>
+                            </> : <>
+                            {
                             transactions.slice(0, 10)?.map((transaction, i) => {
                                 return <tr key={i}>
                                     {
@@ -47,9 +52,15 @@ const SendMoneyHistory = ({ email}) => {
                                         transaction.receiverEmail === user.email && <th><p><HiArrowSmDown className='bg-green-500 text-white rounded-full text-xl'/></p></th>
                                     }
                                     <td>
-                                        {
-                                            transaction.receiverEmail === user.email ? "You Received" :
-                                            `${transaction?.receiverEmail}`
+                                    {
+                                            user?.email === transaction.senderEmail ?
+                                            `${transaction.receiverEmail}` : `${transaction.senderEmail}`
+                                        }
+                                    </td>
+                                    <td>
+                                    {
+                                            user?.email === transaction.senderEmail ?
+                                            `You Sent` : `You received`
                                         }
                                     </td>
                                     <td>{transaction?.amount}</td>
@@ -58,7 +69,8 @@ const SendMoneyHistory = ({ email}) => {
                                 </tr>
                             })
                         }
-
+                            </>
+                        }
                     </tbody>
                 </table>
             </div>
