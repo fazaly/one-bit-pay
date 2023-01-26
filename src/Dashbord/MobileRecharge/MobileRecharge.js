@@ -283,7 +283,7 @@ const MobileRecharge = () => {
 
     if (balance < 5) {
       toast.error('Minimum Recharge $5');
-    } else if (balance > userDetails.balance) {
+    } else if (balance > userDetails?.balance) {
       toast.error('insufficient balance');
     } else if (balance > 50) {
       toast.error('Maximum Recharge $50');

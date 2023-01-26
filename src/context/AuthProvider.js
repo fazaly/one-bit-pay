@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
 
     //Loading user data from database for using in multiple components
     useEffect(() => {
-        fetch(`https://one-bit-pay-server.vercel.app/user/${user.email}`)
+        fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`)
             .then((res) => res.json())
             .then((data) => {
                 setUserDetails(data.data);
