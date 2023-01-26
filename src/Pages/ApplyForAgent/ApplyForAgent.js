@@ -8,7 +8,7 @@ import { AuthContext } from "../../context/AuthProvider";
 import "./ApplyForAgent.css";
 
 const ApplyForAgent = () => {
-  const {user, userDetails} = useContext(AuthContext);
+  const { user, userDetails } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
   const {
@@ -43,41 +43,41 @@ const ApplyForAgent = () => {
       method: "POST",
       body: formData
     })
-    .then(res => res.json())
-    .then(data => {
-      const userinfo = {
-        img: data.data.display_url,
-        name: `${userData.fname} ${userData.lname}`,
-        email: userData.email,
-        nid: userData.nid,
-        tin: userData.tin,
-        number: userData.number
-      }
+      .then(res => res.json())
+      .then(data => {
+        const userinfo = {
+          img: data.data.display_url,
+          name: `${userData.fname} ${userData.lname}`,
+          email: userData.email,
+          nid: userData.nid,
+          tin: userData.tin,
+          number: userData.number
+        }
 
         //Insert user data in databas
-        fetch(`http://localhost:5000/agents/request`, {
+        fetch(`https://one-bit-pay-server.vercel.app/agents/request`, {
           method: "POST",
           headers: {
             "content-type": "application/json",
           },
           body: JSON.stringify(userinfo)
         })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          setLoading(false);
-          toast.success('Request Inserted');
-        })
-        .catch(err => {
-          setLoading(false);
-          toast.error(err.message);
-        })
-    })
-    .catch(err => {
-      console.log(err);
-      setLoading(false);
-      toast.error(err.message);
-    })
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+            setLoading(false);
+            toast.success('Request Inserted');
+          })
+          .catch(err => {
+            setLoading(false);
+            toast.error(err.message);
+          })
+      })
+      .catch(err => {
+        console.log(err);
+        setLoading(false);
+        toast.error(err.message);
+      })
   };
   return (
     <div>
@@ -284,7 +284,7 @@ const ApplyForAgent = () => {
                 type="submit"
                 className="text-base  ml-3  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF]  hover:from-[#8759f1] text-white duration-200 ease-in-out transition"
               >
-                {loading ? <Loader2/> : "CONFIRM"}
+                {loading ? <Loader2 /> : "CONFIRM"}
               </button>
               <button
                 type="reset"
