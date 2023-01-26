@@ -27,6 +27,7 @@
     "react-scripts": "^5.0.1",
     "react-time-ago": "^7.2.1",
     "recharts": "^2.3.2",
+    "swiper": "^8.4.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
