@@ -1,12 +1,12 @@
 import React, { createContext, useEffect, useState } from 'react';
 import app from '../firebase/firebase.config';
-import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut} from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 export const AuthContext = createContext();
 
 const auth = getAuth(app);
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(false);
@@ -32,6 +32,15 @@ const AuthProvider = ({children}) => {
         return sendPasswordResetEmail(auth, email)
     };
 
+    //Loading user data from database for using in multiple components
+    useEffect(() => {
+        fetch(`https://one-bit-pay-server.vercel.app/user/${user.email}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setUserDetails(data.data);
+            });
+    }, [user]);
+
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
@@ -39,15 +48,6 @@ const AuthProvider = ({children}) => {
         });
         return () => unsubscribe;
     }, [user]);
-
-    //Loading user data from database for using in multiple components
-    useEffect(() => {
-        fetch(`http://localhost:5000/user/${user?.email}`)
-          .then((res) => res.json())
-          .then((data) => {
-            setUserDetails(data.data);
-          });
-      }, [user, userDetails, auth.currentUser]);
 
     const authInfo = {
         user,

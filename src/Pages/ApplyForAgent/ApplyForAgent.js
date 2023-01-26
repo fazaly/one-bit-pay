@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { Form } from "react-router-dom";
+import Loader2 from "../../Components/Loader/Loader2";
 import { AuthContext } from "../../context/AuthProvider";
 import "./ApplyForAgent.css";
 
 const ApplyForAgent = () => {
-  const {user} = useContext(AuthContext);
+  const { user, userDetails } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -18,7 +22,8 @@ const ApplyForAgent = () => {
     console.log(data);
 
     const userData = {
-      name: data.first_name + data.last_name,
+      fname: data.first_name,
+      lname: data.last_name,
       email: user?.email,
       img: data.image[0],
       nid: data.nidNumber,
@@ -33,14 +38,46 @@ const ApplyForAgent = () => {
     formData.append('image', image);
 
     //Upload user image to imgBB database
-    fetch(`https://api.imgbb.com/1/upload?key=69feaaeadf81acc090617d3a3519dfb4`, {
+    setLoading(true);
+    fetch(`https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMG_BB_KEY}`, {
       method: "POST",
       body: formData
     })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-    })
+      .then(res => res.json())
+      .then(data => {
+        const userinfo = {
+          img: data.data.display_url,
+          name: `${userData.fname} ${userData.lname}`,
+          email: userData.email,
+          nid: userData.nid,
+          tin: userData.tin,
+          number: userData.number
+        }
+
+        //Insert user data in databas
+        fetch(`https://one-bit-pay-server.vercel.app/agents/request`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userinfo)
+        })
+          .then(res => res.json())
+          .then(data => {
+            console.log(data);
+            setLoading(false);
+            toast.success('Request Inserted');
+          })
+          .catch(err => {
+            setLoading(false);
+            toast.error(err.message);
+          })
+      })
+      .catch(err => {
+        console.log(err);
+        setLoading(false);
+        toast.error(err.message);
+      })
   };
   return (
     <div>
@@ -127,7 +164,7 @@ const ApplyForAgent = () => {
                   type="text"
                   name="last_name"
                   placeholder="last name"
-                  {...register("lastname", { required: true })}
+                  {...register("last_name", { required: true })}
                   className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
                 />{" "}
               </div>
@@ -213,12 +250,12 @@ const ApplyForAgent = () => {
                       strokeLinejoin="round"
                     />
                   </svg>
-                  <div className="flex text-sm text-gray-600">
+                  <div className="text-sm text-gray-600">
                     <label
                       htmlFor="file-upload"
                       className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                     >
-                      <span className="">Upload a file</span>
+                      <span className="text-center">Upload a file</span>
                       <input
                         id="file-upload"
                         name="image"
@@ -227,7 +264,6 @@ const ApplyForAgent = () => {
                         className="sr-only"
                       />
                     </label>
-                    <p className="pl-1 text-gray-700">or drag and drop</p>
                   </div>
                   <p className="text-xs text-gray-700">
                     PNG, JPG, GIF up to 10MB
@@ -248,7 +284,7 @@ const ApplyForAgent = () => {
                 type="submit"
                 className="text-base  ml-3  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF]  hover:from-[#8759f1] text-white duration-200 ease-in-out transition"
               >
-                Update Information
+                {loading ? <Loader2 /> : "CONFIRM"}
               </button>
               <button
                 type="reset"
