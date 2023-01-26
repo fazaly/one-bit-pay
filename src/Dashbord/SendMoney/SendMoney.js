@@ -18,7 +18,7 @@ const SendMoney = () => {
   // const {data:userInfo = []} = useQuery({
   //   queryKey: ['SendMoney'],
   //   queryFn: async () => {
-  //     const res = await fetch(`http://localhost:5000/user/${user?.email}`);
+  //     const res = await fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`);
   //     const data = await res.json();
   //     return data;
   //   }
@@ -45,12 +45,12 @@ const SendMoney = () => {
     } else if (userDetails.balance <= 10) {
       toast.error("insufficient balance");
 
-    } else if (amount < 10){
+    } else if (amount < 10) {
       toast.error('Minimum sending amount is 10');
 
-    }else if(receiverEmail !== user.email && userDetails.balance > 10) {
+    } else if (receiverEmail !== user.email && userDetails.balance > 10) {
       setLoading(true);
-      fetch("http://localhost:5000/sendMoney", {
+      fetch("https://one-bit-pay-server.vercel.app/sendMoney", {
         method: "PUT",
         headers: {
           "content-type": "application/json",
@@ -76,7 +76,7 @@ const SendMoney = () => {
               Current Balance
             </h1>
             <h1 className="font-bold text-3xl text-slate-700">
-               ${userDetails?.balance}.00
+              ${userDetails?.balance}.00
             </h1>
           </div>
         </div>
