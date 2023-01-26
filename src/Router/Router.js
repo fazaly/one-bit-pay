@@ -14,6 +14,7 @@ import BillPay from "../Dashbord/BillPay/BillPay";
 import BecomeAgent from "../Dashbord/BecomeAgent/BecomeAgent";
 import MobileRecharge from "../Dashbord/MobileRecharge/MobileRecharge";
 import EditProfile from "../Dashbord/EditProfile/EditProfile";
+import PrivateRoutes from "./PrivateRoutes";
 
 export const router = createBrowserRouter([
     {
@@ -41,7 +42,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <DashbordLayout />,
+        element: <PrivateRoutes><DashbordLayout /></PrivateRoutes>,
         errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
