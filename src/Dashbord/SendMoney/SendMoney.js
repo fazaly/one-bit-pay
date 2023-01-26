@@ -48,7 +48,7 @@ const SendMoney = () => {
     } else if (amount < 10) {
       toast.error('Minimum sending amount is 10');
 
-    } else if (receiverEmail !== user.email && userDetails.balance > 10) {
+    } else if (receiverEmail !== user?.email && userDetails?.balance > 10) {
       setLoading(true);
       fetch("https://one-bit-pay-server.vercel.app/sendMoney", {
         method: "PUT",
@@ -135,7 +135,7 @@ const SendMoney = () => {
             <h1 className="font-bold text-xl text-[#5966FF] opacity-50 mb-4">
               History
             </h1>
-            <SendMoneyHistory email={user.email} loading={loading} />
+            <SendMoneyHistory email={user?.email} loading={loading} />
           </div>
         </div>
       </div>
