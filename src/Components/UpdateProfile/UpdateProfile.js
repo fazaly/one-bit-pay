@@ -1,9 +1,62 @@
 import React from "react";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { AuthContext } from "../../context/AuthProvider";
 import './UpdateProfile.css';
 
 const UpdateProfile = () => {
+  const { user, userDetails } = useContext(AuthContext);
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const imageHostKey = process.env.REACT_APP_imgHostKey
+
+  const handleUpdate = (data) => {
+    const image = data.image[0]
+    const formData = new FormData();
+
+    formData.append('image', image);
+    const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+    fetch(url, {
+      method: 'POST',
+      body: formData
+    })
+      .then(res => res.json())
+      .then(imgdata => {
+        if (imgdata.success) {
+          // console.log(imgdata.data.url)
+          const userData = {
+            name: data.name,
+            address: data.address,
+            imageUrl: imgdata.data.url,
+            nidNumber: data.nidNumber,
+            phnNumber: data.phoneNumber,
+            birthDate: data.birthDay
+          }
+          handleUpdateUser(userData)
+        }
+      })
+  }
+
+  const handleUpdateUser = userData => {
+    fetch(`http://localhost:5000/userUpdate/${user.email}`, {
+      method: "PUT",
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.acknowledged) {
+          toast.success("User Info updated successfully")
+          reset()
+        }
+      })
+  }
   return (
-    <div className="w-full flex bg-white rounded-lg shadow-xl lg:mt-5 mt-16 mb-5">
+    <form
+      onSubmit={handleSubmit(handleUpdate)}
+      className="w-full flex bg-white rounded-lg shadow-xl lg:mt-5 mt-16 mb-5">
       <div className="lg:w-32 w-10 min-h-full bg-[#5966FF]">
         <h1 className="text-[#5966FF]"></h1>
       </div>
@@ -17,23 +70,30 @@ const UpdateProfile = () => {
           <div className="lg:w-96 w-72">
             <div className="form-control w-full ">
               <label className="label">
-                <span className="label-text"> Your first name</span>
+                <span className="label-text"> Your name</span>
               </label>
               <input
+                defaultValue={userDetails.name}
                 type="text"
                 placeholder="Type here"
+                name="name"
                 className="input  w-full "
+                {...register('name', { required: 'Name is required' })}
               />
+              {errors.name && <p className="text-xs text-red-600 ml-6 mt-1">{errors.name?.message}</p>}
               <div className="divider mt-0 mb-0"></div>
             </div>
             <div className="form-control w-full ">
               <label className="label">
-                <span className="label-text"> Your last name</span>
+                <span className="label-text"> Your email</span>
               </label>
               <input
-                type="text"
+                defaultValue={userDetails.userEmail}
+                disabled
+                type="email"
                 placeholder="Type here"
                 className="input  w-full "
+                {...register('email')}
               />
               <div className="divider mt-0 mb-0"></div>
             </div>
@@ -42,21 +102,27 @@ const UpdateProfile = () => {
                 <span className="label-text"> Your nid number</span>
               </label>
               <input
-                type="text"
+                type="number"
                 placeholder="Type here"
                 className="input  w-full "
+                name="nidNumber"
+                {...register('nidNumber', { required: 'nidNumber is required' })}
               />
+              {errors.nidNumber && <p className="text-xs text-red-600 ml-6 mt-1">{errors.nidNumber?.message}</p>}
               <div className="divider mt-0 mb-0"></div>
             </div>
             <div className="form-control w-full ">
               <label className="label">
-                <span className="label-text"> your date of birth</span>
+                <span className="label-text"> Your date of birth</span>
               </label>
               <input
-                type="text"
+                type="date"
                 placeholder="Type here"
                 className="input  w-full"
+                name="birthDay"
+                {...register('birthDay', { required: 'birthDay is required' })}
               />
+              {errors.birthDay && <p className="text-xs text-red-600 ml-6 mt-1">{errors.birthDay?.message}</p>}
               <div className="divider mt-0 mb-0"></div>
             </div>
           </div>
@@ -70,7 +136,10 @@ const UpdateProfile = () => {
                 type="text"
                 placeholder="Type here"
                 className="input  w-full "
+                name="address"
+                {...register('address', { required: 'address is required' })}
               />
+              {errors.address && <p className="text-xs text-red-600 ml-6 mt-1">{errors.address?.message}</p>}
               <div className="divider mt-0 mb-0"></div>
             </div>
             <div className="form-control w-full ">
@@ -78,10 +147,13 @@ const UpdateProfile = () => {
                 <span className="label-text"> Your phone number</span>
               </label>
               <input
-                type="text"
+                type="number"
                 placeholder="Type here"
                 className="input  w-full "
+                name="phoneNumber"
+                {...register('phoneNumber', { required: 'phone Number is required' })}
               />
+              {errors.phoneNumber && <p className="text-xs text-red-600 ml-6 mt-1">{errors.phoneNumber?.message}</p>}
               <div className="divider mt-0 mb-0"></div>
             </div>
             <div className="form-control w-full ">
@@ -116,7 +188,9 @@ const UpdateProfile = () => {
                           name="image"
                           type="file"
                           className="sr-only"
+                          {...register('image', { required: 'image is required' })}
                         />
+                        {errors.image && <p className="text-xs text-red-600 ml-6 mt-1">{errors.image?.message}</p>}
                       </label>
                       <p className="pl-1 text-gray-700">or drag and drop</p>
                     </div>
@@ -130,15 +204,13 @@ const UpdateProfile = () => {
           </div>
         </div>
         <div className="flex justify-between items-center mt-5">
-          <button className="btn bg-transparent hover:bg-transparent hover:text-[#939cff] text-[#5966FF] border-none btn-xs">
-            Reset All
-          </button>
-          <button className="btn bg-[#5966FF] rounded-full border-none">
-            confirm
-          </button>
+          <input type="reset" value="reset all" className="btn bg-transparent hover:bg-transparent hover:text-[#939cff] text-[#5966FF] border-none btn-xs" />
+
+          <input type="submit" value="submit" className="btn bg-[#5966FF] rounded-full border-none" />
+
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
