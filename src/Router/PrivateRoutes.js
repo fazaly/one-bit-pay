@@ -5,14 +5,14 @@ import Spinner from '../Components/Spinner/Spinner';
 import { AuthContext } from '../context/AuthProvider';
 
 const PrivateRoutes = ({children}) => {
-    const {user, loading} = useContext(AuthContext);
+    const {user,  userDetails, loading} = useContext(AuthContext);
     const location = useLocation();
 
     if(loading){
         return <Spinner/>;
     }
 
-    if(user && user?.email){
+    if(user){
         return children ;
     }
 
