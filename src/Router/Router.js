@@ -17,6 +17,7 @@ import EditProfile from "../Dashbord/EditProfile/EditProfile";
 import PrivateRoutes from "./PrivateRoutes";
 import DonationDetails from "../Dashbord/Donation/DonationDetails"
 import Donation from "../Dashbord/Donation/Donation"
+import IndividualBlog from "../Pages/Blog/IndividualBlog";
 
 export const router = createBrowserRouter([
     {
@@ -39,6 +40,11 @@ export const router = createBrowserRouter([
             {
                 path: '/signUp',
                 element: <Signup></Signup>
+            },
+            {
+                path: "/blogpost/:id",
+                element: <IndividualBlog></IndividualBlog>,
+                loader: ({ params }) => fetch(`https://one-bit-pay-server.vercel.app/blogs/${params.id}`)
             }
         ]
     },
