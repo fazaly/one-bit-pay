@@ -15,6 +15,8 @@ import BecomeAgent from "../Dashbord/BecomeAgent/BecomeAgent";
 import MobileRecharge from "../Dashbord/MobileRecharge/MobileRecharge";
 import EditProfile from "../Dashbord/EditProfile/EditProfile";
 import PrivateRoutes from "./PrivateRoutes";
+import DonationDetails from "../Dashbord/Donation/DonationDetails"
+import Donation from "../Dashbord/Donation/Donation"
 
 export const router = createBrowserRouter([
     {
@@ -81,6 +83,15 @@ export const router = createBrowserRouter([
                 path: "/dashboard/billPay",
                 element: <BillPay></BillPay>
             },
+            {
+                path: "/dashboard/donation",
+                element: <Donation></Donation>
+            },
+            {
+                path: `/dashboard/donationDetails/:id`,
+                element: <DonationDetails></DonationDetails>,
+                loader: ({ params }) => fetch(`http://localhost:5000/donations/${params.id}`)
+            }
 
         ]
     }
