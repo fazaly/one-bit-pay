@@ -7,7 +7,7 @@ import DonationModal from './DonationModal';
 const Donation = () => {
     const [institutes, setInstitutes] = useState([])
     useEffect(() => {
-        fetch(`http://localhost:5000/donations`)
+        fetch(`https://one-bit-pay-server.vercel.app/donations`)
             .then(res => res.json())
             .then(data => {
                 setInstitutes(data)
@@ -26,7 +26,7 @@ const Donation = () => {
                     institutes?.map(institute => <DonationCard key={institute._id} institute={institute}></DonationCard>)
                 }
             </div>
-            <DonationModal></DonationModal>
+            {/* <DonationModal></DonationModal> */}
         </div>
     );
 };

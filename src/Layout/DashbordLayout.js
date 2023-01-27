@@ -27,7 +27,7 @@ const DashbordLayout = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/user/${user?.email}`)
+    fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status) {
@@ -63,11 +63,11 @@ const DashbordLayout = () => {
             {/* <!-- Sidebar content here --> */}
             <div className="flex justify-center items-center border-2 rounded-md p-2">
               <div className="mr-2">
-                {user?.userPhoto ? (
+                {userDetails?.userPhoto ? (
                   <>
                     <NavLink to="/dashboard/editProfile">
                       <img
-                        src={user?.userPhoto}
+                        src={userDetails?.userPhoto}
                         alt=""
                         className="w-20 rounded-full"
                       />
