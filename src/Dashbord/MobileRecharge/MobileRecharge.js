@@ -1,11 +1,13 @@
-import { async } from "@firebase/util";
 import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import Loader from "../../Components/Loader/Loader";
 import Spinner from "../../Components/Spinner/Spinner";
 import { AuthContext } from "../../context/AuthProvider";
+import RechargeHistory from "./RechargeHistory";
+
 
 const cCodes = [
   { country: "Afghanistan", code: "93", iso: "AF" },
@@ -256,13 +258,15 @@ const MobileRecharge = () => {
 
 
   const { data: recharges = [], refetch } = useQuery({
-    queryKey: ['recharge'],
+    queryKey: ["recharge"],
     queryFn: async () => {
-      const res = await fetch(`https://one-bit-pay-server.vercel.app/recharge/${user?.email}`);
+      const res = await fetch(
+        `http://localhost:5000/recharge/${user?.email}`
+      );
       const data = await res.json();
       return data;
-    }
-  })
+    },
+  });
 
 
   const handleRecharge = (event) => {
@@ -271,46 +275,49 @@ const MobileRecharge = () => {
     const phoneNumber = form.phone_number.value;
     const countryCode = form.select.value;
     const balance = form.amount.value;
-    const time = new Date().toISOString();
+    const time = format(new Date(), "PP");
 
     const rechargeInfo = {
       userEmail: user.email,
       phone: countryCode + phoneNumber,
       balance,
       time,
-    }
+    };
     console.log(rechargeInfo);
 
     if (balance < 5) {
-      toast.error('Minimum Recharge $5');
+      toast.error("Minimum Recharge $5");
     } else if (balance > userDetails?.balance) {
-      toast.error('insufficient balance');
+      toast.error("insufficient balance");
     } else if (balance > 50) {
-      toast.error('Maximum Recharge $50');
+      toast.error("Maximum Recharge $50");
     } else if (balance >= 5 && balance <= 50) {
       setLoading(true);
 
-      fetch("https://one-bit-pay-server.vercel.app/mobile/recharge", {
+      fetch("http://localhost:5000/mobile/recharge", {
         method: "POST",
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify(rechargeInfo)
+        body: JSON.stringify(rechargeInfo),
       })
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          toast.success('Recharge Success ✔');
+          toast.success("Recharge Success ✔");
           form.reset();
           setLoading(false);
+          refetch();
         });
     }
   };
 
+  refetch();
+
   return (
     <div>
       <div className="flex flex-col lg:flex-row gap-4">
-        <div className="">
+        <div className="CARD-1">
           <div className="card lg:w-80 w-96 h-48 bg-white text-primary-content mx-auto shadow-lg">
             <div className="card-body">
               <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
@@ -324,7 +331,7 @@ const MobileRecharge = () => {
         </div>
         <div>
           <div className="card lg:w-80 w-96 bg-white text-primary-content mx-auto shadow-xl">
-            <div className="">
+            <div className="CARD-2">
               <form
                 onSubmit={handleRecharge}
                 className="card-body rounded-xl bg-white"
@@ -383,6 +390,21 @@ const MobileRecharge = () => {
             </div>
           </div>
         </div>
+        <div className="CARD-3">
+          <div className="card lg:w-80 w-96 h-48 bg-white text-primary-content mx-auto shadow-lg">
+            <div className="card-body">
+              <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
+                Total Overview
+              </h1>
+              <h1 className="font-bold text-3xl text-gray-900">
+                ${userDetails?.balance}.00
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="mt-6">
+        <RechargeHistory recharges={recharges} refetch={refetch}/>
       </div>
     </div>
   );

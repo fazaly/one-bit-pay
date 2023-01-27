@@ -43,7 +43,7 @@ const Signup = () => {
         };
 
         //Here save a user to database after register
-        fetch("https://one-bit-pay-server.vercel.app/addUser", {
+        fetch("http://localhost:5000/addUser", {
           method: "POST",
           headers: {
             "content-type": "application/json",
