@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import DonationModal from './DonationModal';
 
 const DonationCard = ({ institute }) => {
     const { Name, img, details, _id } = institute
@@ -18,6 +19,7 @@ const DonationCard = ({ institute }) => {
 
                 </div>
             </div>
+            <DonationModal key={institute._id} institute={institute}></DonationModal>
         </div>
     );
 };

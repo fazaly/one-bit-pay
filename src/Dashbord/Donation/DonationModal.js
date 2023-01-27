@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const DonationModal = () => {
+const DonationModal = ({ institute }) => {
     const [loading, setLoading] = useState(false);
 
 
@@ -10,8 +10,8 @@ const DonationModal = () => {
             <input type="checkbox" id="my-modal-3" className="modal-toggle" />
             <div className="modal">
                 <div className="modal-box relative">
-                    <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                    <h3 className="text-lg font-bold">Make Someone Happy</h3>
+                    <label htmlFor="my-modal-3" className="btn bg-[#5966FF] hover:bg-red-600 btn-sm btn-circle absolute right-2 top-2">✕</label>
+                    <h3 className="text-lg font-bold">{institute.Name}</h3>
 
                     <form className="space-y-2 my-10">
 
@@ -25,9 +25,9 @@ const DonationModal = () => {
                         <p className="">
                             <button
                                 type="submit"
-                                className="btn  btn-info btn-xs rounded-sm border-none hover:bg-[#5966FF]"
+                                className="btn  bg-[#5966FF] btn-xs rounded-sm border-none hover:bg-green-300 rounded-lg"
                             >
-                                Donate
+                                Buy Happiness
                             </button>
                         </p>
                     </form>
