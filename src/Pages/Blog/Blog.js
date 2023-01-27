@@ -16,33 +16,26 @@ const Blog = () => {
     }, [])
     return (
         <div>
-            <section className="pt-10 lg:pt-[80px] pb-10 lg:pb-20">
-                <div className="container">
-                    <div className="flex flex-wrap justify-center -mx-4">
-                        <div className="w-full px-4">
+            <section className="max-w-[1440px] mx-auto mt-20">
+                <div>
+                    <div className="flex flex-wrap justify-center">
+                        <div className="w-full">
                             <div className="text-center mx-auto mb-[60px] lg:mb-20 max-w-[510px]">
-                                <span className="font-semibold text-lg text-primary mb-2 block">
+                                <span className="font-bold text-[45px] text-primary mb-2 block">
                                     Our Blogs
                                 </span>
                                 <h2
-                                    className="
-                  font-bold
-                  text-3xl
-                  sm:text-4xl
-                  md:text-[40px]
-                  text-dark
-                  mb-4
-                  "
+                                    className="font-bold text-3xl sm:text-4xl md:text-[40px] text-dark mb-4"
                                 >
                                     Our Recent News
                                 </h2>
-                                <p className="text-base text-body-color">
-                                    Finential sector have been focused on MFS recent time from them mobile banking is now most popular.
+                                <p className="text-base text-center text-body-color">
+                                    Financial sector have been focused on MFS recent time from them mobile banking is now most popular.
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-wrap -mx-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                         {
                             blogpost.map(blog => <BlogInfo
                                 key={blog._id}
