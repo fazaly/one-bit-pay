@@ -9,7 +9,7 @@ const SendMoneyHistory = ({ email }) => {
     // const [loading2, setLoading2] = useState(false)
 
     useEffect(() => {
-        fetch(`https://one-bit-pay-server.vercel.app/transactionSend/${email}`)
+        fetch(`http://localhost:5000/transactionSend/${email}`)
             .then(res => res.json())
             .then(data => {
                 if (data.status) {

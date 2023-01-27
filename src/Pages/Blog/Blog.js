@@ -7,7 +7,7 @@ const Blog = () => {
     const [blogpost, setBlogPost] = useState([])
 
     useEffect(() => {
-        fetch('https://one-bit-pay-server.vercel.app/blogs')
+        fetch('http://localhost:5000/blogs')
             .then(res => res.json())
             .then(data => {
                 console.log(data)
