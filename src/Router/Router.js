@@ -8,7 +8,6 @@ import Login from "../Pages/Login/Login";
 import Signup from "../Pages/Signup/Signup";
 import SendMoney from "../Dashbord/SendMoney/SendMoney"
 import Withdraw from "../Dashbord/Withdraw/Withdraw";
-import ApplyForAgent from "../Pages/ApplyForAgent/ApplyForAgent"
 import Loan from "../Dashbord/Loan/Loan";
 import BillPay from "../Dashbord/BillPay/BillPay";
 import BecomeAgent from "../Dashbord/BecomeAgent/BecomeAgent";
@@ -18,6 +17,7 @@ import PrivateRoutes from "./PrivateRoutes";
 import DonationDetails from "../Dashbord/Donation/DonationDetails"
 import Donation from "../Dashbord/Donation/Donation"
 import IndividualBlog from "../Pages/Blog/IndividualBlog";
+import Blog from "../Pages/Blog/Blog";
 
 export const router = createBrowserRouter([
     {
@@ -40,6 +40,10 @@ export const router = createBrowserRouter([
             {
                 path: '/signUp',
                 element: <Signup></Signup>
+            },
+            {
+                path: '/blog',
+                element: <Blog></Blog>
             },
             {
                 path: "/blogpost/:id",

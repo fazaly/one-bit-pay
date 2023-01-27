@@ -5,13 +5,13 @@ const BlogInfo = ({ blog }) => {
     const { image, date, title, description, _id } = blog
     return (
 
-        <div className="w-full md:w-1/2 lg:w-1/3 px-4">
-            <div className="max-w-[370px] mx-auto mb-10 shadow-zinc-500 shadow-lg hover:shadow-slate-600 hover:shadow-2xl p-6 rounded-lg">
+        <div className="">
+            <div className="max-w-[400px] mx-auto mb-10 shadow-zinc-500 shadow-lg hover:shadow-slate-600 hover:shadow-2xl p-6 rounded-lg">
                 <div className="rounded overflow-hidden mb-8">
                     <img
                         src={image}
                         alt=""
-                        className="w-[320px] h-[200px]"
+                        className="w-[350px] h-[200px]"
                     />
                 </div>
                 <div>
