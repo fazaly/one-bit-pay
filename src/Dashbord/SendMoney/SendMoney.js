@@ -136,7 +136,7 @@ const SendMoney = () => {
             <h1 className="font-bold text-xl text-[#5966FF] opacity-50 mb-4">
               History
             </h1>
-            <SendMoneyHistory email={user?.email} loading={loading} />
+            <SendMoneyHistory email={user?.email} loading={loading} type={"balanceTransfer"} />
           </div>
         </div>
       </div>

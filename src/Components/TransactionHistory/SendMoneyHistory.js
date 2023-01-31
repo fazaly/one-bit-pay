@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { HiArrowSmDown, HiArrowSmUp } from "react-icons/hi";
 import { AuthContext } from '../../context/AuthProvider';
 
-const SendMoneyHistory = ({ email }) => {
+const SendMoneyHistory = ({ email, type }) => {
     const [transactions, setTransactions] = useState([]);
     const { user, userDetails } = useContext(AuthContext);
 
@@ -43,7 +43,16 @@ const SendMoneyHistory = ({ email }) => {
                                 <h1 className='text-2xl font-bold text-center mt-4 mb-4'>No Transactions</h1>
                             </> : <>
                                 {
-                                    transactions.slice(0, 10)?.map((transaction, i) => {
+                                    transactions.slice(0, 10)?.filter((data) => {
+                                        if (type) {
+                                            return data.type === type
+                                        }
+                                        else {
+                                            return data
+                                        }
+
+                                    }
+                                    ).map((transaction, i) => {
                                         return <tr key={i}>
                                             {
                                                 transaction.senderEmail === user.email && <th><p><HiArrowSmUp className='bg-red-500 text-white rounded-full text-xl' /></p></th>

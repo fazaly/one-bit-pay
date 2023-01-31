@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import SendMoneyHistory from '../../Components/TransactionHistory/SendMoneyHistory';
+import { AuthContext } from '../../context/AuthProvider';
 import DonationCard from './DonationCard';
 import DonationModal from './DonationModal';
 
 const Donation = () => {
+    const { user, userDetails } = useContext(AuthContext);
+    const [loading, setLoading] = useState(false);
     const [institutes, setInstitutes] = useState([])
     useEffect(() => {
         fetch(`https://one-bit-pay-server.vercel.app/donations`)
@@ -25,6 +29,10 @@ const Donation = () => {
                 {
                     institutes?.map(institute => <DonationCard key={institute._id} institute={institute}></DonationCard>)
                 }
+            </div>
+            <div className='mt-8 '>
+                <h2 className='my-4 text-2xl text-center font-semibold'>All Donation History</h2>
+                <SendMoneyHistory email={user?.email} loading={loading} type={"donation"}></SendMoneyHistory>
             </div>
             {/* <DonationModal></DonationModal> */}
         </div>
