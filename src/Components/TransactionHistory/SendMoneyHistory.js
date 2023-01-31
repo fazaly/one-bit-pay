@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { HiArrowSmDown, HiArrowSmUp } from "react-icons/hi";
 import { AuthContext } from '../../context/AuthProvider';
+import ReactTimeAgo from 'react-time-ago';
 
 const SendMoneyHistory = ({ email, type }) => {
     const [transactions, setTransactions] = useState([]);
-    const { user, userDetails } = useContext(AuthContext);
-
-    // const [loading2, setLoading2] = useState(false)
+    console.log(transactions)
+    const { user} = useContext(AuthContext);
 
     useEffect(() => {
-        fetch(`https://one-bit-pay-server.vercel.app/transactionSend/${email}`)
+        fetch(`http://localhost:5000/transactionSend/${email}`)
             .then(res => res.json())
             .then(data => {
                 if (data.status) {
@@ -18,7 +18,7 @@ const SendMoneyHistory = ({ email, type }) => {
                 }
             })
 
-    }, [transactions, user])
+    }, [user,email, transactions])
     // console.log(transactions);
 
     return (
@@ -31,7 +31,7 @@ const SendMoneyHistory = ({ email, type }) => {
                         <tr>
                             <th></th>
                             <th>EMAIL</th>
-                            <th>EMAIL</th>
+                            <th>Status</th>
                             <th>AMOUNT</th>
                             <th>TRANSACTION ID</th>
                             <th>DATE & TIME</th>
@@ -74,7 +74,10 @@ const SendMoneyHistory = ({ email, type }) => {
                                             </td>
                                             <td>{transaction?.amount}</td>
                                             <td >{transaction?.transactionId}</td>
-                                            <td >{transaction?.time}</td>
+                                            <td >
+                                                <ReactTimeAgo date={transaction?.time} 
+                                                locale="en" timeStyle="round-minute"/>
+                                            </td>
                                         </tr>
                                     })
                                 }
