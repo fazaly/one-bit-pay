@@ -23,6 +23,7 @@ import {
 
 const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
+  const [notifi, setNotifi] = useState(false)
   const [userDetails, setUserDetails] = useState([]);
   const { user } = useContext(AuthContext);
 
@@ -32,17 +33,19 @@ const DashbordLayout = () => {
       .then((data) => {
         if (data.status) {
           setUserDetails(data.data);
+          if (data.data.notification) {
+            setNotifi(data.data.notification)
+          }
         }
       });
-  }, [user, userDetails]);
-
+  }, []);
   return (
     <div>
       <div className="drawer drawer-mobile">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content lg:p-4 p-2">
           <div>
-            <DashBoardNavbar></DashBoardNavbar>
+            <DashBoardNavbar notifi={notifi} setNotifi={setNotifi} userDetails={userDetails}></DashBoardNavbar>
           </div>
           <Outlet />
         </div>
