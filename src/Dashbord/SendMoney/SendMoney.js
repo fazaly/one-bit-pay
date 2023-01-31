@@ -35,6 +35,7 @@ const SendMoney = () => {
       receiverEmail,
       amount: parseInt(amount),
       time,
+      type: "balanceTransfer"
     };
 
     console.log(sendMoneyInfo);
