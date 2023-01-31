@@ -32,8 +32,6 @@ const SendMoney = () => {
       type: "balanceTransfer"
     };
 
-    console.log(sendMoneyInfo);
-
     if (receiverEmail === user.email) {
       toast.error("Send money not possible own account");
 
