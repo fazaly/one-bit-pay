@@ -1,7 +1,54 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthProvider';
+import { format } from "date-fns";
+import { toast } from "react-hot-toast";
 
-const DonationModal = ({ institute }) => {
-    const [loading, setLoading] = useState(false);
+const DonationModal = ({ institute, modal, setModal }) => {
+    // const [loading, setLoading] = useState(false);
+    const { user, loading, setLoading } = useContext(AuthContext)
+
+
+
+    const handleDonate = (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const amount = form.amount.value;
+        const senderEmail = user?.email;
+        const receiverEmail = institute?.email;
+        const time = format(new Date(), "PP");
+        const sendMoneyInfo = {
+            senderEmail,
+            receiverEmail,
+            amount: parseInt(amount),
+            time,
+            type: "donation"
+        };
+        // console.log(institute)
+        // console.log(sendMoneyInfo);
+
+        fetch("https://one-bit-pay-server.vercel.app/sendMoney", {
+            method: "PUT",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(sendMoneyInfo),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                toast.success("Thank You So Much For Donation");
+                form.reset();
+                // setLoading(false);
+                setModal(!modal)
+            });
+
+
+
+
+
+    }
+
 
 
     return (
@@ -13,7 +60,7 @@ const DonationModal = ({ institute }) => {
                     <label htmlFor="my-modal-3" className="btn bg-[#5966FF] hover:bg-red-600 btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 className="text-lg font-bold">{institute.Name}</h3>
 
-                    <form className="space-y-2 my-10">
+                    <form onSubmit={handleDonate} className="space-y-2 my-10">
 
                         <input
                             type="text"
