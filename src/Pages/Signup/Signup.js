@@ -38,8 +38,7 @@ const Signup = () => {
           confirmPass: confirm,
           balance: 10000,
           accountType: "user",
-          isAgent: false,
-          isAdmin: false,
+          role: "user"
         };
 
         //Here save a user to database after register

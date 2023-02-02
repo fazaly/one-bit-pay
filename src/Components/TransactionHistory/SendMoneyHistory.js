@@ -5,7 +5,6 @@ import ReactTimeAgo from 'react-time-ago';
 
 const SendMoneyHistory = ({ email, type }) => {
     const [transactions, setTransactions] = useState([]);
-    console.log(transactions)
     const { user} = useContext(AuthContext);
 
     useEffect(() => {
