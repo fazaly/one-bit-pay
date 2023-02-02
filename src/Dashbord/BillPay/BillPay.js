@@ -161,7 +161,7 @@ const BillPay = () => {
         {
             "id": 12,
             "email": "triangle@gmail.com",
-            "image": '',
+            "image": 'https://i.ibb.co/6HffBXq/triangle.jpg',
             "name": "Triangle",
             "code": "1028"
         },
