@@ -21,7 +21,7 @@ const DashBoardNavbar = ({ userDetails, notifi, setNotifi }) => {
                 }
             })
 
-    }, [notifi])
+    }, [notifi, user])
 
 
     const handleNotification = () => {

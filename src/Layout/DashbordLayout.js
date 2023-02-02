@@ -38,7 +38,8 @@ const DashbordLayout = () => {
           }
         }
       });
-  }, []);
+  }, [user]);
+
   return (
     <div>
       <div className="drawer drawer-mobile">
