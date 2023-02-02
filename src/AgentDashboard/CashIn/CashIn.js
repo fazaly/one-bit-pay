@@ -6,7 +6,7 @@ import { useState } from "react";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 
 const CashIn = () => {
-  const { user, userDetails, refetch} = useContext(AuthContext);
+  const { user, userDetails, refetch,} = useContext(AuthContext);
   const [loading, setloading] = useState(false);
   const [areUser, setAreUser] = useState("");
 
