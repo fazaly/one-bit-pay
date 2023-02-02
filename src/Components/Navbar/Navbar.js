@@ -11,11 +11,8 @@ const Navbar = () => {
     const handleLogOut = () => {
         logOut()
             .then(result => {
-                // const user = result.user;
-                // console.log(user);
             })
             .catch(error => console.error(error));
-        
     }
 
     const menuItems = <>
