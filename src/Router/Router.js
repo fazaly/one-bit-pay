@@ -18,6 +18,8 @@ import DonationDetails from "../Dashbord/Donation/DonationDetails"
 import Donation from "../Dashbord/Donation/Donation"
 import IndividualBlog from "../Pages/Blog/IndividualBlog";
 import Blog from "../Pages/Blog/Blog";
+import MyBills from "../Dashbord/BillPay/MyBills/MyBills";
+import AllReceipts from "../Dashbord/BillPay/AllReceipts/AllReceipts";
 
 export const router = createBrowserRouter([
     {
@@ -92,6 +94,14 @@ export const router = createBrowserRouter([
             {
                 path: "/dashboard/billPay",
                 element: <BillPay></BillPay>
+            },
+            {
+                path: "/dashboard/billPay/myBills",
+                element: <MyBills></MyBills>
+            },
+            {
+                path: "/dashboard/billPay/allReceipts",
+                element: <AllReceipts></AllReceipts>
             },
             {
                 path: "/dashboard/donation",
