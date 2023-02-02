@@ -23,7 +23,6 @@ const UpdateProfile = () => {
       .then(res => res.json())
       .then(imgdata => {
         if (imgdata.success) {
-          // console.log(imgdata.data.url)
           const userData = {
             name: data.name,
             address: data.address,
