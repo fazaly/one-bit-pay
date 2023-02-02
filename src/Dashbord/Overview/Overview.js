@@ -22,7 +22,7 @@ const Overview = () => {
                     Main Balance
                   </h1>
                   <h1 className="font-bold text-3xl text-white">
-                    ${userDetails?.balance}.00
+                    ${userDetails.balance}.00
                   </h1>
                 </div>
               </div>
