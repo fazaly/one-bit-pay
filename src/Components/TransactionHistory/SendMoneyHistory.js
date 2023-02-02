@@ -74,7 +74,7 @@ const SendMoneyHistory = ({ email, type }) => {
                                             <td>{transaction?.amount}</td>
                                             <td >{transaction?.transactionId}</td>
                                             <td >
-                                                <ReactTimeAgo date={transaction?.time} 
+                                                <ReactTimeAgo date={Date.parse(transaction.time)} 
                                                 locale="en" timeStyle="round-minute"/>
                                             </td>
                                         </tr>

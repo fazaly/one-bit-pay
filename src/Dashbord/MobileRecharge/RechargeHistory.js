@@ -29,7 +29,7 @@ const RechargeHistory = ({recharges}) => {
                     <td>{recharge.balance}</td>
                     <td>{recharge.trxID}</td>
                     <td>
-                    <ReactTimeAgo date={recharge?.date} 
+                    <ReactTimeAgo date={Date.parse(recharge?.date)} 
                     locale="en" timeStyle="round-minute"/>
                     </td>
                   </tr>
