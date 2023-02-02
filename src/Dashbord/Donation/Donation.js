@@ -11,7 +11,7 @@ const Donation = () => {
     const [loading, setLoading] = useState(false);
     const [institutes, setInstitutes] = useState([])
     useEffect(() => {
-        fetch(`https://one-bit-pay-server.vercel.app/donations`)
+        fetch(`http://localhost:5000/donations`)
             .then(res => res.json())
             .then(data => {
                 setInstitutes(data)

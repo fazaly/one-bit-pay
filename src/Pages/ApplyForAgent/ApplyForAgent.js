@@ -55,7 +55,7 @@ const ApplyForAgent = () => {
         }
 
         //Insert user data in databas
-        fetch(`https://one-bit-pay-server.vercel.app/agents/request`, {
+        fetch(`http://localhost:5000/agents/request`, {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -67,6 +67,7 @@ const ApplyForAgent = () => {
             console.log(data);
             setLoading(false);
             toast.success('Request Inserted');
+            reset();
           })
           .catch(err => {
             setLoading(false);
