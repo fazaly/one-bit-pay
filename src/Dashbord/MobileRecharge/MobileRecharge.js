@@ -1,12 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { format } from "date-fns";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
-import Loader from "../../Components/Loader/Loader";
-import Spinner from "../../Components/Spinner/Spinner";
 import { AuthContext } from "../../context/AuthProvider";
 import RechargeHistory from "./RechargeHistory";
+import dateTime from 'date-time';
 
 
 const cCodes = [
@@ -258,10 +256,10 @@ const MobileRecharge = () => {
 
 
   const { data: recharges = [], refetch } = useQuery({
-    queryKey: ["recharge"],
+    queryKey: ["recharges"],
     queryFn: async () => {
       const res = await fetch(
-        `https://one-bit-pay-server.vercel.app/recharge/${user?.email}`
+        `http://localhost:5000/recharge/${user?.email}`
       );
       const data = await res.json();
       return data;
@@ -275,7 +273,7 @@ const MobileRecharge = () => {
     const phoneNumber = form.phone_number.value;
     const countryCode = form.select.value;
     const balance = form.amount.value;
-    const time = format(new Date(), "PP");
+    const time = dateTime({showTimeZone: true});
 
     const rechargeInfo = {
       userEmail: user.email,
@@ -294,7 +292,7 @@ const MobileRecharge = () => {
     } else if (balance >= 5 && balance <= 50) {
       setLoading(true);
 
-      fetch("https://one-bit-pay-server.vercel.app/mobile/recharge", {
+      fetch("http://localhost:5000/mobile/recharge", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -311,8 +309,6 @@ const MobileRecharge = () => {
         });
     }
   };
-
-  refetch();
 
   return (
     <div>
@@ -404,7 +400,7 @@ const MobileRecharge = () => {
         </div>
       </div>
       <div className="mt-6">
-        <RechargeHistory recharges={recharges} refetch={refetch} />
+        <RechargeHistory recharges={recharges} />
       </div>
     </div>
   );

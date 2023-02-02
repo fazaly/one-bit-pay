@@ -40,11 +40,6 @@ const Chart2 = () => {
           A: 85,
           fullMark: 1500
         },
-        {
-          subject: "History",
-          A: 65,
-          fullMark: 1500
-        }
       ];
     
   return (
@@ -52,8 +47,8 @@ const Chart2 = () => {
       cx={150}
       cy={150}
       outerRadius={80}
-      width={500}
-      height={500}
+      width={300}
+      height={300}
       data={data}
     >
       <PolarGrid />

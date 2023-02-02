@@ -30,6 +30,7 @@ const Login = () => {
     signIn(email, password)
       .then((result) => {
         const user = result.user;
+        localStorage.setItem("user", JSON.stringify(user));
         setUser(user);
         console.log(user);
         setLoading(false);
