@@ -1,24 +1,110 @@
-import React from 'react';
-import Spinner from '../../Components/Spinner/Spinner';
+import { format } from 'date-fns';
+import React, { useState } from 'react';
+import { useContext } from 'react';
+import { toast } from 'react-hot-toast';
+import Typewriter from 'typewriter-effect';
+import ButtonSpinner from '../../Components/ButtonSpinner/ButtonSpinner';
+import { AuthContext } from '../../context/AuthProvider';
+import WithdrawHistory from './WithdrawHistory';
 
 const Withdraw = () => {
-    return (
-        <div className="flex flex-col justify-center items-center w-full h-full">
-        <h2 className="text-center text-3xl font-bold uppercase">
-         Money Withdraw Comming
-        </h2>
-        <div className="flex items-center gap-2">
-          <span className="text-center lg:text-9xl text-7xl font-normal uppercase text-[#5966FF]">
-            s
-          </span>
-          <Spinner />
-          <Spinner />
-          <span className="text-center lg:text-9xl text-7xl font-normal uppercase text-[#5966FF]">
-            n
-          </span>
+  const { user, userDetails } = useContext(AuthContext)
+  const [loading, setLoading] = useState(false);
+  const handleWithdraw = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const receiverEmail = form.receiverEmail.value;
+    const amount = form.amount.value;
+    const senderEmail = user?.email;
+    const time = format(new Date(), "PP");
+    const WithdrawInfo = {
+      senderEmail,
+      receiverEmail,
+      amount: parseInt(amount),
+      time,
+      type: "Withdraw"
+    };
+    console.log(WithdrawInfo);
+    toast.success('Successfully You have Withdraw')
+  }
+  return (
+    <div className='pt-10'>
+      <div className="flex gap-4 lg:flex-row flex-col">
+        <div className="card lg:w-80 w-96 h-60 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-500">
+          <div className="flex items-center justify-center h-screen flex-col">
+            <h1 className="font-bold text-xl text-[#5966FF] opacity-75">
+              Current Balance
+            </h1>
+            <h1 className="font-bold text-3xl text-slate-700">
+              <Typewriter
+                options={{
+                  strings: [`$${userDetails?.balance}`],
+                  autoStart: true,
+                  loop: true,
+                }}
+              />
+            </h1>
+          </div>
+        </div>
+
+        <div className="card lg:w-80 w-96 h-60 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-500">
+          <div className="flex items-center justify-center h-screen flex-col px-6">
+            <h1 className="font-bold text-xl text-[#5966FF] opacity-75">
+              Withdraw Amount
+            </h1>
+            <form onSubmit={handleWithdraw} className="space-y-4">
+              <input
+                type="text"
+                name="receiverEmail"
+                required
+                placeholder="receiverEmail"
+                className=" w-full border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
+              />
+              <input
+                type="text"
+                name="amount"
+                required
+                placeholder="Amount"
+                className=" w-full border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF]  focus:border-b-[#5966FF]"
+              />
+              <p className="">
+                <button
+                  type="submit"
+                  className="btn btn-primary w-full  rounded-lg border-none hover:bg-[#5966FF]"
+                >
+                  {loading ? <ButtonSpinner /> : "Withdraw Now"}
+                </button>
+              </p>
+            </form>
+          </div>
+        </div>
+
+        <div className="card lg:w-80 w-96 h-60 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-500">
+          <div className="flex items-center justify-center h-screen flex-col">
+            <h1 className="font-bold text-xl text-[#5966FF] opacity-75">
+              Today's Transaction
+            </h1>
+            <h1 className="font-bold text-xl text-slate-700">
+              You made <br />{" "}
+              <span className="text-3xl text-[#5966FF]">
+                $10000
+              </span>{" "}
+              <br /> transaction today
+            </h1>
+          </div>
         </div>
       </div>
-    );
+      <div className="mt-4">
+        <div className="card bg-white text-primary-content shadow-lg">
+          <div>
+            <h1 className="font-bold text-xl text-[#5966FF] opacity-100 p-6">
+              History
+            </h1>
+            <WithdrawHistory></WithdrawHistory>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
-
 export default Withdraw;
