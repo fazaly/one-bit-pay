@@ -238,7 +238,7 @@ const DashbordLayout = () => {
 
               {/* //Admin routes ------------------------------------------*/}
               {
-                isAdmin === true && <div>
+                userRole === "admin" && <div>
                   <NavLink to="" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
                       icon={faFileSignature}
