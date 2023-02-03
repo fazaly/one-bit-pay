@@ -23,18 +23,24 @@ import {
 import useAgent from "../Hooks/useAgent";
 import useUser from "../Hooks/useUser";
 import useAdmin from "../Hooks/useAdmin";
+import useRole from "../Hooks/useRole";
 
 const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
   const [notifi, setNotifi] = useState(false);
   // const [userDetails, setUserDetails] = useState([]);
   const { user, userDetails } = useContext(AuthContext);
-  const [isAgent] = useAgent(user?.email);
-  const [isUser] = useUser(user?.email);
-  const [isAdmin] = useAdmin(user?.userEmail);
+  const [userRole] = useRole(user?.email);
+  console.log('userRole', userRole)
+
+  useEffect(() => {
+    if (userDetails?.notification) {
+      setNotifi(true);
+    }
+  }, [])
 
   // useEffect(() => {
-  //   fetch(`http://localhost:5000/user/${user?.email}`)
+  //   fetch(` https://one-bit-pay-server.vercel.app/user/${user?.email}`)
   //     .then((res) => res.json())
   //     .then((data) => {
   //       if (data.status) {
@@ -105,7 +111,7 @@ const DashbordLayout = () => {
             </div>
             <div className="text-white p-4">
               {
-                isUser && <div>
+                userRole === 'user' && <div>
                   <NavLink
                     to="/dashboard/overview"
                     className="flex items-center mb-6 mt-4"
@@ -196,7 +202,7 @@ const DashbordLayout = () => {
 
               {/* agent routes------------------------------------------  */}
               {
-                isAgent && !isUser && <div>
+                userRole === 'agent' && <div>
                   <NavLink to="/dashboard/overview" className="flex items-center mb-6 mt-4">
                     <HiViewGridAdd className="text-[30px] mr-4" />
                     <p className="text-lg font-semibold">Dashbord</p>
@@ -232,8 +238,15 @@ const DashbordLayout = () => {
 
               {/* //Admin routes ------------------------------------------*/}
               {
-                isAdmin === true && <div>
-                  <NavLink to="" className="flex items-center mb-6 mt-4">
+                userRole === 'admin' && <div>
+                  <NavLink to="/dashboard/adminOverview" className="flex items-center mb-6 mt-4">
+                    <FontAwesomeIcon
+                      icon={faFileSignature}
+                      className="text-[25px] mr-4"
+                    />
+                    <p className="text-lg font-semibold">OverView</p>
+                  </NavLink>
+                  <NavLink to="/dashboard/agentRequest" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
                       icon={faFileSignature}
                       className="text-[25px] mr-4"
@@ -241,7 +254,7 @@ const DashbordLayout = () => {
                     <p className="text-lg font-semibold">Agents Requests</p>
                   </NavLink>
 
-                  <NavLink to="" className="flex items-center mb-6 mt-4">
+                  <NavLink to="/dashboard/agents" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
                       icon={faUsersGear}
                       className="text-[25px] mr-4"
@@ -249,7 +262,7 @@ const DashbordLayout = () => {
                     <p className="text-lg font-semibold">All Agents</p>
                   </NavLink>
 
-                  <NavLink to="" className="flex items-center mb-6 mt-4">
+                  <NavLink to="/dashboard/users" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
                       icon={faUsers}
                       className="text-[25px] mr-4"
