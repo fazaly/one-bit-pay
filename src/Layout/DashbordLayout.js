@@ -233,6 +233,13 @@ const DashbordLayout = () => {
               {/* //Admin routes ------------------------------------------*/}
               {
                 isAdmin === true && <div>
+                  <NavLink to="dashboard/admin" className="flex items-center mb-6 mt-4">
+                    <FontAwesomeIcon
+                      icon={faFileSignature}
+                      className="text-[25px] mr-4"
+                    />
+                    <p className="text-lg font-semibold">Overview</p>
+                  </NavLink>
                   <NavLink to="" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
                       icon={faFileSignature}
@@ -241,7 +248,7 @@ const DashbordLayout = () => {
                     <p className="text-lg font-semibold">Agents Requests</p>
                   </NavLink>
 
-                  <NavLink to="" className="flex items-center mb-6 mt-4">
+                  <NavLink to="/dashboard/agents" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
                       icon={faUsersGear}
                       className="text-[25px] mr-4"
@@ -249,7 +256,7 @@ const DashbordLayout = () => {
                     <p className="text-lg font-semibold">All Agents</p>
                   </NavLink>
 
-                  <NavLink to="" className="flex items-center mb-6 mt-4">
+                  <NavLink to="/dashboard/users" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
                       icon={faUsers}
                       className="text-[25px] mr-4"

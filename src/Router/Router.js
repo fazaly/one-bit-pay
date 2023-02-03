@@ -29,6 +29,7 @@ import AgentMobileRecharge from "../AgentDashboard/AgentMobileRecharge/AgentMobi
 import Admin from "../Pages/Admin/Admin";
 import AllUsers from "../Pages/Admin/AllUsers";
 import AdminRoutes from "./AdminRoutes";
+import AllAgents from "../Pages/Admin/AllAgents";
 
 
 export const router = createBrowserRouter([
@@ -185,6 +186,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/users",
         element: <AllUsers></AllUsers>
+      },
+      {
+        path: "/dashboard/agents",
+        element: <AllAgents></AllAgents>
       },
     ],
   },
