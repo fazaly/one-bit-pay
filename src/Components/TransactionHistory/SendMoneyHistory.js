@@ -5,10 +5,10 @@ import ReactTimeAgo from 'react-time-ago';
 
 const SendMoneyHistory = ({ email, type }) => {
     const [transactions, setTransactions] = useState([]);
-    const { user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/transactionSend/${email}`)
+        fetch(` https://one-bit-pay-server.vercel.app/transactionSend/${email}`)
             .then(res => res.json())
             .then(data => {
                 if (data.status) {
@@ -17,7 +17,7 @@ const SendMoneyHistory = ({ email, type }) => {
                 }
             })
 
-    }, [user,email, transactions])
+    }, [user, email, transactions])
     // console.log(transactions);
 
     return (
@@ -74,8 +74,8 @@ const SendMoneyHistory = ({ email, type }) => {
                                             <td>{transaction?.amount}</td>
                                             <td >{transaction?.transactionId}</td>
                                             <td >
-                                                <ReactTimeAgo date={Date.parse(transaction.time)} 
-                                                locale="en" timeStyle="round-minute"/>
+                                                <ReactTimeAgo date={Date.parse(transaction.time)}
+                                                    locale="en" timeStyle="round-minute" />
                                             </td>
                                         </tr>
                                     })

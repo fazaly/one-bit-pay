@@ -4,9 +4,10 @@ import './Navbar.css';
 import logo from '../.././images/logo.svg';
 import { AuthContext } from '../../context/AuthProvider';
 
+
 const Navbar = () => {
     const { user, logOut } = useContext(AuthContext);
-
+    // const [userRole] = useRole(user?.email);
     // // logOut
     const handleLogOut = () => {
         logOut()
@@ -19,7 +20,24 @@ const Navbar = () => {
         <li className='font-semibold mr-5'><Link to='/'>Home</Link></li>
         <li className='font-semibold mr-5'><Link to='/about'>About</Link></li>
         {
-            user && user.email && <li className='font-semibold mr-5'><Link to='/dashboard'>Dashboard</Link></li>
+            user && user.email && <li className='font-semibold mr-5'>
+                {/* {
+                    userRole === "admin" ?
+                        <>
+                            <Link to='/dashboard/adminOverview'>Dashboard</Link>
+                        </>
+                        :
+                        <>
+                            <Link to='/dashboard'>Dashboard</Link>
+                        </>
+                } */}
+                {/* {
+                    userRole === "user" && <Link to='/dashboard'>Dashboard</Link>
+                } */}
+
+                <Link to='/dashboard'>Dashboard</Link>
+
+            </li>
         }
         <li><Link to='/blog' className='font-semibold mr-5'>Blog</Link></li>
         {

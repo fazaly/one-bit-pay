@@ -27,7 +27,7 @@ const DonationModal = ({ institute, modal, setModal }) => {
         // console.log(institute)
         // console.log(sendMoneyInfo);
 
-        fetch("http://localhost:5000/sendMoney", {
+        fetch(" https://one-bit-pay-server.vercel.app/sendMoney", {
             method: "PUT",
             headers: {
                 "content-type": "application/json",
