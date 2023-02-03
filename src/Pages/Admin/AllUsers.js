@@ -6,24 +6,24 @@ const AllUsers = () => {
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users');
+            const res = await fetch('https://one-bit-pay-server.vercel.app/users');
             const data = await res.json();
             return data;
         }
     })
 
     const handleAdminRole = (id) => {
-        fetch(`http://localhost:5000/users/admin/${id}`, {
+        fetch(`https://one-bit-pay-server.vercel.app/users/admin/${id}`, {
             method: 'PATCH',
-            
+
         })
-        .then(res => res.json())
-        .then(data => {
-            if(data.modifiedCount > 0) {
-                toast.success('Admin role is given successfully');
-                refetch();
-            }
-        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount > 0) {
+                    toast.success('Admin role is given successfully');
+                    refetch();
+                }
+            })
     }
 
     return (
@@ -41,15 +41,15 @@ const AllUsers = () => {
                     {
                         users.map((user, i) =>
                             <tr key={user._id}>
-                                <td>{i+1}</td>
+                                <td>{i + 1}</td>
                                 <td>{user.name}</td>
                                 <td>{user.userEmail}</td>
                                 <td>
-                                    { user?.role !== 'admin' &&
+                                    {user?.role !== 'admin' &&
                                         <button onClick={() => handleAdminRole(user._id)} className="btn">Make Admin</button>
                                     }
                                 </td>
-                                
+
                             </tr>
                         )
                     }

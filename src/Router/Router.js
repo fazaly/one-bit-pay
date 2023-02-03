@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
         path: "/blogpost/:id",
         element: <IndividualBlog></IndividualBlog>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/blogs/${params.id}`),
+          fetch(` https://one-bit-pay-server.vercel.app/blogs/${params.id}`),
       },
     ],
   },
@@ -154,7 +154,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoutes>
             <AgentRoutes>
-              <AgentOverview/>
+              <AgentOverview />
             </AgentRoutes>
           </PrivateRoutes>
         )
@@ -164,7 +164,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoutes>
             <AgentRoutes>
-              <BillPayAgent/>
+              <BillPayAgent />
             </AgentRoutes>
           </PrivateRoutes>
         )
@@ -174,13 +174,13 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoutes>
             <AgentRoutes>
-              <AgentMobileRecharge/>
+              <AgentMobileRecharge />
             </AgentRoutes>
           </PrivateRoutes>
         )
       },
       {
-        path: "/dashboard/admin",
+        path: "/dashboard/adminOverview",
         element: <Admin></Admin>
       },
       {
@@ -190,7 +190,7 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/agents",
         element: <AllAgents></AllAgents>
-      },
+      }
     ],
   },
 ]);

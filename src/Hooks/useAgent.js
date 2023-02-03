@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AuthContext } from "../context/AuthProvider";
 
 const useAgent = () => {
-  const {user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [isAgent, setIsAgent] = useState(false);
   const [agentLoading, setAgentLoading] = useState(false);
   console.log(isAgent);
@@ -12,12 +12,12 @@ const useAgent = () => {
   useEffect(() => {
     if (user?.email) {
       setAgentLoading(true);
-      fetch(`http://localhost:5000/user/agent/${user?.email}`)
+      fetch(` https://one-bit-pay-server.vercel.app/user/agent/${user?.email}`)
         .then((res) => res.json())
         .then((data) => {
-            setIsAgent(data);
-            setAgentLoading(false);
-            console.log(data.isAgent);
+          setIsAgent(data);
+          setAgentLoading(false);
+          console.log(data.isAgent);
         });
     }
   }, [user?.email]);
