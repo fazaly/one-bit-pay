@@ -20,9 +20,9 @@ import {
   faMoneyBills,
   faDollar,
 } from "@fortawesome/free-solid-svg-icons";
-import useAgent from "../hooks/useAgent";
-import useUser from "../hooks/useUser";
-import useAdmin from "../hooks/useAdmin";
+import useAgent from "../Hooks/useAgent";
+import useUser from "../Hooks/useUser";
+import useAdmin from "../Hooks/useAdmin";
 
 const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
@@ -32,7 +32,8 @@ const DashbordLayout = () => {
   const [isAgent] = useAgent(user?.email);
   const [isUser] = useUser(user?.email);
   const [isAdmin] = useAdmin(user?.userEmail);
-
+  console.log("agent", useAgent)
+  console.log("admin", useAdmin)
   console.log(userDetails)
   useEffect(() => {
     if (userDetails?.notification) {
