@@ -1,70 +1,77 @@
-import React, { createContext, useEffect, useState } from 'react';
-import app from '../firebase/firebase.config';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import React, { createContext, useEffect, useState } from "react";
+import app from "../firebase/firebase.config";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
+import { useQuery } from "@tanstack/react-query";
 
 export const AuthContext = createContext();
 
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(false);
 
-    const [user, setUser] = useState({});
-    const [loading, setLoading] = useState(false);
-    const [userDetails, setUserDetails] = useState({});
+  const createUser = (email, password) => {
+    setLoading(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
 
+  const signIn = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
-    const createUser = (email, password) => {
-        setLoading(true);
-        return createUserWithEmailAndPassword(auth, email, password)
-    }
+  const logOut = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
 
-    const signIn = (email, password) => {
-        setLoading(true);
-        return signInWithEmailAndPassword(auth, email, password)
-    }
+  const passwordReset = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
 
-    const logOut = () => {
-        setLoading(true);
-        return signOut(auth);
-    }
+  const { data: userDetails = {}, refetch } = useQuery({
+    queryKey: ["userDetails"],
+    queryFn: async () => {
+      if (user) {
+        const res = await fetch(`http://localhost:5000/user/${user?.email}`);
+        const data = await res.json();
+        return data.data;
+      }
+    },
+  });
 
-    const passwordReset = (email) => {
-        return sendPasswordResetEmail(auth, email)
-    };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+      refetch();
+    });
+    return () => unsubscribe;
+  }, [user?.email, refetch]);
 
-    //Loading user data from database for using in multiple components
-    useEffect(() => {
-        fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`)
-            .then((res) => res.json())
-            .then((data) => {
-                setUserDetails(data.data);
-            });
-    }, [user]);
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, currentUser => {
-            setUser(currentUser);
-            setLoading(false);
-        });
-        return () => unsubscribe;
-    }, [user]);
-
-    const authInfo = {
-        user,
-        setUser,
-        loading,
-        setLoading,
-        userDetails,
-        createUser,
-        signIn,
-        logOut,
-        passwordReset
-    }
-    return (
-        <AuthContext.Provider value={authInfo}>
-            {children}
-        </AuthContext.Provider>
-    );
+  const authInfo = {
+    user,
+    setUser,
+    loading,
+    userDetails,
+    refetch,
+    setLoading,
+    createUser,
+    signIn,
+    logOut,
+    passwordReset,
+  };
+  return (
+    <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;
