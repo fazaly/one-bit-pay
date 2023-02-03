@@ -55,7 +55,7 @@ const ApplyForAgent = () => {
         }
 
         //Insert user data in databas
-        fetch(`https://one-bit-pay-server.vercel.app/agents/request`, {
+        fetch(` https://one-bit-pay-server.vercel.app/agents/request`, {
           method: "POST",
           headers: {
             "content-type": "application/json",

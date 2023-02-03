@@ -23,7 +23,6 @@ const UpdateProfile = () => {
       .then(res => res.json())
       .then(imgdata => {
         if (imgdata.success) {
-          // console.log(imgdata.data.url)
           const userData = {
             name: data.name,
             address: data.address,
@@ -37,8 +36,9 @@ const UpdateProfile = () => {
       })
   }
 
+
   const handleUpdateUser = userData => {
-    fetch(`https://one-bit-pay-server.vercel.app/userUpdate/${user.email}`, {
+    fetch(` https://one-bit-pay-server.vercel.app/userUpdate/${user.email}`, {
       method: "PUT",
       headers: {
         'content-type': 'application/json'

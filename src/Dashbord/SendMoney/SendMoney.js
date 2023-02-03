@@ -7,17 +7,17 @@ import dateTime from 'date-time';
 
 
 const SendMoney = () => {
-  const { user, refetch, userDetails} = useContext(AuthContext);
+  const { user, refetch, userDetails } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
-  
+
   const handleSendMoney = (event) => {
     event.preventDefault();
     const form = event.target;
     const receiverEmail = form.receiverEmail.value;
     const amount = form.amount.value;
     const senderEmail = user?.email;
-    const time = dateTime ({showTimeZone: true})
+    const time = dateTime({ showTimeZone: true })
     const sendMoneyInfo = {
       senderEmail,
       receiverEmail,
@@ -37,7 +37,7 @@ const SendMoney = () => {
 
     } else if (receiverEmail !== user?.email && userDetails?.balance > 10) {
       setLoading(true);
-      fetch("https://one-bit-pay-server.vercel.app/sendMoney", {
+      fetch(" https://one-bit-pay-server.vercel.app/sendMoney", {
         method: "PUT",
         headers: {
           "content-type": "application/json",

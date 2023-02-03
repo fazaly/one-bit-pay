@@ -251,7 +251,7 @@ const cCodes = [
 ];
 
 const MobileRecharge = () => {
-  const { user, userDetails} = useContext(AuthContext);
+  const { user, userDetails } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
 
@@ -259,7 +259,7 @@ const MobileRecharge = () => {
     queryKey: ["recharges"],
     queryFn: async () => {
       const res = await fetch(
-        `https://one-bit-pay-server.vercel.app/recharge/${user?.email}`
+        ` https://one-bit-pay-server.vercel.app/recharge/${user?.email}`
       );
       const data = await res.json();
       return data;
@@ -273,7 +273,7 @@ const MobileRecharge = () => {
     const phoneNumber = form.phone_number.value;
     const countryCode = form.select.value;
     const balance = form.amount.value;
-    const time = dateTime({showTimeZone: true});
+    const time = dateTime({ showTimeZone: true });
 
     const rechargeInfo = {
       userEmail: user.email,
@@ -292,7 +292,7 @@ const MobileRecharge = () => {
     } else if (balance >= 5 && balance <= 50) {
       setLoading(true);
 
-      fetch("https://one-bit-pay-server.vercel.app/mobile/recharge", {
+      fetch(" https://one-bit-pay-server.vercel.app/mobile/recharge", {
         method: "POST",
         headers: {
           "content-type": "application/json",
