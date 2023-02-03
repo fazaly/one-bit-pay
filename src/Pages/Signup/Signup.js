@@ -26,6 +26,8 @@ const Signup = () => {
     const email = info.email;
     const password = info.password;
     const confirm = info.confirm;
+    const current = new Date();
+    const date = `${current.getDate()}-${current.getMonth() + 1}-${current.getFullYear()}`;
 
     setSignupError("");
     createUser(email, password)
@@ -40,6 +42,7 @@ const Signup = () => {
           accountType: "user",
           isAgent: false,
           isAdmin: false,
+          date
         };
 
         //Here save a user to database after register

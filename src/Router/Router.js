@@ -18,6 +18,9 @@ import DonationDetails from "../Dashbord/Donation/DonationDetails"
 import Donation from "../Dashbord/Donation/Donation"
 import IndividualBlog from "../Pages/Blog/IndividualBlog";
 import Blog from "../Pages/Blog/Blog";
+import AdminRoutes from "./AdminRoutes";
+import AllUsers from "../Pages/Admin/AllUsers";
+import Admin from "../Pages/Admin/Admin";
 
 export const router = createBrowserRouter([
     {
@@ -101,7 +104,15 @@ export const router = createBrowserRouter([
                 path: `/dashboard/donationDetails/:id`,
                 element: <DonationDetails></DonationDetails>,
                 loader: ({ params }) => fetch(`https://one-bit-pay-server.vercel.app/donations/${params.id}`)
-            }
+            },
+            {
+                path: '/dashboard/admin',
+                element: <Admin></Admin>
+            },
+            {
+                path: '/dashboard/users',
+                element: <AllUsers></AllUsers>
+            },
 
         ]
     }
