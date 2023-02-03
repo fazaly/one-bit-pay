@@ -31,6 +31,13 @@ const DashbordLayout = () => {
   const [isAgent] = useAgent(user?.email);
   const [isUser] = useUser(user?.email);
 
+  console.log(userDetails)
+  useEffect(() => {
+    if (userDetails?.notification) {
+      setNotifi(true);
+    }
+  }, [])
+
   // useEffect(() => {
   //   fetch(`http://localhost:5000/user/${user?.email}`)
   //     .then((res) => res.json())
