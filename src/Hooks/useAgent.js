@@ -7,6 +7,7 @@ const useAgent = () => {
   const {user} = useContext(AuthContext);
   const [isAgent, setIsAgent] = useState(false);
   const [agentLoading, setAgentLoading] = useState(false);
+  console.log(isAgent);
 
   useEffect(() => {
     if (user?.email) {

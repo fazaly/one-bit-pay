@@ -20,8 +20,9 @@ import {
   faMoneyBills,
   faDollar,
 } from "@fortawesome/free-solid-svg-icons";
-import useAgent from "../Hooks/useAgent";
-import useUser from "../Hooks/useUser";
+import useAgent from "../hooks/useAgent";
+import useUser from "../hooks/useUser";
+import useAdmin from "../hooks/useAdmin";
 
 const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
@@ -30,6 +31,7 @@ const DashbordLayout = () => {
   const { user, userDetails } = useContext(AuthContext);
   const [isAgent] = useAgent(user?.email);
   const [isUser] = useUser(user?.email);
+  const [isAdmin] = useAdmin(user?.userEmail);
 
   console.log(userDetails)
   useEffect(() => {
@@ -237,7 +239,7 @@ const DashbordLayout = () => {
 
               {/* //Admin routes ------------------------------------------*/}
               {
-                isAgent === true && <div>
+                isAdmin === true && <div>
                   <NavLink to="" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
                       icon={faFileSignature}
