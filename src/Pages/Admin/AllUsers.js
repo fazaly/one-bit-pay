@@ -13,7 +13,7 @@ const AllUsers = () => {
     })
 
     const handleAdminRole = (id) => {
-        fetch(`/users/admin/${id}`, {
+        fetch(`http://localhost:5000/users/admin/${id}`, {
             method: 'PATCH',
             
         })

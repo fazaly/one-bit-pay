@@ -26,6 +26,9 @@ import B2B from "../AgentDashboard/B2B/B2B";
 import AgentOverview from "../AgentDashboard/AgentOverview/AgentOverview";
 import BillPayAgent from "../AgentDashboard/BillPayAgent/BillPayAgent";
 import AgentMobileRecharge from "../AgentDashboard/AgentMobileRecharge/AgentMobileRecharge";
+import Admin from "../Pages/Admin/Admin";
+import AllUsers from "../Pages/Admin/AllUsers";
+import AdminRoutes from "./AdminRoutes";
 
 
 export const router = createBrowserRouter([
@@ -72,7 +75,7 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
-        path: "dahsboard/overview",
+        path: "/dashboard/overview",
         element: <Overview></Overview>,
       },
       {
@@ -174,7 +177,15 @@ export const router = createBrowserRouter([
             </AgentRoutes>
           </PrivateRoutes>
         )
-      }
+      },
+      {
+        path: "/dashboard/admin",
+        element: <Admin></Admin>
+      },
+      {
+        path: "/dashboard/users",
+        element: <AllUsers></AllUsers>
+      },
     ],
   },
 ]);
