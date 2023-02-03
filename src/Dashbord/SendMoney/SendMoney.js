@@ -5,18 +5,12 @@ import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import { toast } from "react-hot-toast";
 import dateTime from 'date-time';
 
+
 const SendMoney = () => {
-  const { user, userDetails } = useContext(AuthContext);
+  const { user, refetch, userDetails} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
 
-  // const {data:userInfo = []} = useQuery({
-  //   queryKey: ['SendMoney'],
-  //   queryFn: async () => {
-  //     const res = await fetch(`http://localhost:5000/user/${user?.email}`);
-  //     const data = await res.json();
-  //     return data;
-  //   }
-  // })
+  
   const handleSendMoney = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -35,7 +29,7 @@ const SendMoney = () => {
     if (receiverEmail === user.email) {
       toast.error("Send money not possible own account");
 
-    } else if (userDetails.balance <= 10) {
+    } else if (userDetails?.balance <= 10) {
       toast.error("insufficient balance");
 
     } else if (amount < 10) {
@@ -54,6 +48,7 @@ const SendMoney = () => {
         .then((data) => {
           console.log(data);
           toast.success("Send money success");
+          refetch();
           form.reset();
           setLoading(false);
         });
@@ -69,7 +64,7 @@ const SendMoney = () => {
               Current Balance
             </h1>
             <h1 className="font-bold text-3xl text-slate-700">
-              ${userDetails.balance}.00
+              ${userDetails?.balance}.00
             </h1>
           </div>
         </div>

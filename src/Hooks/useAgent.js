@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { AuthContext } from "../context/AuthProvider";
 
-const useAgent = (email) => {
+const useAgent = () => {
+  const {user} = useContext(AuthContext);
   const [isAgent, setIsAgent] = useState(false);
   const [agentLoading, setAgentLoading] = useState(false);
+  console.log(isAgent);
 
   useEffect(() => {
-    if (email) {
+    if (user?.email) {
       setAgentLoading(true);
-      fetch(`http://localhost:5000/user/agent/${email}`)
+      fetch(`http://localhost:5000/user/agent/${user?.email}`)
         .then((res) => res.json())
         .then((data) => {
             setIsAgent(data);
@@ -17,7 +20,7 @@ const useAgent = (email) => {
             console.log(data.isAgent);
         });
     }
-  }, [email]);
+  }, [user?.email]);
 
   return [isAgent, agentLoading];
 };

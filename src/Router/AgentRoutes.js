@@ -2,7 +2,7 @@ import React from 'react';
 import { useContext } from 'react';
 import { Navigate, useLocation } from 'react-router';
 import { AuthContext } from '../context/AuthProvider';
-import useAgent from '../Hooks/useAgent';
+import useAgent from '../hooks/useAgent';
 
 const AgentRoutes = ({children}) => {
     const {user, loading} = useContext(AuthContext);

@@ -37,19 +37,7 @@ const AuthProvider = ({ children }) => {
     return sendPasswordResetEmail(auth, email);
   };
 
-  //Loading user data from database for using in multiple components
-  // useEffect(() => {
-  //     fetch(`http://localhost:5000/user/${user?.email}`)
-  //         .then((res) => res.json())
-  //         .then((data) => {
-  //             setUserDetails(data.data);
-  //         });
-  // },[user?.email, userDetails.balance]);
-
-  const {
-    data: userDetails = {},
-    refetch,
-  } = useQuery({
+  const { data: userDetails = {}, refetch } = useQuery({
     queryKey: ["userDetails"],
     queryFn: async () => {
       if (user) {
@@ -73,9 +61,9 @@ const AuthProvider = ({ children }) => {
     user,
     setUser,
     loading,
-    setLoading,
     userDetails,
     refetch,
+    setLoading,
     createUser,
     signIn,
     logOut,

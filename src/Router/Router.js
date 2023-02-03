@@ -18,12 +18,18 @@ import DonationDetails from "../Dashbord/Donation/DonationDetails";
 import Donation from "../Dashbord/Donation/Donation";
 import IndividualBlog from "../Pages/Blog/IndividualBlog";
 import Blog from "../Pages/Blog/Blog";
+import MyBills from "../Dashbord/BillPay/MyBills/MyBills";
+import AllReceipts from "../Dashbord/BillPay/AllReceipts/AllReceipts";
 import CashIn from "../AgentDashboard/CashIn/CashIn";
 import AgentRoutes from "./AgentRoutes";
 import B2B from "../AgentDashboard/B2B/B2B";
 import AgentOverview from "../AgentDashboard/AgentOverview/AgentOverview";
 import BillPayAgent from "../AgentDashboard/BillPayAgent/BillPayAgent";
 import AgentMobileRecharge from "../AgentDashboard/AgentMobileRecharge/AgentMobileRecharge";
+import Admin from "../Pages/Admin/Admin";
+import AllUsers from "../Pages/Admin/AllUsers";
+import AdminRoutes from "./AdminRoutes";
+
 
 export const router = createBrowserRouter([
   {
@@ -69,7 +75,7 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
-        path: "/dashboard",
+        path: "/dashboard/overview",
         element: <Overview></Overview>,
       },
       {
@@ -77,7 +83,7 @@ export const router = createBrowserRouter([
         element: <EditProfile></EditProfile>,
       },
       {
-        path: "/dashboard/overview",
+        path: "/dashboard",
         element: <Overview />,
       },
       {
@@ -105,6 +111,14 @@ export const router = createBrowserRouter([
         element: <BillPay></BillPay>,
       },
       {
+        path: "/dashboard/billPay/myBills",
+        element: <MyBills></MyBills>,
+      },
+      {
+        path: "/dashboard/billPay/allReceipts",
+        element: <AllReceipts></AllReceipts>,
+      },
+      {
         path: "/dashboard/donation",
         element: <Donation></Donation>,
       },
@@ -112,7 +126,7 @@ export const router = createBrowserRouter([
         path: `/dashboard/donationDetails/:id`,
         element: <DonationDetails></DonationDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/donations/${params.id}`),
+          fetch(`https://one-bit-pay-server.vercel.app/donations/${params.id}`),
       },
       {
         path: "/dashboard/cashin",
@@ -122,7 +136,7 @@ export const router = createBrowserRouter([
               <CashIn />
             </AgentRoutes>
           </PrivateRoutes>
-        ),
+        )
       },
       {
         path: "/dashboard/b2b",
@@ -132,7 +146,7 @@ export const router = createBrowserRouter([
               <B2B />
             </AgentRoutes>
           </PrivateRoutes>
-        ),
+        )
       },
       {
         path: "/dashboard/agentOverview",
@@ -142,7 +156,7 @@ export const router = createBrowserRouter([
               <AgentOverview/>
             </AgentRoutes>
           </PrivateRoutes>
-        ),
+        )
       },
       {
         path: "/dashboard/billpayagent",
@@ -152,7 +166,7 @@ export const router = createBrowserRouter([
               <BillPayAgent/>
             </AgentRoutes>
           </PrivateRoutes>
-        ),
+        )
       },
       {
         path: "/dashboard/rechargeagent",
@@ -162,7 +176,15 @@ export const router = createBrowserRouter([
               <AgentMobileRecharge/>
             </AgentRoutes>
           </PrivateRoutes>
-        ),
+        )
+      },
+      {
+        path: "/dashboard/admin",
+        element: <Admin></Admin>
+      },
+      {
+        path: "/dashboard/users",
+        element: <AllUsers></AllUsers>
       },
     ],
   },
