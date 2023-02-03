@@ -20,15 +20,15 @@ import {
   faMoneyBills,
   faDollar,
 } from "@fortawesome/free-solid-svg-icons";
-import useAgent from "../hooks/useAgent";
-import useUser from "../hooks/useUser";
-import useAdmin from "../hooks/useAdmin";
+import useAgent from "../Hooks/useAgent";
+import useUser from "../Hooks/useUser";
+import useAdmin from "../Hooks/useAdmin";
 
 const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
   const [notifi, setNotifi] = useState(false);
   // const [userDetails, setUserDetails] = useState([]);
-  const { user, userDetails} = useContext(AuthContext);
+  const { user, userDetails } = useContext(AuthContext);
   const [isAgent] = useAgent(user?.email);
   const [isUser] = useUser(user?.email);
   const [isAdmin] = useAdmin(user?.userEmail);
@@ -99,99 +99,99 @@ const DashbordLayout = () => {
                 )}
               </div>
               <div>
-                 <h1 className="font-bold text-white text-lg">{userDetails.name}</h1> 
-                  <h1 className="text-sm text-white">{userDetails.userEmail}</h1>
+                <h1 className="font-bold text-white text-lg">{userDetails.name}</h1>
+                <h1 className="text-sm text-white">{userDetails.userEmail}</h1>
               </div>
             </div>
             <div className="text-white p-4">
               {
                 isUser && <div>
-                <NavLink
-                  to="/dashboard/overview"
-                  className="flex items-center mb-6 mt-4"
-                >
-                  <HiViewGridAdd className="text-[30px] mr-4" />
-                  <p className="text-lg font-semibold">Dashboard</p>
-                </NavLink>
+                  <NavLink
+                    to="/dashboard/overview"
+                    className="flex items-center mb-6 mt-4"
+                  >
+                    <HiViewGridAdd className="text-[30px] mr-4" />
+                    <p className="text-lg font-semibold">Dashboard</p>
+                  </NavLink>
 
-                <NavLink
-                  to="/dashboard/editProfile"
-                  className="flex items-center mb-6 mt-4"
-                >
-                  <FaUserEdit className="text-[30px] mr-4" />
-                  <p className="text-lg font-semibold">Update Profile</p>
-                </NavLink>
+                  <NavLink
+                    to="/dashboard/editProfile"
+                    className="flex items-center mb-6 mt-4"
+                  >
+                    <FaUserEdit className="text-[30px] mr-4" />
+                    <p className="text-lg font-semibold">Update Profile</p>
+                  </NavLink>
 
-                <NavLink
-                  to="/dashboard/sendMoney"
-                  className="flex items-center mb-6 mt-4"
-                >
-                  <HiCurrencyDollar className="text-[30px] mr-4" />
-                  <p className="text-lg font-semibold">Send Money</p>
-                </NavLink>
+                  <NavLink
+                    to="/dashboard/sendMoney"
+                    className="flex items-center mb-6 mt-4"
+                  >
+                    <HiCurrencyDollar className="text-[30px] mr-4" />
+                    <p className="text-lg font-semibold">Send Money</p>
+                  </NavLink>
 
-                <NavLink
-                  to="/dashboard/withdraw"
-                  className="flex items-center mb-6 mt-4"
-                >
-                  <FontAwesomeIcon
-                    icon={faWallet}
-                    className="text-[25px] mr-4"
-                  />
-                  <p className="text-lg font-semibold">Withdraw</p>
-                </NavLink>
+                  <NavLink
+                    to="/dashboard/withdraw"
+                    className="flex items-center mb-6 mt-4"
+                  >
+                    <FontAwesomeIcon
+                      icon={faWallet}
+                      className="text-[25px] mr-4"
+                    />
+                    <p className="text-lg font-semibold">Withdraw</p>
+                  </NavLink>
 
-                <NavLink
-                  to="/dashboard/mobileRecharge"
-                  className="flex items-center mb-6 mt-4"
-                >
-                  <FaMobile className="text-[25px] mr-4" />
-                  <p className="text-lg font-semibold">Mobile Recharge</p>
-                </NavLink>
+                  <NavLink
+                    to="/dashboard/mobileRecharge"
+                    className="flex items-center mb-6 mt-4"
+                  >
+                    <FaMobile className="text-[25px] mr-4" />
+                    <p className="text-lg font-semibold">Mobile Recharge</p>
+                  </NavLink>
 
-                <NavLink
-                  to="/dashboard/billPay"
-                  className="flex items-center mb-6 mt-4"
-                >
-                  <FontAwesomeIcon
-                    icon={faCreditCard}
-                    className="text-[25px] mr-4"
-                  />
-                  <p className="text-lg font-semibold">Bill Pay</p>
-                </NavLink>
+                  <NavLink
+                    to="/dashboard/billPay"
+                    className="flex items-center mb-6 mt-4"
+                  >
+                    <FontAwesomeIcon
+                      icon={faCreditCard}
+                      className="text-[25px] mr-4"
+                    />
+                    <p className="text-lg font-semibold">Bill Pay</p>
+                  </NavLink>
 
-                <NavLink
-                  to="/dashboard/loanRequest"
-                  className="flex items-center mb-6 mt-4"
-                >
-                  <FontAwesomeIcon
-                    icon={faSackDollar}
-                    className="text-[25px] mr-4"
-                  />
-                  <p className="text-lg font-semibold">Loan Request</p>
-                </NavLink>
-                <NavLink
-                  to="/dashboard/donation"
-                  className="flex items-center mb-6 mt-4"
-                >
-                  <FontAwesomeIcon
-                    icon={faDollar}
-                    className="text-[25px] mr-4"
-                  />
-                  <p className="text-lg font-semibold">Donation</p>
-                </NavLink>
+                  <NavLink
+                    to="/dashboard/loanRequest"
+                    className="flex items-center mb-6 mt-4"
+                  >
+                    <FontAwesomeIcon
+                      icon={faSackDollar}
+                      className="text-[25px] mr-4"
+                    />
+                    <p className="text-lg font-semibold">Loan Request</p>
+                  </NavLink>
+                  <NavLink
+                    to="/dashboard/donation"
+                    className="flex items-center mb-6 mt-4"
+                  >
+                    <FontAwesomeIcon
+                      icon={faDollar}
+                      className="text-[25px] mr-4"
+                    />
+                    <p className="text-lg font-semibold">Donation</p>
+                  </NavLink>
 
-                <NavLink
-                  to="/dashboard/applyForAgent"
-                  className="flex items-center mb-6 mt-4"
-                >
-                  <FontAwesomeIcon
-                    icon={faFileSignature}
-                    className="text-[25px] mr-4"
-                  />
-                  <p className="text-lg font-semibold">Become An Agent</p>
-                </NavLink>
-              </div>
+                  <NavLink
+                    to="/dashboard/applyForAgent"
+                    className="flex items-center mb-6 mt-4"
+                  >
+                    <FontAwesomeIcon
+                      icon={faFileSignature}
+                      className="text-[25px] mr-4"
+                    />
+                    <p className="text-lg font-semibold">Become An Agent</p>
+                  </NavLink>
+                </div>
               }
 
               {/* agent routes------------------------------------------  */}
