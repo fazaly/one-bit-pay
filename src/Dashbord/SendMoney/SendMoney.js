@@ -37,7 +37,7 @@ const SendMoney = () => {
 
     } else if (receiverEmail !== user?.email && userDetails?.balance > 10) {
       setLoading(true);
-      fetch("http://localhost:5000/sendMoney", {
+      fetch("https://one-bit-pay-server.vercel.app/sendMoney", {
         method: "PUT",
         headers: {
           "content-type": "application/json",

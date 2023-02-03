@@ -14,7 +14,7 @@ const CashIn = () => {
 
   const hadleFocus = (email) => {
     console.log(email)
-    fetch(`http://localhost:5000/user/normaluser/${email}`)
+    fetch(`https://one-bit-pay-server.vercel.app/user/normaluser/${email}`)
       .then((res) => res.json())
       .then((data) => {
         setAreUser(data.isUser);
@@ -47,7 +47,7 @@ const CashIn = () => {
       return toast.error("Cashin in Agent Account Not Possible");
     } else if (receiverEmail !== user?.email && userDetails?.balance > 10) {
       setloading(true);
-      fetch("http://localhost:5000/agent/cashin", {
+      fetch("https://one-bit-pay-server.vercel.app/agent/cashin", {
         method: "PUT",
         headers: {
           "content-type": "application/json",

@@ -32,7 +32,7 @@ const DashbordLayout = () => {
   const [isUser] = useUser(user?.email);
 
   // useEffect(() => {
-  //   fetch(`http://localhost:5000/user/${user?.email}`)
+  //   fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`)
   //     .then((res) => res.json())
   //     .then((data) => {
   //       if (data.status) {

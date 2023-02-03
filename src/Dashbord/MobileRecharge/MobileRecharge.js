@@ -259,7 +259,7 @@ const MobileRecharge = () => {
     queryKey: ["recharges"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/recharge/${user?.email}`
+        `https://one-bit-pay-server.vercel.app/recharge/${user?.email}`
       );
       const data = await res.json();
       return data;
@@ -292,7 +292,7 @@ const MobileRecharge = () => {
     } else if (balance >= 5 && balance <= 50) {
       setLoading(true);
 
-      fetch("http://localhost:5000/mobile/recharge", {
+      fetch("https://one-bit-pay-server.vercel.app/mobile/recharge", {
         method: "POST",
         headers: {
           "content-type": "application/json",

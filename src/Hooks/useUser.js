@@ -7,7 +7,7 @@ const useUser = (email) => {
   
     useEffect(() => {
       if (email) {
-        fetch(`http://localhost:5000/user/normaluser/${email}`)
+        fetch(`https://one-bit-pay-server.vercel.app/user/normaluser/${email}`)
           .then((res) => res.json())
           .then((data) => {
                 setIsUser(data.isUser);

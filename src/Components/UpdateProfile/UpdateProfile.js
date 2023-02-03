@@ -38,7 +38,7 @@ const UpdateProfile = () => {
   }
 
   const handleUpdateUser = userData => {
-    fetch(`http://localhost:5000/userUpdate/${user.email}`, {
+    fetch(`https://one-bit-pay-server.vercel.app/userUpdate/${user.email}`, {
       method: "PUT",
       headers: {
         'content-type': 'application/json'

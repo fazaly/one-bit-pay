@@ -41,7 +41,7 @@ const AuthProvider = ({ children }) => {
     queryKey: ["userDetails"],
     queryFn: async () => {
       if (user) {
-        const res = await fetch(`http://localhost:5000/user/${user?.email}`);
+        const res = await fetch(`https://one-bit-pay-server.vercel.app/user/${user?.email}`);
         const data = await res.json();
         return data.data;
       }
