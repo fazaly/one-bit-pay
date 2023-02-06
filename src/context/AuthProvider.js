@@ -9,6 +9,10 @@ import {
   signOut,
 } from "firebase/auth";
 import { useQuery } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../features/api/courrentUserSlice";
+
+// import { setCurrentUser } from "../features/api/courrentUserSlice"
 
 export const AuthContext = createContext();
 
@@ -18,6 +22,8 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
   const [notifi, setNotifi] = useState(false);
+  const dispatch = useDispatch()
+
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -51,6 +57,11 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      // const userData = {
+      //   email: currentUser.email,
+      //   uid: currentUser.uid
+      // }
+      dispatch(setCurrentUser(currentUser))
       setUser(currentUser);
       setLoading(false);
       refetch();

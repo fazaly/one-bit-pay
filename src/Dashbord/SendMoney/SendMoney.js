@@ -4,11 +4,34 @@ import { AuthContext } from "../../context/AuthProvider";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import { toast } from "react-hot-toast";
 import dateTime from 'date-time';
+import { useGetUserDetailsQuery, useGetUserLoggedinDetailsQuery, useSendMoneyMutation } from "../../features/api/apiSlice";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 
 const SendMoney = () => {
-  const { user, refetch, userDetails } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+  const [sendMoney, { isLoading, isSuccess, isError }] = useSendMoneyMutation();
+
+  const currentUser = useSelector(state => state?.currentUser?.user)
+  const loggededUser = currentUser?.email
+
+
+  const { data } = useGetUserLoggedinDetailsQuery(loggededUser)
+  const userDetails = data?.data;
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Send money success", { id: "senMoney" });
+
+    }
+    if (isError) {
+      toast.success("Failed to sending money! Please try again", { id: "sendMoney" });
+
+    }
+
+  }, [isSuccess, isError])
 
 
   const handleSendMoney = (event) => {
@@ -26,7 +49,7 @@ const SendMoney = () => {
       type: "balanceTransfer"
     };
 
-    if (receiverEmail === user.email) {
+    if (receiverEmail === user?.email) {
       toast.error("Send money not possible own account");
 
     } else if (userDetails?.balance <= 10) {
@@ -36,24 +59,15 @@ const SendMoney = () => {
       toast.error('Minimum sending amount is 10');
 
     } else if (receiverEmail !== user?.email && userDetails?.balance > 10) {
-      setLoading(true);
-      fetch(" https://one-bit-pay-server.vercel.app/sendMoney", {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(sendMoneyInfo),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          toast.success("Send money success");
-          refetch();
-          form.reset();
-          setLoading(false);
-        });
+
+      sendMoney(sendMoneyInfo)
+      form.reset()
+
     }
   };
+
+
+
 
   return (
     <div>
@@ -94,7 +108,7 @@ const SendMoney = () => {
                   type="submit"
                   className="btn w-full btn-xs rounded-sm border-none hover:bg-[#5966FF]"
                 >
-                  {loading ? <ButtonSpinner /> : "SEND NOW"}
+                  {isLoading ? <ButtonSpinner /> : "SEND NOW"}
                 </button>
               </p>
             </form>
@@ -123,7 +137,7 @@ const SendMoney = () => {
             <h1 className="font-bold text-xl text-[#5966FF] opacity-50 mb-4">
               History
             </h1>
-            <SendMoneyHistory email={user?.email} loading={loading} type={"balanceTransfer"} />
+            <SendMoneyHistory email={currentUser?.email} loading={loading} type={"balanceTransfer"} />
           </div>
         </div>
       </div>

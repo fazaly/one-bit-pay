@@ -3,15 +3,22 @@ import { Link } from 'react-router-dom';
 import './Navbar.css';
 import logo from '../.././images/logo.svg';
 import { AuthContext } from '../../context/AuthProvider';
+import { useSelector } from 'react-redux';
 
 
 const Navbar = () => {
-    const { user, logOut } = useContext(AuthContext);
+    const { logOut } = useContext(AuthContext);
+    const currentUser = useSelector(state => state?.currentUser?.user)
+
+
     // const [userRole] = useRole(user?.email);
+
+
     // // logOut
     const handleLogOut = () => {
         logOut()
             .then(result => {
+
             })
             .catch(error => console.error(error));
     }
@@ -19,30 +26,11 @@ const Navbar = () => {
     const menuItems = <>
         <li className='font-semibold mr-5'><Link to='/'>Home</Link></li>
         <li className='font-semibold mr-5'><Link to='/about'>About</Link></li>
-        {
-            user && user.email && <li className='font-semibold mr-5'>
-                {/* {
-                    userRole === "admin" ?
-                        <>
-                            <Link to='/dashboard/adminOverview'>Dashboard</Link>
-                        </>
-                        :
-                        <>
-                            <Link to='/dashboard'>Dashboard</Link>
-                        </>
-                } */}
-                {/* {
-                    userRole === "user" && <Link to='/dashboard'>Dashboard</Link>
-                } */}
-
-                <Link to='/dashboard'>Dashboard</Link>
-
-            </li>
-        }
         <li><Link to='/blog' className='font-semibold mr-5'>Blog</Link></li>
         {
-            user?.uid ?
+            currentUser?.uid ?
                 <>
+                    <li> <Link to='/dashboard' className='font-semibold mr-5' >Dashboard</Link></li>
                     <li className='font-semibold'>
                         <button onClick={handleLogOut} className='btn btn-ghost'>Sign Out</button>
                     </li>
