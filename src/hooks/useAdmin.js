@@ -6,14 +6,14 @@ const useAdmin = email => {
     console.log(isAdmin);
 
     useEffect(() => {
-        if(email){
-            fetch(`http://localhost:5000/users/admin/${email}`)
-            .then(res => res.json())
-            .then( data => {
-                console.log(data);
-                setIsAdmin(data.isAdmin);
-                setIsAdminLoading(false)
-            })
+        if (email) {
+            fetch(`https://one-bit-pay-server.vercel.app/users/admin/${email}`)
+                .then(res => res.json())
+                .then(data => {
+
+                    setIsAdmin(data.isAdmin);
+                    setIsAdminLoading(false)
+                })
         }
     }, [email])
     return [isAdmin, isAdminLoading];

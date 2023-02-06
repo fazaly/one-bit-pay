@@ -9,6 +9,10 @@ import {
   signOut,
 } from "firebase/auth";
 import { useQuery } from "@tanstack/react-query";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../features/api/courrentUserSlice";
+
+// import { setCurrentUser } from "../features/api/courrentUserSlice"
 
 export const AuthContext = createContext();
 
@@ -17,6 +21,9 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
+  const [notifi, setNotifi] = useState(false);
+  const dispatch = useDispatch()
+
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -41,7 +48,7 @@ const AuthProvider = ({ children }) => {
     queryKey: ["userDetails"],
     queryFn: async () => {
       if (user) {
-        const res = await fetch(`http://localhost:5000/user/${user?.email}`);
+        const res = await fetch(` https://one-bit-pay-server.vercel.app/user/${user?.email}`);
         const data = await res.json();
         return data.data;
       }
@@ -50,6 +57,11 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      // const userData = {
+      //   email: currentUser.email,
+      //   uid: currentUser.uid
+      // }
+      dispatch(setCurrentUser(currentUser))
       setUser(currentUser);
       setLoading(false);
       refetch();

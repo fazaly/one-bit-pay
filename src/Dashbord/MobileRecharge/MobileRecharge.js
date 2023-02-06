@@ -5,6 +5,8 @@ import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import { AuthContext } from "../../context/AuthProvider";
 import RechargeHistory from "./RechargeHistory";
 import dateTime from 'date-time';
+import { useSelector } from "react-redux";
+import { useGetUserLoggedinDetailsQuery } from "../../features/api/apiSlice";
 
 
 const cCodes = [
@@ -251,15 +253,16 @@ const cCodes = [
 ];
 
 const MobileRecharge = () => {
-  const { user, userDetails} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-
+  const { email } = useSelector(state => state?.currentUser?.user)
+  const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email)
+  const userDetails = data?.data;
 
   const { data: recharges = [], refetch } = useQuery({
     queryKey: ["recharges"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/recharge/${user?.email}`
+        ` https://one-bit-pay-server.vercel.app/recharge/${email}`
       );
       const data = await res.json();
       return data;
@@ -273,26 +276,25 @@ const MobileRecharge = () => {
     const phoneNumber = form.phone_number.value;
     const countryCode = form.select.value;
     const balance = form.amount.value;
-    const time = dateTime({showTimeZone: true});
+    const time = dateTime({ showTimeZone: true });
 
     const rechargeInfo = {
-      userEmail: user.email,
+      userEmail: email,
       phone: countryCode + phoneNumber,
       balance,
       time,
     };
-    console.log(rechargeInfo);
 
     if (balance < 5) {
       toast.error("Minimum Recharge $5");
     } else if (balance > userDetails?.balance) {
       toast.error("insufficient balance");
-    } else if (balance > 50) {
-      toast.error("Maximum Recharge $50");
-    } else if (balance >= 5 && balance <= 50) {
+    } else if (balance > 1000) {
+      toast.error("Maximum Recharge $1000");
+    } else if (balance >= 5 && balance <= 1000) {
       setLoading(true);
 
-      fetch("http://localhost:5000/mobile/recharge", {
+      fetch(" https://one-bit-pay-server.vercel.app/mobile/recharge", {
         method: "POST",
         headers: {
           "content-type": "application/json",

@@ -1,4 +1,4 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 import dateTime from "date-time";
 import { toast } from "react-hot-toast";
@@ -6,7 +6,7 @@ import { useState } from "react";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 
 const CashIn = () => {
-  const { user, userDetails, refetch,} = useContext(AuthContext);
+  const { user, userDetails, refetch, } = useContext(AuthContext);
   const [loading, setloading] = useState(false);
   const [areUser, setAreUser] = useState("");
 
@@ -14,7 +14,7 @@ const CashIn = () => {
 
   const hadleFocus = (email) => {
     console.log(email)
-    fetch(`http://localhost:5000/user/normaluser/${email}`)
+    fetch(` https://one-bit-pay-server.vercel.app/user/normaluser/${email}`)
       .then((res) => res.json())
       .then((data) => {
         setAreUser(data.isUser);
@@ -43,11 +43,11 @@ const CashIn = () => {
       return toast.error("insufficient balance");
     } else if (amount < 10) {
       return toast.error("Minimum sending amount is 10");
-    } else if (!areUser){
+    } else if (!areUser) {
       return toast.error("Cashin in Agent Account Not Possible");
     } else if (receiverEmail !== user?.email && userDetails?.balance > 10) {
       setloading(true);
-      fetch("http://localhost:5000/agent/cashin", {
+      fetch(" https://one-bit-pay-server.vercel.app/agent/cashin", {
         method: "PUT",
         headers: {
           "content-type": "application/json",
@@ -89,7 +89,7 @@ const CashIn = () => {
                 placeholder="user email"
                 className={`w-full border-0 border-b-2 ${areUser ? `border-slate-700 text-slate-700` : `border-red-500 text-red-500`} outline-none  focus:text-[#5966FF] focus:border-b-[#5966FF]`}
                 data-tip="hello"
-                onBlur={(e)=> hadleFocus(e.target.value)}
+                onBlur={(e) => hadleFocus(e.target.value)}
               />
               <input
                 type="text"
@@ -98,12 +98,12 @@ const CashIn = () => {
                 placeholder="amount"
                 className=" w-full border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF]  focus:border-b-[#5966FF]"
               />
-                <button
-                  type="submit"
-                  className={`btn w-full btn-xs rounded-sm border-none hover:bg-[#5966FF] ${areUser || `bg-red-500`}`}
-                >
-                  {loading ? <ButtonSpinner /> : " CASH IN"}
-                </button>
+              <button
+                type="submit"
+                className={`btn w-full btn-xs rounded-sm border-none hover:bg-[#5966FF] ${areUser || `bg-red-500`}`}
+              >
+                {loading ? <ButtonSpinner /> : " CASH IN"}
+              </button>
             </form>
           </div>
         </div>

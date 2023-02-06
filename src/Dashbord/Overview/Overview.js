@@ -7,7 +7,7 @@ import Chart2 from "./Chart/Chart2";
 
 
 const Overview = () => {
-  const { user, userDetails} = useContext(AuthContext);
+  const { user, userDetails } = useContext(AuthContext);
   // console.log(userDetails);
   return (
     <div>
@@ -16,7 +16,7 @@ const Overview = () => {
           <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 col-span-2">
             {/* CARD 1 */}
             <div className="">
-              <div className="card lg:w-80 w-96 bg-[#5966FF] text-primary-content mx-auto shadow-lg">
+              <div className="card lg:w-80 w-96 bg-[#251F71] text-primary-content mx-auto shadow-lg">
                 <div className="card-body">
                   <h1 className="font-bold text-xl text-white opacity-60">
                     Main Balance
@@ -71,7 +71,7 @@ const Overview = () => {
           </div>
           <div className="">
             <div className="py-4 rounded-lg lg:w-80 h-80 shadow-lg bg-white">
-            <Chart2/>
+              <Chart2 />
             </div>
           </div>
         </div>
@@ -79,7 +79,7 @@ const Overview = () => {
         <div className="mt-4">
           <div className="card bg-white text-primary-content shadow-lg">
             <div className="card-body">
-              <SendMoneyHistory email={user.email}/>
+              <SendMoneyHistory email={user.email} />
             </div>
           </div>
         </div>
