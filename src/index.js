@@ -8,6 +8,8 @@ import AuthProvider from './context/AuthProvider';
 import { Toaster } from 'react-hot-toast';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en.json';
+import { Provider } from 'react-redux';
+import store from './app/store';
 
 // Create a client
 const queryClient = new QueryClient();
@@ -17,10 +19,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <App />
-        <Toaster/>
-      </AuthProvider>
+      <Provider store={store}>
+        <AuthProvider>
+          <App />
+          <Toaster />
+        </AuthProvider>
+      </Provider>
     </QueryClientProvider>
   </React.StrictMode>
 );

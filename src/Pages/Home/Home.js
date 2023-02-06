@@ -5,6 +5,7 @@ import HeroSlider from './HeroSlider/HeroSlider';
 import ImageGallery from './ImageGallery/ImageGallery';
 
 const Home = () => {
+
     return (
         <div>
             <HeroSlider></HeroSlider>

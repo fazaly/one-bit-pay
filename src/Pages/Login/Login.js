@@ -1,12 +1,16 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import { AuthContext } from "../../context/AuthProvider";
 import signin from "../../images/LoginPage.svg";
+import { setCurrentUser } from "../../features/api/courrentUserSlice";
+
 
 const Login = () => {
+  const dispatch = useDispatch()
   const {
     register,
     formState: { errors },
@@ -31,7 +35,7 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         setUser(user);
-        console.log(user);
+        // dispatch(setCurrentUser(user))
         setLoading(false);
         navigate('/dashboard');
         toast.success("SignUp Success ✔");
@@ -126,7 +130,7 @@ const Login = () => {
               <div className="form-control">
                 <button type="submit" className="btn bg-black">
                   {
-                    loading ? <ButtonSpinner/> : "SIGN IN"
+                    loading ? <ButtonSpinner /> : "SIGN IN"
                   }
                 </button>
                 {signinError && <p className="text-red-500">{signinError}</p>}

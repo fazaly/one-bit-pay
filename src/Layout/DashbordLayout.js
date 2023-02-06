@@ -24,14 +24,23 @@ import useAgent from "../Hooks/useAgent";
 import useUser from "../Hooks/useUser";
 import useAdmin from "../Hooks/useAdmin";
 import useRole from "../Hooks/useRole";
+import { useGetTransactionHistoryQuery, useGetUserDetailsQuery, useGetUserLoggedinDetailsQuery } from "../features/api/apiSlice";
+import { useSelector } from "react-redux";
 
 const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
   const [notifi, setNotifi] = useState(false);
   // const [userDetails, setUserDetails] = useState([]);
-  const { user, userDetails } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [userRole] = useRole(user?.email);
-  console.log('userRole', userRole)
+
+  const { email } = useSelector(state => state?.currentUser?.user)
+  // const loggededUser = currentUser?.email;
+
+  const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email)
+  const userDetails = data?.data
+
+
 
   useEffect(() => {
     if (userDetails?.notification) {
@@ -39,18 +48,8 @@ const DashbordLayout = () => {
     }
   }, [])
 
-  // useEffect(() => {
-  //   fetch(` https://one-bit-pay-server.vercel.app/user/${user?.email}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data.status) {
-  //         setUserDetails(data.data);
-  //         if (data.data.notification) {
-  //           setNotifi(data.data.notification);
-  //         }
-  //       }
-  //     });
-  // }, [user?.email]);
+
+
   return (
     <div>
       <div className="drawer drawer-mobile">
@@ -60,18 +59,20 @@ const DashbordLayout = () => {
             <DashBoardNavbar
               notifi={notifi}
               setNotifi={setNotifi}
-              userDetails={userDetails}
+              userDetail={userDetails}
             ></DashBoardNavbar>
           </div>
-          <Outlet />
+          <div className="">
+            <Outlet />
+          </div>
         </div>
-        <div className="drawer-side">
+        <div className="drawer-side shadow-2xl ml-4">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 bg-[#5966FF] text-base-content relative ">
+          <ul className="menu p-4 w-72 bg-[#251F71] text-white relative ">
             <label
               onClick={() => setOpen(!open)}
               htmlFor="my-drawer-2"
-              className="bg-[#5966FF] text-white p-2 w-8 absolute -right-7 rounded-tr-full rounded-br-full duration-300"
+              className=" p-2 w-8 absolute -right-7 rounded-tr-full rounded-br-full duration-300"
             >
               {open ? (
                 <HiChevronDoubleRight className="text-lg" />
@@ -80,9 +81,9 @@ const DashbordLayout = () => {
               )}
             </label>
             {/* <!-- Sidebar content here --> */}
-            <div className="flex justify-center items-center border-2 rounded-md p-2">
+            <div className="w-52 flex flex-col justify-center items-center  rounded-md p-3  mb-4 ml-3 ">
               <div className="mr-2">
-                {userDetails?.userPhoto ? (
+                {userDetails?.userPhoto ?
                   <>
                     <NavLink to="/dashboard/editProfile">
                       <img
@@ -92,7 +93,7 @@ const DashbordLayout = () => {
                       />
                     </NavLink>
                   </>
-                ) : (
+                  :
                   <>
                     <NavLink to="/dashboard/editProfile">
                       <img
@@ -102,27 +103,33 @@ const DashbordLayout = () => {
                       />
                     </NavLink>
                   </>
-                )}
+                }
               </div>
-              <div>
-                <h1 className="font-bold text-white text-lg">{userDetails.name}</h1>
-                <h1 className="text-sm text-white">{userDetails.userEmail}</h1>
-              </div>
-            </div>
-            <div className="text-white p-4">
               {
-                userRole === 'user' && <div>
+                isLoading ? <p>Loading</p>
+                  :
+                  <div>
+                    <span className=""><h1 className="font-bold text-lg">{userDetails?.name}</h1></span>
+                    <h1 className="text-sm ">{userDetails?.userEmail}</h1>
+                  </div>
+
+              }
+
+            </div>
+            <div className=" p-4">
+              {
+                userDetails?.role === 'user' && <div className="grid grid-cols-1 gap-4">
                   <NavLink
                     to="/dashboard/overview"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex justify-items-start "
                   >
                     <HiViewGridAdd className="text-[30px] mr-4" />
-                    <p className="text-lg font-semibold">Dashboard</p>
+                    <p className="text-lg font-semibold">OverView</p>
                   </NavLink>
 
                   <NavLink
                     to="/dashboard/editProfile"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex  justify-items-start "
                   >
                     <FaUserEdit className="text-[30px] mr-4" />
                     <p className="text-lg font-semibold">Update Profile</p>
@@ -130,7 +137,7 @@ const DashbordLayout = () => {
 
                   <NavLink
                     to="/dashboard/sendMoney"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex items-center "
                   >
                     <HiCurrencyDollar className="text-[30px] mr-4" />
                     <p className="text-lg font-semibold">Send Money</p>
@@ -138,7 +145,7 @@ const DashbordLayout = () => {
 
                   <NavLink
                     to="/dashboard/withdraw"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex items-center "
                   >
                     <FontAwesomeIcon
                       icon={faWallet}
@@ -149,7 +156,7 @@ const DashbordLayout = () => {
 
                   <NavLink
                     to="/dashboard/mobileRecharge"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex items-center"
                   >
                     <FaMobile className="text-[25px] mr-4" />
                     <p className="text-lg font-semibold">Mobile Recharge</p>
@@ -157,7 +164,7 @@ const DashbordLayout = () => {
 
                   <NavLink
                     to="/dashboard/billPay"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex items-center "
                   >
                     <FontAwesomeIcon
                       icon={faCreditCard}
@@ -168,7 +175,7 @@ const DashbordLayout = () => {
 
                   <NavLink
                     to="/dashboard/loanRequest"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex items-center "
                   >
                     <FontAwesomeIcon
                       icon={faSackDollar}
@@ -178,7 +185,7 @@ const DashbordLayout = () => {
                   </NavLink>
                   <NavLink
                     to="/dashboard/donation"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex items-center "
                   >
                     <FontAwesomeIcon
                       icon={faDollar}
@@ -189,7 +196,7 @@ const DashbordLayout = () => {
 
                   <NavLink
                     to="/dashboard/applyForAgent"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex items-center"
                   >
                     <FontAwesomeIcon
                       icon={faFileSignature}
@@ -202,7 +209,7 @@ const DashbordLayout = () => {
 
               {/* agent routes------------------------------------------  */}
               {
-                userRole === 'agent' && <div>
+                userDetails?.role === 'agent' && <div>
                   <NavLink to="/dashboard/overview" className="flex items-center mb-6 mt-4">
                     <HiViewGridAdd className="text-[30px] mr-4" />
                     <p className="text-lg font-semibold">Dashbord</p>
@@ -238,7 +245,7 @@ const DashbordLayout = () => {
 
               {/* //Admin routes ------------------------------------------*/}
               {
-                userRole === 'admin' && <div>
+                userDetails?.role === 'admin' && <div>
                   <NavLink to="/dashboard/adminOverview" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
                       icon={faFileSignature}
