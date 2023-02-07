@@ -34,7 +34,7 @@ const DashbordLayout = () => {
   const { user } = useContext(AuthContext);
   const [userRole] = useRole(user?.email);
 
-  const { email } = useSelector(state => state?.currentUser?.user)
+  const  email  = useSelector(state => state.auth.email)
   // const loggededUser = currentUser?.email;
 
   const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email)

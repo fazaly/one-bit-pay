@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 const Navbar = () => {
     const { logOut } = useContext(AuthContext);
     const currentUser = useSelector(state => state?.currentUser?.user)
+    
+    const userEmail = useSelector((state) => state.auth.email);
 
 
     // const [userRole] = useRole(user?.email);
@@ -28,7 +30,7 @@ const Navbar = () => {
         <li className='font-semibold mr-5'><Link to='/about'>About</Link></li>
         <li><Link to='/blog' className='font-semibold mr-5'>Blog</Link></li>
         {
-            currentUser?.uid ?
+            userEmail ?
                 <>
                     <li> <Link to='/dashboard' className='font-semibold mr-5' >Dashboard</Link></li>
                     <li className='font-semibold'>
