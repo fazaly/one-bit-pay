@@ -21,7 +21,7 @@ const AllAgents = () => {
                                 <td>{user.userEmail}</td>
                                 <td>
                                         <button className="text-green-500">Approve Request</button>
-                                    }
+                                    
                                 </td>
                                 <td>
                                     <button
