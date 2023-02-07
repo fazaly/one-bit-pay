@@ -49,8 +49,33 @@ export const userDetailsApi = createApi({
             invalidatesTags: ["UserDetails"],
 
         }),
-
+        getRechargeHistory: builder.query({
+            query: (email) => ({
+                url: `/recharge/${email}`
+            }),
+            providesTags: ["Users"],
+        }),
+        postRechargeData: builder.mutation({
+            query: (data) => ({
+                url:"/mobile/recharge",
+                method: "POST",
+                body: data,
+            }),
+        invalidatesTags: ["Users", "userDetails"]
+        }),
+        getUsersRole: builder.query({
+            query: (email) => ({
+                url: `/user/normaluser/${email}`
+            })
+        }),
+        postCashIn: builder.mutation({
+            query: (data) => ({
+                url: `/agent/cashin`,
+                method: "PUT",
+                body: data,
+            })
+        })
     })
 });
 
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery } = userDetailsApi
+export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation , useGetUsersRoleQuery, usePostCashInMutation} = userDetailsApi

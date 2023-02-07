@@ -7,6 +7,7 @@ import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import { AuthContext } from "../../context/AuthProvider";
 import signin from "../../images/LoginPage.svg";
 import { setCurrentUser } from "../../features/api/courrentUserSlice";
+import { loginUser } from "../../features/api/authSlice";
 
 
 const Login = () => {
@@ -29,24 +30,26 @@ const Login = () => {
     const email = data.email;
     const password = data.password;
 
-    setSigninError("");
-    setLoading(true);
-    signIn(email, password)
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        // dispatch(setCurrentUser(user))
-        setLoading(false);
-        navigate('/dashboard');
-        toast.success("SignUp Success ✔");
-      })
-      .catch((err) => {
-        console.error(err.message);
-        setSigninError(err.message);
-        setLoading(false);
-        toast.error(err.message);
-      });
+    // setSigninError("");
+    // setLoading(true);
+    // signIn(email, password)
+    //   .then((result) => {
+    //     const user = result.user;
+    //     setUser(user);
+    //     // dispatch(setCurrentUser(user))
+    //     setLoading(false);
+    //     navigate('/dashboard');
+    //     toast.success("SignUp Success ✔");
+    //   })
+    //   .catch((err) => {
+    //     console.error(err.message);
+    //     setSigninError(err.message);
+    //     setLoading(false);
+    //     toast.error(err.message);
+    //   });
     // navigate(from, { replace: true });
+    dispatch(loginUser({email, password}));
+
   };
 
   const handleEmailBlur = (event) => {
