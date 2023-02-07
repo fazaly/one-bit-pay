@@ -1,33 +1,41 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../context/AuthProvider";
 import dateTime from "date-time";
 import { toast } from "react-hot-toast";
 import { useState } from "react";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  useGetUserLoggedinDetailsQuery,
+  useGetUsersRoleQuery,
+  usePostCashInMutation,
+} from "../../features/api/apiSlice";
 
 const CashIn = () => {
-  const { user, userDetails, refetch, } = useContext(AuthContext);
-  const [loading, setloading] = useState(false);
-  const [areUser, setAreUser] = useState("");
+  const [focusEmail, setFocusEmail] = useState("");
 
-  console.log(userDetails);
+  const email = useSelector((state) => state.auth.email);
+  const { data } = useGetUserLoggedinDetailsQuery(email);
+  const userDetails = data?.data;
+  const { data: userRole } = useGetUsersRoleQuery(focusEmail);
 
-  const hadleFocus = (email) => {
-    console.log(email)
-    fetch(` https://one-bit-pay-server.vercel.app/user/normaluser/${email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setAreUser(data.isUser);
-      });
-  };
+  //post cashin data in database------------
+  const [postData, { isLoading, isSuccess, isError ,error}] = usePostCashInMutation();
 
+  useEffect(() => {
+    if(!isLoading && isSuccess){
+      toast.success("Cash In has been success", {id: "Cash In"});
+    }else if (isError){
+      toast.error(error.message, {id: "Cash In"});
+    }
+  }, [isLoading, isSuccess, isError, error]);
 
   const handleCashIn = (event) => {
     event.preventDefault();
     const form = event.target;
     const receiverEmail = form.receiverEmail.value;
     const amount = form.amount.value;
-    const agentEmail = user?.email;
+    const agentEmail = email;
     const time = dateTime({ showTimeZone: true });
     const cashInInfo = {
       agentEmail,
@@ -37,33 +45,22 @@ const CashIn = () => {
       type: "cashin",
     };
 
-    if (receiverEmail === user.email) {
+    if (receiverEmail === email) {
       return toast.error("Send money not possible own account");
     } else if (userDetails.balance <= 10) {
       return toast.error("insufficient balance");
     } else if (amount < 10) {
       return toast.error("Minimum sending amount is 10");
-    } else if (!areUser) {
+    } else if (userRole.isUser === false) {
       return toast.error("Cashin in Agent Account Not Possible");
-    } else if (receiverEmail !== user?.email && userDetails?.balance > 10) {
-      setloading(true);
-      fetch(" https://one-bit-pay-server.vercel.app/agent/cashin", {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(cashInInfo),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          toast.success("Cash In Success");
-          form.reset();
-          setloading(false);
-          refetch();
-        });
+    } else if (receiverEmail !== email && userDetails?.balance > 10) {
+      postData(cashInInfo);
+      if(isSuccess){
+        form.reset();
+      }
     }
   };
+
   return (
     <div>
       <div className="flex gap-4 lg:flex-row flex-col">
@@ -72,13 +69,15 @@ const CashIn = () => {
             <h1 className="font-bold text-xl text-[#fff] opacity-60 uppercase">
               Main Balance
             </h1>
-            <h1 className="font-bold text-3xl text-white">${userDetails.balance}.00</h1>
+            <h1 className="font-bold text-3xl text-white">
+              ${userDetails?.balance}.00
+            </h1>
           </div>
         </div>
 
         <div className="card lg:w-80 w-96 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
           <div className="card-body">
-            <h1 className={`font-bold text-xl ${areUser ? `text-[#5966FF]` : `text-red-500`}`}>
+            <h1 className={`font-bold text-xl text-[#5966FF]text-red-500`}>
               CASH IN
             </h1>
             <form onSubmit={handleCashIn} className="space-y-2 relative">
@@ -87,9 +86,9 @@ const CashIn = () => {
                 name="receiverEmail"
                 required
                 placeholder="user email"
-                className={`w-full border-0 border-b-2 ${areUser ? `border-slate-700 text-slate-700` : `border-red-500 text-red-500`} outline-none  focus:text-[#5966FF] focus:border-b-[#5966FF]`}
+                className={`w-full border-0 border-b-2 border-slate-700 text-slate-700 outline-none  focus:text-[#5966FF] focus:border-b-[#5966FF]`}
                 data-tip="hello"
-                onBlur={(e) => hadleFocus(e.target.value)}
+                onBlur={(e) => setFocusEmail(e.target.value)}
               />
               <input
                 type="text"
@@ -100,9 +99,11 @@ const CashIn = () => {
               />
               <button
                 type="submit"
-                className={`btn w-full btn-xs rounded-sm border-none hover:bg-[#5966FF] ${areUser || `bg-red-500`}`}
+                className={`btn w-full btn-xs rounded-sm border-none hover:bg-[#5966FF]`}
               >
-                {loading ? <ButtonSpinner /> : " CASH IN"}
+                {
+                  isLoading ? <ButtonSpinner/> : "CASH IN"
+                }
               </button>
             </form>
           </div>
@@ -115,8 +116,10 @@ const CashIn = () => {
             </h1>
             <h1 className="font-bold text-xl text-slate-700">
               You made <br />
-              <span className="text-3xl text-[#5966FF]">${userDetails?.commission}</span> <br />{" "}
-              commission
+              <span className="text-3xl text-[#5966FF]">
+                ${userDetails?.commission}
+              </span>{" "}
+              <br /> commission
             </h1>
           </div>
         </div>

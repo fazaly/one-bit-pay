@@ -1,12 +1,17 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import { AuthContext } from "../../context/AuthProvider";
 import signin from "../../images/LoginPage.svg";
+import { setCurrentUser } from "../../features/api/courrentUserSlice";
+import { loginUser } from "../../features/api/authSlice";
+
 
 const Login = () => {
+  const dispatch = useDispatch()
   const {
     register,
     formState: { errors },
@@ -25,24 +30,26 @@ const Login = () => {
     const email = data.email;
     const password = data.password;
 
-    setSigninError("");
-    setLoading(true);
-    signIn(email, password)
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        console.log(user);
-        setLoading(false);
-        navigate('/dashboard');
-        toast.success("SignUp Success ✔");
-      })
-      .catch((err) => {
-        console.error(err.message);
-        setSigninError(err.message);
-        setLoading(false);
-        toast.error(err.message);
-      });
+    // setSigninError("");
+    // setLoading(true);
+    // signIn(email, password)
+    //   .then((result) => {
+    //     const user = result.user;
+    //     setUser(user);
+    //     // dispatch(setCurrentUser(user))
+    //     setLoading(false);
+    //     navigate('/dashboard');
+    //     toast.success("SignUp Success ✔");
+    //   })
+    //   .catch((err) => {
+    //     console.error(err.message);
+    //     setSigninError(err.message);
+    //     setLoading(false);
+    //     toast.error(err.message);
+    //   });
     // navigate(from, { replace: true });
+    dispatch(loginUser({email, password}));
+
   };
 
   const handleEmailBlur = (event) => {
@@ -126,7 +133,7 @@ const Login = () => {
               <div className="form-control">
                 <button type="submit" className="btn bg-black">
                   {
-                    loading ? <ButtonSpinner/> : "SIGN IN"
+                    loading ? <ButtonSpinner /> : "SIGN IN"
                   }
                 </button>
                 {signinError && <p className="text-red-500">{signinError}</p>}

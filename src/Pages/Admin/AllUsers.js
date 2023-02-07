@@ -1,29 +1,18 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
+import { useGetUserDetailsQuery, useMakeAdminMutation } from '../../features/api/apiSlice';
 
 const AllUsers = () => {
-    const { data: users = [], refetch } = useQuery({
-        queryKey: ['users'],
-        queryFn: async () => {
-            const res = await fetch('https://one-bit-pay-server.vercel.app/users');
-            const data = await res.json();
-            return data;
-        }
-    })
+    const { data, isLoading, isSuccess, isError } = useGetUserDetailsQuery();
+    const [makeAdmin] = useMakeAdminMutation()
+    const users = data;
 
-    const handleAdminRole = (id) => {
-        fetch(`https://one-bit-pay-server.vercel.app/users/admin/${id}`, {
-            method: 'PATCH',
-
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.modifiedCount > 0) {
-                    toast.success('Admin role is given successfully');
-                    refetch();
-                }
-            })
+    if (isLoading) {
+        return <p>Loading..</p>
+    }
+    if (isError) {
+        return <p>Something Went Wrong ! Please Check .. </p>
     }
 
     return (
@@ -39,14 +28,16 @@ const AllUsers = () => {
                 </thead>
                 <tbody>
                     {
-                        users.map((user, i) =>
+                        users?.map((user, i) =>
                             <tr key={user._id}>
                                 <td>{i + 1}</td>
                                 <td>{user.name}</td>
                                 <td>{user.userEmail}</td>
                                 <td>
-                                    {user?.role !== 'admin' &&
-                                        <button onClick={() => handleAdminRole(user._id)} className="btn">Make Admin</button>
+                                    {user?.role !== 'admin' ?
+                                        <button onClick={() => makeAdmin(user?._id)} className="btn">Make Admin</button>
+                                        :
+                                        <p>Admin</p>
                                     }
                                 </td>
                                 <td>

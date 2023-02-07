@@ -1,16 +1,33 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
 import signup from "../../images/signUp.svg";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
+import { useAddUserMutation } from "../../features/api/apiSlice"
 
 const Signup = () => {
   const [loading, setLoading] = useState(false);
   const { createUser, user, setUser } = useContext(AuthContext);
   const [signupError, setSignupError] = useState("");
   const navigate = useNavigate();
+
+  const [saveUser, { isLoading, isError, isSuccess }] = useAddUserMutation();
+
+  useEffect(() => {
+    if (isLoading) {
+      toast.success("Creating New User..", { id: "addUser" });
+    }
+    if (isSuccess) {
+      toast.success("SIGN UP SUCCESS ✔", { id: "addUser" });
+      navigate("/");
+    }
+    if (isError) {
+      toast.success("Something Wrong Please try again!", { id: "addUser" });
+    }
+  }, [isLoading, isSuccess, isError])
+
   const {
     register,
     handleSubmit,
@@ -42,33 +59,13 @@ const Signup = () => {
           accountType: "user",
           role: "user",
           date
-        }; https://one-bit-pay-server.vercel.app/
+        };
+        //save user by RTK
+        saveUser(userData);
 
-        //Here save a user to database after register
-        fetch("https://one-bit-pay-server.vercel.app/addUser", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(userData),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            setUser(user);
-            toast.success("SIGN UP SUCCESS ✔");
-            setLoading(false);
-            navigate("/");
-            console.log(user);
-          })
-          .catch((err) => {
-            console.log(err);
-            setLoading(false);
-            toast.error(err.message);
-          });
       })
       .catch((err) => {
-        console.error(err.message);
+        // console.error(err.message);
         setSignupError(err.message);
         setLoading(false);
       });

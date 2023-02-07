@@ -58,6 +58,7 @@ const BillPay = () => {
         },
     ]
 
+    // all companies full documents
     const AllCompanies = [
         {
             "id": 1,

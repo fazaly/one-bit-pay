@@ -1,14 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import SendMoneyHistory from "../../Components/TransactionHistory/SendMoneyHistory";
 import { AuthContext } from "../../context/AuthProvider";
+import { useGetUserLoggedinDetailsQuery } from "../../features/api/apiSlice";
 import Chart2 from "./Chart/Chart2";
 // import ChartView from "./Chart/Chart";
 
 
 
 const Overview = () => {
-  const { user, userDetails} = useContext(AuthContext);
-  // console.log(userDetails);
+  // const { user, userDetails } = useContext(AuthContext);
+  const email = useSelector((state) => state.auth.email);
+  const {data} = useGetUserLoggedinDetailsQuery(email);
+  const userDetails = data?.data;
+
   return (
     <div>
       <div>
@@ -16,13 +21,13 @@ const Overview = () => {
           <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 col-span-2">
             {/* CARD 1 */}
             <div className="">
-              <div className="card lg:w-80 w-96 bg-[#5966FF] text-primary-content mx-auto shadow-lg">
+              <div className="card lg:w-80 w-96 bg-[#251F71] text-primary-content mx-auto shadow-lg">
                 <div className="card-body">
                   <h1 className="font-bold text-xl text-white opacity-60">
                     Main Balance
                   </h1>
                   <h1 className="font-bold text-3xl text-white">
-                    ${userDetails.balance}.00
+                    ${userDetails?.balance}.00
                   </h1>
                 </div>
               </div>
@@ -71,7 +76,7 @@ const Overview = () => {
           </div>
           <div className="">
             <div className="py-4 rounded-lg lg:w-80 h-80 shadow-lg bg-white">
-            <Chart2/>
+              <Chart2 />
             </div>
           </div>
         </div>
@@ -79,7 +84,7 @@ const Overview = () => {
         <div className="mt-4">
           <div className="card bg-white text-primary-content shadow-lg">
             <div className="card-body">
-              <SendMoneyHistory email={user.email}/>
+              <SendMoneyHistory email={email} />
             </div>
           </div>
         </div>

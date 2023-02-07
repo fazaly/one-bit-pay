@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import { AuthContext } from "../../context/AuthProvider";
 import RechargeHistory from "./RechargeHistory";
 import dateTime from 'date-time';
+import { useSelector } from "react-redux";
+import { useGetUserLoggedinDetailsQuery, usePostRechargeDataMutation } from "../../features/api/apiSlice";
 
 
 const cCodes = [
@@ -251,20 +253,16 @@ const cCodes = [
 ];
 
 const MobileRecharge = () => {
-  const { user, userDetails } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
+  const [postData, {isLoading, isSuccess}] = usePostRechargeDataMutation();
+  const { email } = useSelector(state => state?.currentUser?.user)
+  const { data } = useGetUserLoggedinDetailsQuery(email);
+  const userDetails = data?.data;
 
-
-  const { data: recharges = [], refetch } = useQuery({
-    queryKey: ["recharges"],
-    queryFn: async () => {
-      const res = await fetch(
-        ` https://one-bit-pay-server.vercel.app/recharge/${user?.email}`
-      );
-      const data = await res.json();
-      return data;
-    },
-  });
+  useEffect(() => {
+    if(!isLoading && isSuccess){
+      toast.success("Mobile Recharge Success");
+    }
+  },[isLoading ,isSuccess])
 
 
   const handleRecharge = (event) => {
@@ -276,37 +274,22 @@ const MobileRecharge = () => {
     const time = dateTime({ showTimeZone: true });
 
     const rechargeInfo = {
-      userEmail: user.email,
+      userEmail: email,
       phone: countryCode + phoneNumber,
       balance,
       time,
     };
-    console.log(rechargeInfo);
 
     if (balance < 5) {
       toast.error("Minimum Recharge $5");
     } else if (balance > userDetails?.balance) {
       toast.error("insufficient balance");
-    } else if (balance > 50) {
-      toast.error("Maximum Recharge $50");
-    } else if (balance >= 5 && balance <= 50) {
-      setLoading(true);
-
-      fetch(" https://one-bit-pay-server.vercel.app/mobile/recharge", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(rechargeInfo),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          toast.success("Recharge Success ✔");
-          form.reset();
-          setLoading(false);
-          refetch();
-        });
+    } else if (balance > 1000) {
+      toast.error("Maximum Recharge $1000");
+    }else if(balance > userDetails.balance){
+      toast.error("insufficient balance");
+    } else if (balance >= 5 && balance <= 1000) {
+      postData(rechargeInfo);
     }
   };
 
@@ -378,7 +361,7 @@ const MobileRecharge = () => {
                       type="submit"
                       className="btn w-full btn-xs rounded-sm mt-2 hover:bg-[#5966FF] border-none"
                     >
-                      {loading ? <ButtonSpinner /> : "CONFIRM"}
+                      {isLoading ? <ButtonSpinner /> : "CONFIRM"}
                     </button>
                   </div>
                 </div>
@@ -400,7 +383,7 @@ const MobileRecharge = () => {
         </div>
       </div>
       <div className="mt-6">
-        <RechargeHistory recharges={recharges} />
+        <RechargeHistory/>
       </div>
     </div>
   );
