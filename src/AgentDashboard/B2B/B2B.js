@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import dateTime from "date-time";
 import { useSelector } from 'react-redux';
-import { useGetUserLoggedinDetailsQuery, useGetUsersRoleQuery } from '../../features/api/apiSlice';
+import { useGetUserLoggedinDetailsQuery, useGetUsersRoleQuery, usePostB2bMutation } from '../../features/api/apiSlice';
 import MoneyTransferHistory from './MoneyTransferHistory';
 import { toast } from 'react-hot-toast';
 import { format } from 'date-fns';
@@ -14,7 +14,7 @@ const B2B = () => {
     const { data } = useGetUserLoggedinDetailsQuery(email);
     const userDetails = data?.data;
     const { data: userRole } = useGetUsersRoleQuery(focusEmail);
-
+    const [postB2bData, { isLoading, isSuccess, isError, error }] = usePostB2bMutation()
     console.log("focusEmail", focusEmail,)
     console.log("userDetails", userDetails)
     console.log("userRole", userRole)
@@ -30,7 +30,7 @@ const B2B = () => {
             receiverEmail,
             transferAmount,
             time,
-            type: "b2b transition",
+            type: "b2bTransition",
             agentEmail: email
         }
 
@@ -51,7 +51,7 @@ const B2B = () => {
             // if (isSuccess) {
             //     form.reset();
             // }
-            console.log(transferInfo)
+            postB2bData(transferInfo)
             toast.success("Transition successfull")
         }
     }
