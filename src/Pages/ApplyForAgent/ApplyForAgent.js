@@ -29,6 +29,7 @@ const ApplyForAgent = () => {
       nid: data.nidNumber,
       tin: data.tinNumber,
       number: data.number,
+      status: 'pending'
     };
     console.log(userData);
 
