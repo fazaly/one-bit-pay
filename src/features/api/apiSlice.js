@@ -88,7 +88,8 @@ export const userDetailsApi = createApi({
                 url: `/userUpdate/${email}`,
                 method: "PUT",
                 body: data,
-            })
+            }),
+            invalidatesTags:["userDetails"]
         })
     })
 });
