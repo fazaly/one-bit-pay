@@ -1,16 +1,61 @@
 import React from 'react';
+import { useState } from 'react';
+import dateTime from "date-time";
 import { useSelector } from 'react-redux';
-import { useGetUserLoggedinDetailsQuery } from '../../features/api/apiSlice';
+import { useGetUserLoggedinDetailsQuery, useGetUsersRoleQuery } from '../../features/api/apiSlice';
 import MoneyTransferHistory from './MoneyTransferHistory';
+import { toast } from 'react-hot-toast';
+import { format } from 'date-fns';
 
 
 const B2B = () => {
-
-    const currentUser = useSelector(state => state?.currentUser?.user)
-    const loggededUser = currentUser?.email
-    const { data } = useGetUserLoggedinDetailsQuery(loggededUser)
+    const [focusEmail, setFocusEmail] = useState("");
+    const email = useSelector((state) => state.auth.email);
+    const { data } = useGetUserLoggedinDetailsQuery(email);
     const userDetails = data?.data;
-    console.log(userDetails?.balance)
+    const { data: userRole } = useGetUsersRoleQuery(focusEmail);
+
+    console.log("focusEmail", focusEmail,)
+    console.log("userDetails", userDetails)
+    console.log("userRole", userRole)
+
+    const handleTransition = (e) => {
+        e.preventDefault()
+        const receiverEmail = e.target.email.value;
+        const transferAmount = parseInt(e.target.amount.value);
+        const time = format(new Date(), "PP");
+
+
+        const transferInfo = {
+            receiverEmail,
+            transferAmount,
+            time,
+            type: "b2b transition",
+            agentEmail: email
+        }
+
+        if (receiverEmail === email) {
+            return toast.error("transition money not possible in own account");
+        }
+        else if (userDetails.balance <= 100) {
+            return toast.error("insufficient balance");
+        }
+        else if (transferAmount < 100) {
+            return toast.error("Minimum transition amount is 100");
+        }
+        else if (userRole.isUser) {
+            return toast.error("transition in User Account Not Possible");
+        }
+        else if (receiverEmail !== email && userDetails?.balance > 100) {
+            // postData(cashInInfo);
+            // if (isSuccess) {
+            //     form.reset();
+            // }
+            console.log(transferInfo)
+            toast.success("Transition successfull")
+        }
+    }
+
     return (
         <div>
             <div className="flex flex-col lg:flex-row gap-4">
@@ -21,8 +66,7 @@ const B2B = () => {
                                 Your Balance
                             </h1>
                             <h1 className="font-bold text-3xl text-gray-600">
-                                {/* ${userDetails?.balance}.00 */}
-                                $1000000
+                                ${userDetails?.balance}.00
                             </h1>
                         </div>
                     </div>
@@ -31,7 +75,7 @@ const B2B = () => {
                     <div className="card lg:w-80 w-96 h-48 bg-white text-primary-content mx-auto shadow-xl">
                         <div className="CARD-2 hover:shadow-slate-300 hover:shadow-lg">
                             <form
-                                // onSubmit={handleRecharge}
+                                onSubmit={handleTransition}
                                 className="card-body rounded-xl bg-white hover:shadow-slate-300 hover:shadow-lg"
                             >
                                 <h1 className="font-bold text-xl text-[#5966FF] opacity-90">
@@ -46,6 +90,7 @@ const B2B = () => {
                                                 name="email"
                                                 placeholder="reciver email"
                                                 className="w-44 border-0 border-b border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
+                                                onBlur={(e) => setFocusEmail(e.target.value)}
                                             />
                                         </div>
 
@@ -80,11 +125,12 @@ const B2B = () => {
                     <div className="card lg:w-80 w-96 h-48 bg-white text-primary-content mx-auto shadow-lg">
                         <div className="card-body">
                             <h1 className="font-bold text-xl text-[#5966FF] opacity-90">
-                                Total Overview
+                                Todays Transaction
                             </h1>
+                            <h1 className='text-gray-500 text-xl font-bold'>You made</h1>
                             <h1 className="font-bold text-3xl text-gray-600">
                                 {/* ${userDetails?.balance}.00 */}
-                                $10000000
+                                $00.00
                             </h1>
                         </div>
                     </div>
