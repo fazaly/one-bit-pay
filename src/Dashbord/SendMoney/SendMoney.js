@@ -3,36 +3,40 @@ import SendMoneyHistory from "../../Components/TransactionHistory/SendMoneyHisto
 import { AuthContext } from "../../context/AuthProvider";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import { toast } from "react-hot-toast";
-import dateTime from 'date-time';
-import { useGetUserDetailsQuery, useGetUserLoggedinDetailsQuery, useSendMoneyMutation } from "../../features/api/apiSlice";
+import dateTime from "date-time";
+import {
+  useGetUserDetailsQuery,
+  useGetUserLoggedinDetailsQuery,
+  useGetUsersRoleQuery,
+  useSendMoneyMutation,
+} from "../../features/api/apiSlice";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
 
 const SendMoney = () => {
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [sendMoney, { isLoading, isSuccess, isError }] = useSendMoneyMutation();
+  const [receiver, setReceiver] = useState("");
+  const dispatch = useDispatch();
 
-  const currentUser = useSelector(state => state?.currentUser?.user)
-  const loggededUser = currentUser?.email
+  const email = useSelector((state) => state.auth.email);
+  const { data:userRole } = useGetUsersRoleQuery(`${receiver}`);
+  console.log(userRole?.status);
 
-
-  const { data } = useGetUserLoggedinDetailsQuery(loggededUser)
+  const { data} = useGetUserLoggedinDetailsQuery(email);
   const userDetails = data?.data;
 
   useEffect(() => {
     if (isSuccess) {
       toast.success("Send money success", { id: "senMoney" });
-
     }
     if (isError) {
-      toast.success("Failed to sending money! Please try again", { id: "sendMoney" });
-
+      toast.success("Failed to sending money! Please try again", {
+        id: "sendMoney",
+      });
     }
-
-  }, [isSuccess, isError])
-
+  }, [isSuccess, isError]);
 
   const handleSendMoney = (event) => {
     event.preventDefault();
@@ -40,34 +44,35 @@ const SendMoney = () => {
     const receiverEmail = form.receiverEmail.value;
     const amount = form.amount.value;
     const senderEmail = user?.email;
-    const time = dateTime({ showTimeZone: true })
+    const time = dateTime({ showTimeZone: true });
     const sendMoneyInfo = {
       senderEmail,
       receiverEmail,
       amount: parseInt(amount),
       time,
-      type: "balanceTransfer"
+      type: "balanceTransfer",
     };
 
     if (receiverEmail === user?.email) {
       toast.error("Send money not possible own account");
-
     } else if (userDetails?.balance <= 10) {
       toast.error("insufficient balance");
-
     } else if (amount < 10) {
-      toast.error('Minimum sending amount is 10');
-
-    } else if (receiverEmail !== user?.email && userDetails?.balance > 10) {
-
-      sendMoney(sendMoneyInfo)
-      form.reset()
-
+      toast.error("Minimum sending amount is 10");
+    } else if (userRole.userRole === "agent") {
+      toast.error("Send money not possible in agent account");
+    }else if(userRole?.status === false){
+      toast.error("Enter Valid Email");
+    } else if (receiverEmail !== user?.email && userDetails?.balance > 10 && userRole.userRole === "user") {
+      sendMoney(sendMoneyInfo);
+      form.reset();
     }
   };
 
-
-
+  const handleFocus = (e ) => {
+    setReceiver(e);
+    console.log(e)
+  }
 
   return (
     <div>
@@ -93,6 +98,7 @@ const SendMoney = () => {
                 type="text"
                 name="receiverEmail"
                 required
+                onBlur={(e) => handleFocus(e.target.value)}
                 placeholder="receiver email"
                 className=" w-full border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
               />
@@ -137,7 +143,11 @@ const SendMoney = () => {
             <h1 className="font-bold text-xl text-[#5966FF] opacity-50 mb-4">
               History
             </h1>
-            <SendMoneyHistory email={currentUser?.email} loading={loading} type={"balanceTransfer"} />
+            <SendMoneyHistory
+              email={email}
+              loading={loading}
+              type={"balanceTransfer"}
+            />
           </div>
         </div>
       </div>
