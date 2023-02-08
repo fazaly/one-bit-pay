@@ -1,10 +1,11 @@
 import React from 'react';
-import { useGetUserDetailsQuery, useMakeAdminMutation } from '../../features/api/apiSlice';
+import { useDeletUserMutation, useGetUserDetailsQuery, useMakeAdminMutation } from '../../features/api/apiSlice';
 
 const AllUsers = () => {
     const { data, isLoading, isSuccess, isError } = useGetUserDetailsQuery();
-    const [makeAdmin] = useMakeAdminMutation()
     const users = data;
+    const [makeAdmin] = useMakeAdminMutation()
+    const [deleteUser] = useDeletUserMutation()
 
     if (isLoading) {
         return <p>Loading..</p>
@@ -36,7 +37,7 @@ const AllUsers = () => {
                                         <>
                                             <button onClick={() => makeAdmin(user?._id)} className="btn btn-sm mr-6">Make Admin</button>
                                             <button
-
+                                                onClick={() => deleteUser(user?._id)}
                                                 className='btn btn-sm bg-red-500'
                                             >
                                                 Delete

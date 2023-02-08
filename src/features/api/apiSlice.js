@@ -3,8 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userDetailsApi = createApi({
     reducerPath: "userDetailsApi",
     baseQuery: fetchBaseQuery({
-        // baseUrl: `https://one-bit-pay-server.vercel.app`,
-        baseUrl: `http://localhost:5000`
+        baseUrl: `https://one-bit-pay-server.vercel.app`,
+        // baseUrl: `http://localhost:5000`
     }),
     tagTypes: ["Users"],
     endpoints: (builder) => ({
@@ -58,11 +58,11 @@ export const userDetailsApi = createApi({
         }),
         postRechargeData: builder.mutation({
             query: (data) => ({
-                url:"/mobile/recharge",
+                url: "/mobile/recharge",
                 method: "POST",
                 body: data,
             }),
-        invalidatesTags: ["Users", "userDetails"]
+            invalidatesTags: ["Users", "userDetails"]
         }),
         getUsersRole: builder.query({
             query: (email) => ({
@@ -89,8 +89,15 @@ export const userDetailsApi = createApi({
                 method: "PUT",
                 body: data,
             })
-        })
+        }),
+        deletUser: builder.mutation({
+            query: (id) => ({
+                url: `/users/${id}`,
+                method: "DELETE"
+            }),
+            invalidatesTags: ["Users"],
+        }),
     })
 });
 
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation , useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation} = userDetailsApi
+export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation } = userDetailsApi
