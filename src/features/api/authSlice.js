@@ -40,15 +40,17 @@ const authSlice = createSlice({
             state.isError = false;
         })
         .addCase(createUser.fulfilled, (state, action) => {
-            state.isLoading = false;
             state.email = action.payload;
+            state.isLoading = false;
             state.isError = false;
+            state.isSuccess = true;
         })
         .addCase(createUser.rejected, (state, action) => {
             state.isLoading = false;
             state.email = "";
             state.isError = true;
             state.error = action.error.message;
+            state.isSuccess = false;
         })
         //Login Users
         .addCase(loginUser.pending, (state, action) => {
@@ -59,12 +61,14 @@ const authSlice = createSlice({
             state.isLoading = false;
             state.email = action.payload;
             state.isError = false;
+            state.isSuccess = true;
         })
         .addCase(loginUser.rejected, (state, action) => {
             state.isLoading = false;
             state.email = "";
             state.isError = true;
             state.error = action.error.message;
+            state.isSuccess = false;
         })
     }
 })

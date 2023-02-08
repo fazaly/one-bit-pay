@@ -224,18 +224,12 @@ const DashbordLayout = () => {
                     />
                     <p className="text-lg font-semibold">Cash In</p>
                   </NavLink>
-
-                  <NavLink to="/dashboard/billpayagent" className="flex items-center mb-6 mt-4">
+                  <NavLink to="/dashboard/transaction" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
-                      icon={faCreditCard}
-                      className="text-[25px] mr-4"
+                      icon={faCommentDollar}
+                      className="text-[30px] mr-4"
                     />
-                    <p className="text-lg font-semibold">Bill Pay</p>
-                  </NavLink>
-
-                  <NavLink to="/dashboard/rechargeagent" className="flex items-center mb-6 mt-4">
-                    <FaMobile className="text-[25px] mr-4" />
-                    <p className="text-lg font-semibold">Mobile Recharge</p>
+                    <p className="text-lg font-semibold">Transaction's</p>
                   </NavLink>
                 </div>
               }

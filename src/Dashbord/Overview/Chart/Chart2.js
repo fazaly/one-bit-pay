@@ -1,5 +1,6 @@
 import React from "react";
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 import {
     Radar,
     RadarChart,
@@ -8,11 +9,13 @@ import {
     PolarRadiusAxis
   } from "recharts";
 import { AuthContext } from "../../../context/AuthProvider";
+import { useGetUserLoggedinDetailsQuery } from "../../../features/api/apiSlice";
 
 
 
 const Chart2 = () => {
-    const {user, userDetails} = useContext(AuthContext);
+   const email = useSelector((state) => state.auth.email);
+   const {data:userDetails} = useGetUserLoggedinDetailsQuery(email)
 
     const data = [
         {
