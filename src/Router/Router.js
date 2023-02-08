@@ -30,6 +30,7 @@ import Admin from "../Pages/Admin/Admin";
 import AllUsers from "../Pages/Admin/AllUsers";
 import AdminRoutes from "./AdminRoutes";
 import AllAgents from "../Pages/Admin/AllAgents";
+import AgentRequest from "../Pages/Admin/AgentRequest";
 
 
 export const router = createBrowserRouter([
@@ -190,7 +191,11 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/agents",
         element: <AllAgents></AllAgents>
-      }
+      },
+      {
+        path: "/dashboard/agentRequest",
+        element: <AgentRequest></AgentRequest>
+      },
     ],
   },
 ]);
