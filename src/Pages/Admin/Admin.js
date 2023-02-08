@@ -25,7 +25,9 @@ const Admin = () => {
         setTodoTask("");
     };
 
-    const userCount = users.length;
+    const userCount = users?.filter(users => users?.role === 'user').length;
+    const agentCount = users?.filter(agents => agents?.role === 'agent').length;
+    const adminCount = users?.filter(admins => admins?.role === 'admin').length;
 
     const options = {
 
@@ -34,7 +36,11 @@ const Admin = () => {
             data: [userCount]
         }, {
             name: 'Agents',
-            data: [11, 32, 45, 32, 34, 52, 41]
+            data: [5, 15]
+        },
+        {
+            name: 'Admin',
+            data: [adminCount]
         }],
         options: {
             chart: {
