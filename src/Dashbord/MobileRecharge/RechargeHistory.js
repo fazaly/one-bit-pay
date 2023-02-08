@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 // https://one-bit-pay-server.vercel.app
 
 const RechargeHistory = () => {
-  const user = useSelector((state) => state.currentUser.user);
-  const {data} = useGetRechargeHistoryQuery(user.email);
+  const email = useSelector((state) => state.auth.email);
+  const {data} = useGetRechargeHistoryQuery(email);
   const recharges = data;
   return (
     <div>

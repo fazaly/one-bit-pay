@@ -1,15 +1,20 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import { Form } from "react-router-dom";
+import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import Loader2 from "../../Components/Loader/Loader2";
-import { AuthContext } from "../../context/AuthProvider";
+import { useApplyForAgentMutation } from "../../features/api/apiSlice";
 import "./ApplyForAgent.css";
 
 const ApplyForAgent = () => {
-  const { user, userDetails } = useContext(AuthContext);
+  const email = useSelector((state) => state.auth.email);
   const [loading, setLoading] = useState(false);
+  const [postData, {isLoading, isSuccess, isError, error}] = useApplyForAgentMutation();
+  const dispacth = useDispatch();
 
   const {
     register,
@@ -18,13 +23,22 @@ const ApplyForAgent = () => {
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    if(!isLoading && isSuccess){
+      toast.success("Apply Success", {id:"postData"});
+      reset();
+    }else if(isError){
+      toast.error(error, {id:"postData"});
+    }
+  },[error, isError, isLoading, isSuccess, reset])
+
   const handleupdateInfo = (data) => {
     console.log(data);
 
     const userData = {
       fname: data.first_name,
       lname: data.last_name,
-      email: user?.email,
+      email: email,
       img: data.image[0],
       nid: data.nidNumber,
       tin: data.tinNumber,
@@ -56,24 +70,7 @@ const ApplyForAgent = () => {
         }
 
         //Insert user data in databas
-        fetch(` https://one-bit-pay-server.vercel.app/agents/request`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(userinfo)
-        })
-          .then(res => res.json())
-          .then(data => {
-            console.log(data);
-            setLoading(false);
-            toast.success('Request Inserted');
-            reset();
-          })
-          .catch(err => {
-            setLoading(false);
-            toast.error(err.message);
-          })
+        postData(userinfo);
       })
       .catch(err => {
         console.log(err);
@@ -286,7 +283,7 @@ const ApplyForAgent = () => {
                 type="submit"
                 className="text-base  ml-3  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF]  hover:from-[#8759f1] text-white duration-200 ease-in-out transition"
               >
-                {loading ? <Loader2 /> : "CONFIRM"}
+                {isLoading ? <ButtonSpinner/> : "CONFIRM"}
               </button>
               <button
                 type="reset"

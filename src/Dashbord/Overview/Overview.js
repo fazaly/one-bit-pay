@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import SendMoneyHistory from "../../Components/TransactionHistory/SendMoneyHistory";
-import { AuthContext } from "../../context/AuthProvider";
 import { useGetUserLoggedinDetailsQuery } from "../../features/api/apiSlice";
 import Chart2 from "./Chart/Chart2";
 // import ChartView from "./Chart/Chart";

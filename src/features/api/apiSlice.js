@@ -74,8 +74,22 @@ export const userDetailsApi = createApi({
                 method: "PUT",
                 body: data,
             })
+        }),
+        applyForAgent: builder.mutation({
+            query: (data) => ({
+                url: `/agents/request`,
+                method: "POST",
+                body: data,
+            })
+        }),
+        updateUserProfile: builder.mutation({
+            query: (email, data) => ({
+                url: `/userUpdate/${email}`,
+                method: "PUT",
+                body: data,
+            })
         })
     })
 });
 
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation , useGetUsersRoleQuery, usePostCashInMutation} = userDetailsApi
+export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation , useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation} = userDetailsApi

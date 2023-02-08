@@ -2,6 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 import { AuthContext } from "../../context/AuthProvider";
 import './UpdateProfile.css';
 
@@ -9,6 +10,8 @@ const UpdateProfile = () => {
   const { user, userDetails } = useContext(AuthContext);
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const imageHostKey = process.env.REACT_APP_imgHostKey
+
+  const email = useSelector((state) => state.auth.email);
 
   const handleUpdate = (data) => {
     const image = data.image[0]
