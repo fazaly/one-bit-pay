@@ -12,7 +12,7 @@ const useAgent = (email) => {
   useEffect(() => {
     if (email) {
       setAgentLoading(true);
-      fetch(` https://one-bit-pay-server.vercel.app/user/agent/${email}`)
+      fetch(` http://localhost:5000/user/agent/${email}`)
         .then((res) => res.json())
         .then((data) => {
           setIsAgent(data);

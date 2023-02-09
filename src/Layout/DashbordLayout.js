@@ -27,11 +27,10 @@ import { useSelector } from "react-redux";
 const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
   const [notifi, setNotifi] = useState(false);
-  // const [userDetails, setUserDetails] = useState([]);
   const { user } = useContext(AuthContext);
-  const [userRole] = useRole(user?.email);
 
-  const  email  = useSelector(state => state.auth.email)
+
+  const email = useSelector(state => state.auth.email)
   // const loggededUser = currentUser?.email;
 
   const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email)

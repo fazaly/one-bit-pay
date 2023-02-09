@@ -60,7 +60,7 @@ const SendMoney = () => {
       toast.error("Send money not possible in agent account");
     } else if (userRole?.status === false) {
       toast.error("Enter Valid Email");
-    } else if (receiverEmail !== user?.email && userDetails?.balance > 10 && userRole.userRole === "user") {
+    } else if (receiverEmail !== user?.email && userDetails?.balance > 10 && userDetails.role === "user") {
       sendMoney(sendMoneyInfo);
       form.reset();
     }

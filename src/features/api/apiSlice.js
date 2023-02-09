@@ -3,8 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userDetailsApi = createApi({
     reducerPath: "userDetailsApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: `https://one-bit-pay-server.vercel.app`,
-        // baseUrl: `http://localhost:5000`
+        // baseUrl: `https://one-bit-pay-server.vercel.app`,
+        baseUrl: `http://localhost:5000`
     }),
     tagTypes: ["users", "userDetails"],
     endpoints: (builder) => ({
@@ -62,11 +62,7 @@ export const userDetailsApi = createApi({
                 method: "POST",
                 body: data,
             }),
-<<<<<<< HEAD
-            invalidatesTags: ["users", "userDetails"]
-=======
             invalidatesTags: ["Users", "userDetails"]
->>>>>>> 1a55738187d689fa65e3c2927878f37e2faf07bb
         }),
         getUsersRole: builder.query({
             query: (email) => ({
@@ -100,11 +96,8 @@ export const userDetailsApi = createApi({
                 url: `/agent/b2b`,
                 method: "POST",
                 body: data,
-<<<<<<< HEAD
             }),
-            invalidatesTags: ["userDetails"]
-=======
-            })
+            invalidatesTags: ["Users", "userDetails"],
         }),
         deletUser: builder.mutation({
             query: (id) => ({
@@ -112,13 +105,28 @@ export const userDetailsApi = createApi({
                 method: "DELETE"
             }),
             invalidatesTags: ["Users"],
->>>>>>> 1a55738187d689fa65e3c2927878f37e2faf07bb
         }),
+        getAgentRequest: builder.query({
+            query: () => ({
+                url: "/agents/request"
+            }),
+            providesTags: ["agentRequest"]
+        }),
+        makeAgent: builder.mutation({
+            query: (id) => ({
+                url: `/users/agent/${id}`,
+                method: "PATCH"
+            }),
+            invalidatesTags: ["agentRequest"],
+        }),
+
+
+
+
+
     })
 });
 
-<<<<<<< HEAD
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, usePostB2bMutation, useUpdateUserProfileMutation } = userDetailsApi
-=======
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation } = userDetailsApi
->>>>>>> 1a55738187d689fa65e3c2927878f37e2faf07bb
+
+export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation, useUpdateUserProfileMutation, usePostB2bMutation } = userDetailsApi
+
