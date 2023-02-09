@@ -33,10 +33,11 @@ const FinancialSolutions = () => {
             <h1 className='text-3xl mt-16 mb-10 text-center font-bold'>One Platform for all Financial Solutions</h1>
             <div className='grid  grid-cols-1 lg:grid-cols-4 gap-10 mx-auto md:grid-cols-3 sm:grid-cols-2 xsm:grid-cols-1'>
                 {
-                    FinancialSolutionsData.map(FSData => <FinancialSolutionsCard
-                        key={FSData.id}
-                        FSData={FSData}
-                    ></FinancialSolutionsCard>
+                    FinancialSolutionsData.map(FSData =>
+                        <FinancialSolutionsCard
+                            key={FSData.id}
+                            FSData={FSData}
+                        ></FinancialSolutionsCard>
                     )
                 }
             </div>
