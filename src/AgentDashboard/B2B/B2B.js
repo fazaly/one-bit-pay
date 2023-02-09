@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-import dateTime from "date-time";
 import { useSelector } from 'react-redux';
-import { useGetUserLoggedinDetailsQuery, useGetUsersRoleQuery, usePostB2bMutation } from '../../features/api/apiSlice';
+import { useGetTransactionHistoryQuery, useGetUserLoggedinDetailsQuery, useGetUsersRoleQuery, usePostB2bMutation } from '../../features/api/apiSlice';
 import MoneyTransferHistory from './MoneyTransferHistory';
 import { toast } from 'react-hot-toast';
 import { format } from 'date-fns';
+import ButtonSpinner from '../../Components/ButtonSpinner/ButtonSpinner';
 
 
 const B2B = () => {
@@ -14,22 +14,34 @@ const B2B = () => {
     const { data } = useGetUserLoggedinDetailsQuery(email);
     const userDetails = data?.data;
     const { data: userRole } = useGetUsersRoleQuery(focusEmail);
-    const [postB2bData, { isLoading, isSuccess, isError, error }] = usePostB2bMutation()
-    console.log("focusEmail", focusEmail,)
-    console.log("userDetails", userDetails)
-    console.log("userRole", userRole)
+    const [postB2bData, { isLoading, isSuccess }] = usePostB2bMutation()
+
+    // todays transaction
+    const { data: transactions } = useGetTransactionHistoryQuery(email)
+    const date = format(new Date(), "PP");
+    const todaysTransition = transactions?.data?.filter(td => td.time === date && td.type === "b2bTransition" && td.senderEmail === email)
+    const todaysTransitionAmount = todaysTransition?.reduce((a, curr) => a + curr.amount, 0)
+    console.log(isLoading, isSuccess)
+
+    useEffect(() => {
+        if (isLoading) {
+            toast.loading('loading', { id: "b2b transition" })
+        }
+        else if (isSuccess) {
+            toast.success("Transition success", { id: "b2b transition" })
+        }
+    }, [isLoading, isSuccess])
+
 
     const handleTransition = (e) => {
         e.preventDefault()
         const receiverEmail = e.target.email.value;
         const transferAmount = parseInt(e.target.amount.value);
-        const time = format(new Date(), "PP");
-
 
         const transferInfo = {
             receiverEmail,
             transferAmount,
-            time,
+            time: date,
             type: "b2bTransition",
             agentEmail: email
         }
@@ -43,17 +55,15 @@ const B2B = () => {
         else if (transferAmount < 100) {
             return toast.error("Minimum transition amount is 100");
         }
-        else if (userRole.isUser) {
-            return toast.error("transition in User Account Not Possible");
+        else if (userRole.userRole !== "agent") {
+            return toast.error("Please enter a valid agent email for transfer money");
         }
         else if (receiverEmail !== email && userDetails?.balance > 100) {
-            // postData(cashInInfo);
-            // if (isSuccess) {
-            //     form.reset();
-            // }
             postB2bData(transferInfo)
-            toast.success("Transition successfull")
+            // toast.success("Transition successfull")
+            e.target.reset()
         }
+
     }
 
     return (
@@ -112,8 +122,8 @@ const B2B = () => {
                                             text-lg hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF] transition-all hover:from-[#8759f1] text-white
                                             "
                                         >
-                                            Transition Confirm
-                                            {/* {loading ? <ButtonSpinner /> : "CONFIRM"} */}
+                                            {/* Transition Confirm */}
+                                            {isLoading ? <ButtonSpinner /> : "Transition Confirm"}
                                         </button>
                                     </div>
                                 </div>
@@ -129,14 +139,20 @@ const B2B = () => {
                             </h1>
                             <h1 className='text-gray-500 text-xl font-bold'>You made</h1>
                             <h1 className="font-bold text-3xl text-gray-600">
-                                {/* ${userDetails?.balance}.00 */}
-                                $00.00
+                                ${todaysTransitionAmount}.00
+
+                                {/* {
+                                    transactionData.data.filter(td => td.time === date && td.type === "b2bTransition").length
+                                } */}
                             </h1>
                         </div>
                     </div>
                 </div>
             </div>
-            <MoneyTransferHistory></MoneyTransferHistory>
+            <MoneyTransferHistory
+                email={email}
+                type="b2bTransition"
+            ></MoneyTransferHistory>
         </div>
     );
 };

@@ -6,25 +6,25 @@ export const userDetailsApi = createApi({
         // baseUrl: `https://one-bit-pay-server.vercel.app`,
         baseUrl: `http://localhost:5000`
     }),
-    tagTypes: ["Users"],
+    tagTypes: ["users", "userDetails"],
     endpoints: (builder) => ({
         getUserDetails: builder.query({
             query: () => ({
                 url: "/users"
             }),
-            providesTags: ["Users"],
+            providesTags: ["users"],
         }),
         getUserLoggedinDetails: builder.query({
             query: (email) => ({
                 url: `/user/${email}`
             }),
-            providesTags: ["UserDetails"],
+            providesTags: ["userDetails"],
         }),
         getTransactionHistory: builder.query({
             query: (email) => ({
                 url: `/transactionSend/${email}`
             }),
-            providesTags: ["UserDetails"],
+            providesTags: ["userDetails"],
         }),
         addUser: builder.mutation({
             query: (data) => ({
@@ -32,14 +32,14 @@ export const userDetailsApi = createApi({
                 method: "POST",
                 body: data
             }),
-            invalidatesTags: ["Users"],
+            invalidatesTags: ["users"],
         }),
         makeAdmin: builder.mutation({
             query: (id) => ({
                 url: `/users/admin/${id}`,
                 method: "PATCH"
             }),
-            invalidatesTags: ["Users"],
+            invalidatesTags: ["users"],
         }),
         sendMoney: builder.mutation({
             query: (sendMoneyInfo) => ({
@@ -47,14 +47,14 @@ export const userDetailsApi = createApi({
                 method: "PUT",
                 body: sendMoneyInfo
             }),
-            invalidatesTags: ["UserDetails"],
+            invalidatesTags: ["userDetails"],
 
         }),
         getRechargeHistory: builder.query({
             query: (email) => ({
                 url: `/recharge/${email}`
             }),
-            providesTags: ["Users"],
+            providesTags: ["users"],
         }),
         postRechargeData: builder.mutation({
             query: (data) => ({
@@ -62,7 +62,7 @@ export const userDetailsApi = createApi({
                 method: "POST",
                 body: data,
             }),
-            invalidatesTags: ["Users", "userDetails"]
+            invalidatesTags: ["users", "userDetails"]
         }),
         getUsersRole: builder.query({
             query: (email) => ({
@@ -84,20 +84,22 @@ export const userDetailsApi = createApi({
             })
         }),
         updateUserProfile: builder.mutation({
-            query: (email, data) => ({
-                url: `/userUpdate/${email}`,
+            query: (userData) => ({
+                url: `/userUpdate`,
                 method: "PUT",
-                body: data,
-            })
+                body: userData,
+            }),
+            invalidatesTags: ["userDetails"]
         }),
         postB2b: builder.mutation({
             query: (data) => ({
                 url: `/agent/b2b`,
                 method: "POST",
                 body: data,
-            })
+            }),
+            invalidatesTags: ["userDetails"]
         }),
     })
 });
 
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, usePostB2bMutation } = userDetailsApi
+export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, usePostB2bMutation, useUpdateUserProfileMutation } = userDetailsApi
