@@ -98,7 +98,25 @@ export const userDetailsApi = createApi({
             }),
             invalidatesTags: ["Users"],
         }),
+        getAgentRequest: builder.query({
+            query: () => ({
+                url: "/agents/request"
+            }),
+            providesTags: ["agentRequest"]
+        }),
+        makeAgent: builder.mutation({
+            query: (id) => ({
+                url: `/users/agent/${id}`,
+                method: "PATCH"
+            }),
+            invalidatesTags: ["agentRequest"],
+        }),
+
+
+
+
+
     })
 });
 
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation } = userDetailsApi
+export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation } = userDetailsApi
