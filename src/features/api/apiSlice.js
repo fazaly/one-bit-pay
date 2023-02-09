@@ -3,8 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userDetailsApi = createApi({
     reducerPath: "userDetailsApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: `https://one-bit-pay-server.vercel.app`,
-        // baseUrl: `http://localhost:5000`
+        // baseUrl: `https://one-bit-pay-server.vercel.app`,
+        baseUrl: `http://localhost:5000`
     }),
     tagTypes: ["Users"],
     endpoints: (builder) => ({
@@ -88,7 +88,8 @@ export const userDetailsApi = createApi({
                 url: `/userUpdate/${email}`,
                 method: "PUT",
                 body: data,
-            })
+            }),
+            invalidatesTags:["userDetails"]
         }),
         deletUser: builder.mutation({
             query: (id) => ({
