@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react';
+// import React, { useEffect, useState } from 'react';
 
-const useRole = (email) => {
-    const [userRole, setUserRole] = useState(null)
-    const [userRoleLoading, setUserRoleLoading] = useState(true)
+// const useRole = (email) => {
+//     const [userRole, setUserRole] = useState(null)
+//     const [userRoleLoading, setUserRoleLoading] = useState(true)
 
-    useEffect(() => {
+//     useEffect(() => {
 
-        if (email) {
-            fetch(`https://one-bit-pay-server.vercel.app/userRole/${email}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.status) {
-                        setUserRole(data.data)
-                        setUserRoleLoading(false)
-                    }
-                })
-                .catch(error => console.error(error))
+//         if (email) {
+//             fetch(`https://one-bit-pay-server.vercel.app/userRole/${email}`)
+//                 .then(res => res.json())
+//                 .then(data => {
+//                     if (data.status) {
+//                         setUserRole(data.data)
+//                         setUserRoleLoading(false)
+//                     }
+//                 })
+//                 .catch(error => console.error(error))
 
-        }
+//         }
 
-    }, [userRole])
+//     }, [userRole])
 
-    return [userRole, userRoleLoading]
+//     return [userRole, userRoleLoading]
 
-};
+// };
 
-export default useRole;
+// export default useRole;
