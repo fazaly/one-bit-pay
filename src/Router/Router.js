@@ -30,6 +30,7 @@ import Admin from "../Pages/Admin/Admin";
 import AllUsers from "../Pages/Admin/AllUsers";
 import AdminRoutes from "./AdminRoutes";
 import AllAgents from "../Pages/Admin/AllAgents";
+import AgentRequest from "../Pages/Admin/AgentRequest";
 
 
 export const router = createBrowserRouter([
@@ -62,7 +63,7 @@ export const router = createBrowserRouter([
         path: "/blogpost/:id",
         element: <IndividualBlog></IndividualBlog>,
         loader: ({ params }) =>
-          fetch(` https://one-bit-pay-server.vercel.app/blogs/${params.id}`),
+          fetch(` http://localhost:5000/blogs/${params.id}`),
       },
     ],
   },
@@ -127,7 +128,7 @@ export const router = createBrowserRouter([
         path: `/dashboard/donationDetails/:id`,
         element: <DonationDetails></DonationDetails>,
         loader: ({ params }) =>
-          fetch(`https://one-bit-pay-server.vercel.app/donations/${params.id}`),
+          fetch(`http://localhost:5000/donations/${params.id}`),
       },
       {
         path: "/dashboard/cashin",
@@ -190,7 +191,11 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/agents",
         element: <AllAgents></AllAgents>
-      }
+      },
+      {
+        path: "/dashboard/agentRequest",
+        element: <AgentRequest></AgentRequest>
+      },
     ],
   },
 ]);

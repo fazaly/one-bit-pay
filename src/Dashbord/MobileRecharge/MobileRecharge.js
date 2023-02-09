@@ -254,7 +254,7 @@ const cCodes = [
 
 const MobileRecharge = () => {
   const [postData, {isLoading, isSuccess}] = usePostRechargeDataMutation();
-  const { email } = useSelector(state => state?.currentUser?.user)
+  const email  = useSelector(state => state.auth.email)
   const { data } = useGetUserLoggedinDetailsQuery(email);
   const userDetails = data?.data;
 

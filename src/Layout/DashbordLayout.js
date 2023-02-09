@@ -20,9 +20,6 @@ import {
   faMoneyBills,
   faDollar,
 } from "@fortawesome/free-solid-svg-icons";
-import useAgent from "../Hooks/useAgent";
-import useUser from "../Hooks/useUser";
-import useAdmin from "../Hooks/useAdmin";
 import useRole from "../Hooks/useRole";
 import { useGetTransactionHistoryQuery, useGetUserDetailsQuery, useGetUserLoggedinDetailsQuery } from "../features/api/apiSlice";
 import { useSelector } from "react-redux";
@@ -30,11 +27,10 @@ import { useSelector } from "react-redux";
 const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
   const [notifi, setNotifi] = useState(false);
-  // const [userDetails, setUserDetails] = useState([]);
   const { user } = useContext(AuthContext);
-  const [userRole] = useRole(user?.email);
 
-  const  email  = useSelector(state => state.auth.email)
+
+  const email = useSelector(state => state.auth.email)
   // const loggededUser = currentUser?.email;
 
   const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email)
@@ -227,18 +223,12 @@ const DashbordLayout = () => {
                     />
                     <p className="text-lg font-semibold">Cash In</p>
                   </NavLink>
-
-                  <NavLink to="/dashboard/billpayagent" className="flex items-center mb-6 mt-4">
+                  <NavLink to="/dashboard/transaction" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
-                      icon={faCreditCard}
-                      className="text-[25px] mr-4"
+                      icon={faCommentDollar}
+                      className="text-[30px] mr-4"
                     />
-                    <p className="text-lg font-semibold">Bill Pay</p>
-                  </NavLink>
-
-                  <NavLink to="/dashboard/rechargeagent" className="flex items-center mb-6 mt-4">
-                    <FaMobile className="text-[25px] mr-4" />
-                    <p className="text-lg font-semibold">Mobile Recharge</p>
+                    <p className="text-lg font-semibold">Transaction's</p>
                   </NavLink>
                 </div>
               }
