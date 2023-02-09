@@ -1,6 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useGetAgentRequestQuery } from '../../features/api/apiSlice';
+import AgentRequestTableRow from './AgentRequestTableRow';
 
 const AgentRequest = () => {
+
+    const { data, isLoading, isSuccess, isError } = useGetAgentRequestQuery();
+    console.log(data)
+
+    // useEffect(() => {
+    //     if (isLoading) {
+    //         return <p className='text-center text-xl font-bold'>Loading</p>
+    //     }
+
+    //     if (isError) {
+    //         return <p className='text-center text-xl font-bold text-red'>Something Wrong!</p>
+    //     }
+    // }, [isLoading, isError, isSuccess])
+
+
+
+    // console.log(agentsRequest)
+
     return (
         <section className="container mx-auto p-6 font-mono">
             <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
@@ -17,24 +37,9 @@ const AgentRequest = () => {
                         </thead>
                         <tbody className="bg-white">
 
-                            <tr className="text-gray-700">
-                                <td className="px-4 py-3 border">
-                                    <div className="flex items-center text-sm">
-                                        <div>
-                                            <p className="font-semibold text-black">Stevens</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className="px-4 py-3 text-xs border">
-                                    <span className="px-2 py-1 font-semibold  rounded-sm">stv@gmail.com </span>
-                                </td>
-                                <td className="px-4 py-3 text-md font-semibold border text-yellow-400"><span className=' leading-tight  bg-gray-100'>Pending</span></td>
-                                <td className="px-4 py-3 text-sm border">12 hours ago</td>
-                                <td className="px-4 py-3 text-sm border">
-                                    <button className='btn btn-sm btn-success'>Approve</button>
-                                </td>
-                            </tr>
-
+                            {isSuccess &&
+                                data?.map(agentRequest => <AgentRequestTableRow key={agentRequest._id} agentRequest={agentRequest}></AgentRequestTableRow>)
+                            }
 
                         </tbody>
                     </table>

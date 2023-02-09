@@ -4,7 +4,8 @@ import { useDeletUserMutation, useGetUserDetailsQuery } from '../../features/api
 const AllAgents = () => {
     const { data, isLoading, isSuccess, isError } = useGetUserDetailsQuery();
     const users = data;
-    const [deleteUser] = useDeletUserMutation()
+    const [deleteUser] = useDeletUserMutation();
+
     return (
         <div>
             <table className="table w-full">
@@ -30,6 +31,7 @@ const AllAgents = () => {
                                     >
                                         Delete
                                     </button>
+
                                 </td>
                             </tr>
                         )
