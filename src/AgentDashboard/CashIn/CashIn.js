@@ -4,22 +4,32 @@ import dateTime from "date-time";
 import { toast } from "react-hot-toast";
 import { useState } from "react";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
+import { useGetAreNormalUserQuery } from "../../features/api/apiSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setCashInUser, setUserType } from "../../features/api/userTypeSlice";
 
 const CashIn = () => {
   const { user, userDetails, refetch, } = useContext(AuthContext);
   const [loading, setloading] = useState(false);
-  const [areUser, setAreUser] = useState("");
+  // const [areUser, setAreUser] = useState("");
+  const [email, setEmail] = useState('')
 
-  console.log(userDetails);
+  const { data, isLoading, isSuccess } = useGetAreNormalUserQuery(email);
+
+  console.log(data?.isUser)
+  let areUser = data?.isUser
+  // useEffect(() => {
+
+
+  // }, [])
+
 
   const hadleFocus = (email) => {
-    console.log(email)
-    fetch(` https://one-bit-pay-server.vercel.app/user/normaluser/${email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setAreUser(data.isUser);
-      });
+    setEmail(email)
   };
+
+
 
 
   const handleCashIn = (event) => {
@@ -44,7 +54,7 @@ const CashIn = () => {
     } else if (amount < 10) {
       return toast.error("Minimum sending amount is 10");
     } else if (!areUser) {
-      return toast.error("Cashin in Agent Account Not Possible");
+      return toast.error("Cash In Not Possible in Agent Or Admin Account ");
     } else if (receiverEmail !== user?.email && userDetails?.balance > 10) {
       setloading(true);
       fetch(" https://one-bit-pay-server.vercel.app/agent/cashin", {

@@ -13,6 +13,12 @@ export const userDetailsApi = createApi({
             }),
             providesTags: ["Users"],
         }),
+        getAreNormalUser: builder.query({
+            query: (email) => ({
+                url: `/user/normaluser/${email}`
+            }),
+            providesTags: ["Users"],
+        }),
         getUserLoggedinDetails: builder.query({
             query: (email) => ({
                 url: `/user/${email}`
@@ -53,4 +59,4 @@ export const userDetailsApi = createApi({
     })
 });
 
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery } = userDetailsApi
+export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetAreNormalUserQuery } = userDetailsApi
