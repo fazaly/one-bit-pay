@@ -8,6 +8,7 @@ import "./DashboardLayout.css";
 import { HiViewGridAdd, HiCurrencyDollar } from "react-icons/hi";
 import { FaUserEdit, FaMobile, FaHandshake, FaDonate } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SlCalculator } from "react-icons/sl";
 import {
   faSackDollar,
   faFileSignature,
@@ -188,6 +189,15 @@ const DashbordLayout = () => {
                       className="text-[25px] mr-4"
                     />
                     <p className="text-lg font-semibold">Donation</p>
+                  </NavLink>
+                  <NavLink
+                    to="/dashboard/chargeCalculate"
+                    className="flex items-center "
+                  >
+                    <SlCalculator
+                      className="text-[25px] mr-4"
+                    />
+                    <p className="text-lg font-semibold">Charge Calculator</p>
                   </NavLink>
 
                   <NavLink
