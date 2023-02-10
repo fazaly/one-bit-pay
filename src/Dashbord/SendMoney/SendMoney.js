@@ -28,6 +28,11 @@ const SendMoney = () => {
   const userDetails = data?.data;
 
   useEffect(() => {
+    if (isSuccess) {
+      toast.success("You Successfully Send Money", {
+        id: "sendMoney",
+      });
+    }
     if (!isSuccess && isError) {
       toast.success("Failed to sending money! Please try again", {
         id: "sendMoney",
