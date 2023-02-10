@@ -32,6 +32,7 @@ import AdminRoutes from "./AdminRoutes";
 import AllAgents from "../Pages/Admin/AllAgents";
 import AgentRequest from "../Pages/Admin/AgentRequest";
 import ChargeCalculator from "../Dashbord/ChargeCalculator/ChargeCalculator";
+import LoadingGif from "../Components/LoadingGif/LoadingGif";
 
 
 export const router = createBrowserRouter([
@@ -177,6 +178,16 @@ export const router = createBrowserRouter([
           <PrivateRoutes>
             <AgentRoutes>
               <AgentMobileRecharge />
+            </AgentRoutes>
+          </PrivateRoutes>
+        )
+      },
+      {
+        path: "/dashboard/transactions",
+        element: (
+          <PrivateRoutes>
+            <AgentRoutes>
+              <LoadingGif/>
             </AgentRoutes>
           </PrivateRoutes>
         )
