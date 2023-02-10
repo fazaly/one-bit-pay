@@ -3,18 +3,19 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthProvider';
 import { format } from "date-fns";
 import { toast } from "react-hot-toast";
+import { useSendMoneyMutation } from '../../features/api/apiSlice';
+import { useSelector } from 'react-redux';
 
 const DonationModal = ({ institute, modal, setModal }) => {
-    // const [loading, setLoading] = useState(false);
-    const { user, loading, setLoading } = useContext(AuthContext)
+    const [sendMoney, { isLoading, isSuccess, isError }] = useSendMoneyMutation();
 
-
+    const email = useSelector((state) => state.auth.email);
 
     const handleDonate = (event) => {
         event.preventDefault();
         const form = event.target;
         const amount = form.amount.value;
-        const senderEmail = user?.email;
+        const senderEmail = email;
         const receiverEmail = institute?.email;
         const time = format(new Date(), "PP");
         const sendMoneyInfo = {
@@ -24,29 +25,12 @@ const DonationModal = ({ institute, modal, setModal }) => {
             time,
             type: "donation"
         };
-        // console.log(institute)
-        // console.log(sendMoneyInfo);
+        sendMoney(sendMoneyInfo);
 
-        fetch(" https://one-bit-pay-server.vercel.app/sendMoney", {
-            method: "PUT",
-            headers: {
-                "content-type": "application/json",
-            },
-            body: JSON.stringify(sendMoneyInfo),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-                toast.success("Thank You So Much For Donation");
-                form.reset();
-                // setLoading(false);
-                setModal(!modal)
-            });
-
-
-
-
-
+        if (isSuccess) {
+            setModal(!modal);
+            toast.success("Thank You So Much For Donation")
+        }
     }
 
 

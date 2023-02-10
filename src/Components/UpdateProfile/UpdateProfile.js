@@ -1,14 +1,30 @@
-import React from "react";
-import { useContext } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { AuthContext } from "../../context/AuthProvider";
+import { useSelector } from "react-redux";
+import { useGetUserLoggedinDetailsQuery, useUpdateUserProfileMutation } from "../../features/api/apiSlice";
 import './UpdateProfile.css';
 
 const UpdateProfile = () => {
-  const { user, userDetails } = useContext(AuthContext);
+  const email = useSelector((state) => state.auth.email);
+  const { data } = useGetUserLoggedinDetailsQuery(email)
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const imageHostKey = process.env.REACT_APP_imgHostKey
+  const [postUpdateData, { isLoading, isSuccess, isError, error }] = useUpdateUserProfileMutation(email)
+  const userDetails = data?.data
+  console.log(userDetails, email)
+
+  useEffect(() => {
+
+    if (isError && error) {
+      toast.error(error, { id: "data update" })
+    }
+    else if (!isLoading && isSuccess) {
+      toast.success("Updated successfully", { id: "data update" })
+      reset()
+    }
+  }, [isLoading, isSuccess, isError, error, reset])
+
 
   const handleUpdate = (data) => {
     const image = data.image[0]
@@ -29,30 +45,15 @@ const UpdateProfile = () => {
             imageUrl: imgdata.data.url,
             nidNumber: data.nidNumber,
             phnNumber: data.phoneNumber,
-            birthDate: data.birthDay
+            birthDate: data.birthDay,
+            userEmail: email
           }
-          handleUpdateUser(userData)
+          console.log(userData)
+          postUpdateData(userData)
         }
       })
   }
 
-
-  const handleUpdateUser = userData => {
-    fetch(` https://one-bit-pay-server.vercel.app/userUpdate/${user.email}`, {
-      method: "PUT",
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(user)
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.acknowledged) {
-          toast.success("User Info updated successfully")
-          reset()
-        }
-      })
-  }
   return (
     <form
       onSubmit={handleSubmit(handleUpdate)}
@@ -73,7 +74,7 @@ const UpdateProfile = () => {
                 <span className="label-text"> Your name</span>
               </label>
               <input
-                defaultValue={userDetails.name}
+                defaultValue={userDetails?.name}
                 type="text"
                 placeholder="Type here"
                 name="name"
@@ -88,8 +89,8 @@ const UpdateProfile = () => {
                 <span className="label-text"> Your email</span>
               </label>
               <input
-                defaultValue={userDetails.userEmail}
                 disabled
+                defaultValue={userDetails?.userEmail}
                 type="email"
                 placeholder="Type here"
                 className="input  w-full "

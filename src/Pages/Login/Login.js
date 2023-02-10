@@ -1,23 +1,26 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import { AuthContext } from "../../context/AuthProvider";
 import signin from "../../images/LoginPage.svg";
 import { setCurrentUser } from "../../features/api/courrentUserSlice";
+import { loginUser } from "../../features/api/authSlice";
 
 
 const Login = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const {isLoading, isError, error, isSuccess} = useSelector((state) => state.auth);
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
+
   const [userEmail, setUserEmail] = useState("");
-  const { signIn, passwordReset, user, setUser } = useContext(AuthContext);
+  const { passwordReset} = useContext(AuthContext);
   const [signinError, setSigninError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,28 +28,38 @@ const Login = () => {
 
   const from = location.state?.from?.pathname || "/";
 
+  useEffect(() => {
+    if(!isLoading && isSuccess){
+      toast.success("Login success", {id:"logon"});
+      navigate("/");
+    }else if(isError){
+      toast.error(error, {id:"logon"});
+    }
+  },[isError, error, isSuccess, isLoading, navigate])
+
   const handleSignIn = (data) => {
     const email = data.email;
     const password = data.password;
 
-    setSigninError("");
-    setLoading(true);
-    signIn(email, password)
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        // dispatch(setCurrentUser(user))
-        setLoading(false);
-        navigate('/dashboard');
-        toast.success("SignUp Success ✔");
-      })
-      .catch((err) => {
-        console.error(err.message);
-        setSigninError(err.message);
-        setLoading(false);
-        toast.error(err.message);
-      });
+    // setSigninError("");
+    // setLoading(true);
+    // signIn(email, password)
+    //   .then((result) => {
+    //     const user = result.user;
+    //     setUser(user);
+    //     // dispatch(setCurrentUser(user))
+    //     setLoading(false);
+    //     navigate('/dashboard');
+    //     toast.success("SignUp Success ✔");
+    //   })
+    //   .catch((err) => {
+    //     console.error(err.message);
+    //     setSigninError(err.message);
+    //     setLoading(false);
+    //     toast.error(err.message);
+    //   });
     // navigate(from, { replace: true });
+    dispatch(loginUser({email, password}));
   };
 
   const handleEmailBlur = (event) => {
@@ -130,7 +143,7 @@ const Login = () => {
               <div className="form-control">
                 <button type="submit" className="btn bg-black">
                   {
-                    loading ? <ButtonSpinner /> : "SIGN IN"
+                    isError ? <ButtonSpinner /> : "SIGN IN"
                   }
                 </button>
                 {signinError && <p className="text-red-500">{signinError}</p>}

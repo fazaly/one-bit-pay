@@ -1,14 +1,50 @@
-import React from "react";
+import { format } from "date-fns";
+import React, { useState } from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { AuthContext } from "../../context/AuthProvider";
 
 const Loan = () => {
   const { userDetails } = useContext(AuthContext)
-  console.log(userDetails)
-  const { register, formState: { errors }, handleSubmit } = useForm();
+  const { register, reset, formState: { errors }, handleSubmit } = useForm();
+  const date = format(new Date(), "PP");
+
   const handleLoanReqSubmit = (data) => {
-    console.log(data)
+    const loanApplicantData = {
+      name: `${data.firstName} ${data.lastName}`,
+      address: data.address,
+      email: userDetails?.userEmail,
+      anoualIncome: data?.anoualIncome,
+      birthDate: data.birthDate,
+      desireAmount: data.desireAmount,
+      duration: data.duration,
+      gender: data.gender,
+      nidNumber: data.nidNumber,
+      phnNumber: data.phnNumber,
+      profession: data.profession,
+      reasonForLoan: data.reasonForLoan,
+      loanRequest: "pending",
+      applyDate: date
+    }
+    console.log(loanApplicantData)
+    if (userDetails.userEmail) {
+      fetch("http://localhost:5000/loanApplicantData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(loanApplicantData)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.acknowledged) {
+            toast.success("loan request successfull")
+            reset()
+          }
+        })
+
+    }
 
   };
 

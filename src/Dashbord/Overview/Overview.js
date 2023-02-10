@@ -1,14 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import SendMoneyHistory from "../../Components/TransactionHistory/SendMoneyHistory";
-import { AuthContext } from "../../context/AuthProvider";
+import { useGetUserLoggedinDetailsQuery } from "../../features/api/apiSlice";
 import Chart2 from "./Chart/Chart2";
 // import ChartView from "./Chart/Chart";
 
 
 
 const Overview = () => {
-  const { user, userDetails } = useContext(AuthContext);
-  // console.log(userDetails);
+  // const { user, userDetails } = useContext(AuthContext);
+  const email = useSelector((state) => state.auth.email);
+  const {data} = useGetUserLoggedinDetailsQuery(email);
+  const userDetails = data?.data;
+
   return (
     <div>
       <div>
@@ -22,7 +26,7 @@ const Overview = () => {
                     Main Balance
                   </h1>
                   <h1 className="font-bold text-3xl text-white">
-                    ${userDetails.balance}.00
+                    ${userDetails?.balance}.00
                   </h1>
                 </div>
               </div>
@@ -79,7 +83,7 @@ const Overview = () => {
         <div className="mt-4">
           <div className="card bg-white text-primary-content shadow-lg">
             <div className="card-body">
-              <SendMoneyHistory email={user.email} />
+              <SendMoneyHistory email={email} />
             </div>
           </div>
         </div>

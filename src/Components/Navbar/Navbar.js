@@ -2,25 +2,22 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import logo from '../.././images/logo.svg';
-import { AuthContext } from '../../context/AuthProvider';
-import { useSelector } from 'react-redux';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { signOut } from 'firebase/auth';
+import { auth, logoutUser } from '../../features/api/authSlice';
 
 
 const Navbar = () => {
-    const { logOut } = useContext(AuthContext);
-    const currentUser = useSelector(state => state?.currentUser?.user)
+    const email = useSelector(state => state.auth.email)
+    const dispatch = useDispatch();
+    const userEmail = useSelector((state) => state.auth.email);
 
-
-    // const [userRole] = useRole(user?.email);
-
-
-    // // logOut
     const handleLogOut = () => {
-        logOut()
-            .then(result => {
+        signOut(auth).then(() => {
+            dispatch(logoutUser());
 
-            })
-            .catch(error => console.error(error));
+        });
     }
 
     const menuItems = <>
@@ -28,7 +25,7 @@ const Navbar = () => {
         <li className='font-semibold mr-5'><Link to='/about'>About</Link></li>
         <li><Link to='/blog' className='font-semibold mr-5'>Blog</Link></li>
         {
-            currentUser?.uid ?
+            email ?
                 <>
                     <li> <Link to='/dashboard' className='font-semibold mr-5' >Dashboard</Link></li>
                     <li className='font-semibold'>
@@ -43,7 +40,7 @@ const Navbar = () => {
     </>
 
     return (
-        <div className="navbar bg-[#ecf0f3] px-4 py-2 rounded-full w-11/12 mt-6  mx-auto">
+        <div className="navbar bg-black text-white">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">
