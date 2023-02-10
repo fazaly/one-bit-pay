@@ -31,6 +31,7 @@ import AllUsers from "../Pages/Admin/AllUsers";
 import AdminRoutes from "./AdminRoutes";
 import AllAgents from "../Pages/Admin/AllAgents";
 import AgentRequest from "../Pages/Admin/AgentRequest";
+import ChargeCalculator from "../Dashbord/ChargeCalculator/ChargeCalculator";
 
 
 export const router = createBrowserRouter([
@@ -195,6 +196,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/agentRequest",
         element: <AgentRequest></AgentRequest>
+      },
+      {
+        path: "/dashboard/chargeCalculate",
+        element:<ChargeCalculator></ChargeCalculator>
       },
     ],
   },
