@@ -1,32 +1,18 @@
 import React, { useContext } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
 import { FaArrowLeft, FaBackspace } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import logo from '../.././images/logo.svg';
-import { AuthContext } from '../../context/AuthProvider';
+import { useGetTransactionHistoryQuery } from '../../features/api/apiSlice';
 import NotificationLog from './NotificationLog';
 
-const DashBoardNavbar = ({ userDetails, notifi, setNotifi }) => {
-    const { user } = useContext(AuthContext);
-    const [transactions, setTransactions] = useState([]);
-    // const [notification, setnotification] = useState(notifi)
-
-    useEffect(() => {
-        fetch(`https://one-bit-pay-server.vercel.app/transactionSend/${user?.email}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.status) {
-                    setTransactions(data.data);
-                    // console.log(transactions);
-                }
-            })
-
-    }, [notifi, user])
-
+const DashBoardNavbar = ({ notifi, setNotifi }) => {
+    const email = useSelector((state) => state.auth.email);
+    const { data } = useGetTransactionHistoryQuery(email);
+    const transactions = data?.data
 
     const handleNotification = () => {
-        fetch(`https://one-bit-pay-server.vercel.app/notification/${user?.email}`)
+        fetch(`https://one-bit-pay-server.vercel.app/notification/${email}`)
             .then((res) => res.json())
             .then((data) => {
                 if (data.status) {
@@ -71,7 +57,7 @@ const DashBoardNavbar = ({ userDetails, notifi, setNotifi }) => {
                         <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-80">
                             <div className='grid grid-cols-1 gap-1 p-2'>
                                 {
-                                    transactions.slice(0, 5).filter((data) => data.notification === true
+                                    transactions?.slice(0, 5).filter((data) => data.notification === true
                                     ).map((transactionsData) => <NotificationLog
                                         key={transactionsData._id}
                                         transactionsData={transactionsData}></NotificationLog>)

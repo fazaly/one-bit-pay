@@ -65,7 +65,7 @@ export const router = createBrowserRouter([
         path: "/blogpost/:id",
         element: <IndividualBlog></IndividualBlog>,
         loader: ({ params }) =>
-          fetch(` http://localhost:5000/blogs/${params.id}`),
+          fetch(`https://one-bit-pay-server.vercel.app/${params.id}`),
       },
     ],
   },
@@ -130,7 +130,7 @@ export const router = createBrowserRouter([
         path: `/dashboard/donationDetails/:id`,
         element: <DonationDetails></DonationDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/donations/${params.id}`),
+          fetch(`https://one-bit-pay-server.vercel.app/donations/${params.id}`),
       },
       {
         path: "/dashboard/cashin",
@@ -210,7 +210,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/chargeCalculate",
-        element:<ChargeCalculator></ChargeCalculator>
+        element: <ChargeCalculator></ChargeCalculator>
       },
     ],
   },
