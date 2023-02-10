@@ -67,7 +67,7 @@ const ApplyForAgent = () => {
           nid: userData.nid,
           tin: userData.tin,
           number: userData.number,
-          status:"pending"
+          status:"pending",
         }
 
         //Insert user data in databas
