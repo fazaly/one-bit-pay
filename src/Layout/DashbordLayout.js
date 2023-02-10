@@ -8,6 +8,7 @@ import "./DashboardLayout.css";
 import { HiViewGridAdd, HiCurrencyDollar } from "react-icons/hi";
 import { FaUserEdit, FaMobile, FaHandshake, FaDonate } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SlCalculator } from "react-icons/sl";
 import {
   faSackDollar,
   faFileSignature,
@@ -27,11 +28,10 @@ import { useSelector } from "react-redux";
 const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
   const [notifi, setNotifi] = useState(false);
-  // const [userDetails, setUserDetails] = useState([]);
   const { user } = useContext(AuthContext);
-  const [userRole] = useRole(user?.email);
 
-  const  email  = useSelector(state => state.auth.email)
+
+  const email = useSelector(state => state.auth.email)
   // const loggededUser = currentUser?.email;
 
   const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email)
@@ -189,6 +189,15 @@ const DashbordLayout = () => {
                       className="text-[25px] mr-4"
                     />
                     <p className="text-lg font-semibold">Donation</p>
+                  </NavLink>
+                  <NavLink
+                    to="/dashboard/chargeCalculate"
+                    className="flex items-center "
+                  >
+                    <SlCalculator
+                      className="text-[25px] mr-4"
+                    />
+                    <p className="text-lg font-semibold">Charge Calculator</p>
                   </NavLink>
 
                   <NavLink

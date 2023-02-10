@@ -30,15 +30,14 @@ const Login = () => {
 
   useEffect(() => {
     if(!isLoading && isSuccess){
-      toast.success("Login success");
+      toast.success("Login success", {id:"logon"});
       navigate("/");
     }else if(isError){
-      toast.error(error);
+      toast.error(error, {id:"logon"});
     }
   },[isError, error, isSuccess, isLoading, navigate])
 
   const handleSignIn = (data) => {
-    setLoading(true);
     const email = data.email;
     const password = data.password;
 

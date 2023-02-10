@@ -6,25 +6,25 @@ export const userDetailsApi = createApi({
         baseUrl: `https://one-bit-pay-server.vercel.app`,
         // baseUrl: `http://localhost:5000`
     }),
-    tagTypes: ["Users"],
+    tagTypes: ["users", "userDetails"],
     endpoints: (builder) => ({
         getUserDetails: builder.query({
             query: () => ({
                 url: "/users"
             }),
-            providesTags: ["Users"],
+            providesTags: ["users"],
         }),
         getUserLoggedinDetails: builder.query({
             query: (email) => ({
                 url: `/user/${email}`
             }),
-            providesTags: ["UserDetails"],
+            providesTags: ["userDetails"],
         }),
         getTransactionHistory: builder.query({
             query: (email) => ({
                 url: `/transactionSend/${email}`
             }),
-            providesTags: ["UserDetails"],
+            providesTags: ["userDetails"],
         }),
         addUser: builder.mutation({
             query: (data) => ({
@@ -32,14 +32,14 @@ export const userDetailsApi = createApi({
                 method: "POST",
                 body: data
             }),
-            invalidatesTags: ["Users"],
+            invalidatesTags: ["users"],
         }),
         makeAdmin: builder.mutation({
             query: (id) => ({
                 url: `/users/admin/${id}`,
                 method: "PATCH"
             }),
-            invalidatesTags: ["Users"],
+            invalidatesTags: ["users"],
         }),
         sendMoney: builder.mutation({
             query: (sendMoneyInfo) => ({
@@ -47,14 +47,14 @@ export const userDetailsApi = createApi({
                 method: "PUT",
                 body: sendMoneyInfo
             }),
-            invalidatesTags: ["UserDetails"],
+            invalidatesTags: ["userDetails"],
 
         }),
         getRechargeHistory: builder.query({
             query: (email) => ({
                 url: `/recharge/${email}`
             }),
-            providesTags: ["Users"],
+            providesTags: ["users"],
         }),
         postRechargeData: builder.mutation({
             query: (data) => ({
@@ -74,7 +74,8 @@ export const userDetailsApi = createApi({
                 url: `/agent/cashin`,
                 method: "PUT",
                 body: data,
-            })
+            }),
+            invalidatesTags: ["userDetails"]
         }),
         applyForAgent: builder.mutation({
             query: (data) => ({
@@ -84,11 +85,20 @@ export const userDetailsApi = createApi({
             })
         }),
         updateUserProfile: builder.mutation({
-            query: (email, data) => ({
-                url: `/userUpdate/${email}`,
+            query: (userData) => ({
+                url: `/userUpdate`,
                 method: "PUT",
+                body: userData,
+            }),
+            invalidatesTags: ["userDetails"]
+        }),
+        postB2b: builder.mutation({
+            query: (data) => ({
+                url: `/agent/b2b`,
+                method: "POST",
                 body: data,
-            })
+            }),
+            invalidatesTags: ["Users", "userDetails"],
         }),
         deletUser: builder.mutation({
             query: (id) => ({
@@ -97,7 +107,32 @@ export const userDetailsApi = createApi({
             }),
             invalidatesTags: ["Users"],
         }),
+        getAgentRequest: builder.query({
+            query: () => ({
+                url: "/agents/request"
+            }),
+            providesTags: ["agentRequest"]
+        }),
+        makeAgent: builder.mutation({
+            query: (id) => ({
+                url: `/users/agent/${id}`,
+                method: "PATCH"
+            }),
+            invalidatesTags: ["agentRequest"],
+        }),
+        billCategory: builder.query({
+            query: (category_id) => ({
+                url: `/allCompanies/${category_id}`,
+            })
+        }),
+        billCategories: builder.query({
+            query: () => ({
+                url: `/billCategory`,
+            })
+        })
     })
 });
 
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation } = userDetailsApi
+
+export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation, useUpdateUserProfileMutation, usePostB2bMutation, useBillCategoriesQuery, useBillCategoryQuery } = userDetailsApi
+

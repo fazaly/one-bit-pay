@@ -21,17 +21,14 @@ const SendMoney = () => {
   const dispatch = useDispatch();
 
   const email = useSelector((state) => state.auth.email);
-  const { data:userRole } = useGetUsersRoleQuery(`${receiver}`);
+  const { data: userRole } = useGetUsersRoleQuery(`${receiver}`);
   console.log(userRole?.status);
 
-  const { data} = useGetUserLoggedinDetailsQuery(email);
+  const { data } = useGetUserLoggedinDetailsQuery(email);
   const userDetails = data?.data;
 
   useEffect(() => {
-    if (isSuccess) {
-      toast.success("Send money success", { id: "senMoney" });
-    }
-    if (isError) {
+    if (!isSuccess && isError) {
       toast.success("Failed to sending money! Please try again", {
         id: "sendMoney",
       });
@@ -61,15 +58,15 @@ const SendMoney = () => {
       toast.error("Minimum sending amount is 10");
     } else if (userRole.userRole === "agent") {
       toast.error("Send money not possible in agent account");
-    }else if(userRole?.status === false){
+    } else if (userRole?.status === false) {
       toast.error("Enter Valid Email");
-    } else if (receiverEmail !== user?.email && userDetails?.balance > 10 && userRole.userRole === "user") {
+    } else if (receiverEmail !== user?.email && userDetails?.balance > 10 && userDetails.role === "user") {
       sendMoney(sendMoneyInfo);
       form.reset();
     }
   };
 
-  const handleFocus = (e ) => {
+  const handleFocus = (e) => {
     setReceiver(e);
     console.log(e)
   }
