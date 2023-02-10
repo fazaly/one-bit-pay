@@ -119,6 +119,16 @@ export const userDetailsApi = createApi({
             }),
             invalidatesTags: ["agentRequest"],
         }),
+        billCategory: builder.query({
+            query: (category_id) => ({
+                url: `/allCompanies/${category_id}`,
+            })
+        }),
+        billCategories: builder.query({
+            query: () => ({
+                url: "/billCategory",
+            })
+        })
 
 
 
@@ -128,5 +138,5 @@ export const userDetailsApi = createApi({
 });
 
 
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation, useUpdateUserProfileMutation, usePostB2bMutation } = userDetailsApi
+export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation, useUpdateUserProfileMutation, usePostB2bMutation, useBillCategoriesQuery, useBillCategoryQuery } = userDetailsApi
 
