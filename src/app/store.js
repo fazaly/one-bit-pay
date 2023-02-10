@@ -6,7 +6,7 @@ import currentUserSlice from "../features/api/courrentUserSlice";
 const store = configureStore({
     reducer: {
         [userDetailsApi.reducerPath]: userDetailsApi.reducer,
-        // currentUser: currentUserSlice,
+        currentUser: currentUserSlice,
         auth: authSlice,
     },
 
