@@ -15,6 +15,7 @@ const B2B = () => {
     const userDetails = data?.data;
     const { data: userRole } = useGetUsersRoleQuery(focusEmail);
     const [postB2bData, { isLoading, isSuccess }] = usePostB2bMutation()
+    console.log(userRole)
 
     // todays transaction
     const { data: transactions } = useGetTransactionHistoryQuery(email)
@@ -24,10 +25,7 @@ const B2B = () => {
     console.log(isLoading, isSuccess)
 
     useEffect(() => {
-        if (isLoading) {
-            toast.loading('loading', { id: "b2b transition" })
-        }
-        else if (isSuccess) {
+        if (!isLoading && isSuccess) {
             toast.success("Transition success", { id: "b2b transition" })
         }
     }, [isLoading, isSuccess])
@@ -57,6 +55,9 @@ const B2B = () => {
         }
         else if (userRole.userRole !== "agent") {
             return toast.error("Please enter a valid agent email for transfer money");
+        }
+        else if (!userRole.userRole) {
+            return toast.error("Please enter a valid a email");
         }
         else if (receiverEmail !== email && userDetails?.balance > 100) {
             postB2bData(transferInfo)
