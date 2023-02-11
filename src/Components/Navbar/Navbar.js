@@ -16,7 +16,7 @@ const Navbar = () => {
     const handleLogOut = () => {
         signOut(auth).then(() => {
             dispatch(logoutUser());
-            
+
         });
     }
 
@@ -40,7 +40,7 @@ const Navbar = () => {
     </>
 
     return (
-        <div className="navbar bg-[#ecf0f3] px-4 py-2 rounded-full w-11/12 mt-6  mx-auto">
+        <div className="navbar bg-black text-white">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">

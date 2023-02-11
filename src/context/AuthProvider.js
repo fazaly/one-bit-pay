@@ -12,7 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../features/api/courrentUserSlice";
 
-// import { setCurrentUser } from "../features/api/courrentUserSlice"
+
 
 export const AuthContext = createContext();
 
@@ -21,7 +21,6 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
-  const [notifi, setNotifi] = useState(false);
   const dispatch = useDispatch()
 
 
@@ -48,13 +47,13 @@ const AuthProvider = ({ children }) => {
     queryKey: ["userDetails"],
     queryFn: async () => {
       if (user) {
-        const res = await fetch(` http://localhost:5000/user/${user?.email}`);
+        const res = await fetch(` server.vercel.app/${user?.email}`);
         const data = await res.json();
         return data.data;
       }
     },
   });
-  console.log(userDetails);
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

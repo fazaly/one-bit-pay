@@ -25,7 +25,10 @@ const B2B = () => {
     console.log(isLoading, isSuccess)
 
     useEffect(() => {
-        if (!isLoading && isSuccess) {
+        if (isLoading) {
+            toast.loading('Sending..', { id: "b2b transition" })
+        }
+        else if (isSuccess) {
             toast.success("Transition success", { id: "b2b transition" })
         }
     }, [isLoading, isSuccess])

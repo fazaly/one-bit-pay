@@ -49,7 +49,7 @@ const ChargeCalculator = () => {
 
     return (
         <div>
-            <h3 className='text-3xl text-center mt-8 mb-8'>Calculate the charge with Tariff Calculator</h3>
+            <h3 className='text-4xl font-bold text-center mt-8 mb-8'>Calculate the charge with Tariff Calculator</h3>
             <div className='grid grid-cols-1 lg: grid-cols-2 md:grid-cols-2 mx-3 border rounded-xl shadow-lg p-10 shadow-slate-600'>
                 <Form onSubmit={handleChargeCalculation} className='grid grid-cols-1 gap-6 mt-10 rounded-xl'>
                     <div className="space-y-5 text-xl">
@@ -74,10 +74,10 @@ const ChargeCalculator = () => {
                 <div>
                 { charge === "Cash Out" ? 
                     <>
-                       <div className='text-center flex flex-col justify-center item-center'>
+                        <div className='text-center flex flex-col justify-center item-center'>
                             <h3 className='text-3xl font-semibold mt-10 mb-5'>Calculation Result</h3>
                             <h3 className='text-5xl text-center font-bold mb-5 flex justify-center item-center'><TbCurrencyTaka></TbCurrencyTaka> {dataCalculation?dataCalculation:""}</h3>
-                            <p className='text-lg font-lg mb-5 mx-10'>Cash Out charge is BDT 15 per BDT 1000 This charge will be automatically deducted from your Nagad account; no cash charge applicable.</p>
+                            <p className='text-lg font-lg mb-5 mx-10'>Cash Out charge is BDT 13 per BDT 1000 This charge will be automatically deducted from your OneBitPay account; no cash charge applicable.</p>
                         </div>
                     </>
                     :

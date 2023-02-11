@@ -3,23 +3,28 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import SendMoneyHistory from '../../Components/TransactionHistory/SendMoneyHistory';
 import { AuthContext } from '../../context/AuthProvider';
+import { useGetDonationInistituteQuery } from '../../features/api/apiSlice';
 import DonationCard from './DonationCard';
 import DonationModal from './DonationModal';
 
 const Donation = () => {
-    const { user, userDetails } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
-    const [institutes, setInstitutes] = useState([])
-    useEffect(() => {
-        fetch(` http://localhost:5000/donations`)
-            .then(res => res.json())
-            .then(data => {
-                setInstitutes(data)
-            })
+    // const [institutes, setInstitutes] = useState([]);
 
+    const { data, isLoading, isSuccess, isError } = useGetDonationInistituteQuery();
 
-    }, [])
+    const institutes = data;
 
+    console.log(data)
+    console.log(institutes)
+
+    if (isLoading) {
+        return <p>Loading..</p>
+    }
+    if (isError) {
+        return <p>Something Went Wrong ! Please Check .. </p>
+    }
 
     return (
         <div className='mx-2'>
