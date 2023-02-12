@@ -5,7 +5,9 @@ import sendMoney from "../../../images/homeImage/Send_Money.png";
 import withdrawImg from "../../../images/homeImage/withdraw_Mobile.png";
 import payBillImg from "../../../images/homeImage/Pay_bill_mobile.png";
 
+
 const HomeSendmoney = () => {
+
     return (
         <div>
 
