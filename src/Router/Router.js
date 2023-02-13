@@ -26,7 +26,7 @@ import B2B from "../AgentDashboard/B2B/B2B";
 import AgentOverview from "../AgentDashboard/AgentOverview/AgentOverview";
 import BillPayAgent from "../AgentDashboard/BillPayAgent/BillPayAgent";
 import AgentMobileRecharge from "../AgentDashboard/AgentMobileRecharge/AgentMobileRecharge";
-import Admin from "../Pages/Admin/Admin";
+import Admin from "../Pages/Admin/Overview/Admin";
 import AllUsers from "../Pages/Admin/AllUsers";
 import AdminRoutes from "./AdminRoutes";
 import AllAgents from "../Pages/Admin/AllAgents";
@@ -194,19 +194,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/adminOverview",
-        element: <AdminRoutes><Admin></Admin></AdminRoutes>
+        element: <Admin></Admin>
       },
       {
         path: "/dashboard/users",
-        element: <AdminRoutes><AllUsers></AllUsers></AdminRoutes>
+        element: <AllUsers></AllUsers>
       },
       {
         path: "/dashboard/agents",
-        element: <AdminRoutes><AllAgents></AllAgents></AdminRoutes>
+        element: <AllAgents></AllAgents>
       },
       {
         path: "/dashboard/agentRequest",
-        element: <AdminRoutes><AgentRequest></AgentRequest></AdminRoutes>
+        element: <AgentRequest></AgentRequest>
       },
       {
         path: "/dashboard/chargeCalculate",
