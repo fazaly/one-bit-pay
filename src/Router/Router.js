@@ -129,7 +129,7 @@ export const router = createBrowserRouter([
         path: `/dashboard/donationDetails/:id`,
         element: <DonationDetails></DonationDetails>,
         loader: ({ params }) =>
-          fetch(`https://one-bit-pay-server.vercel.app/${params.id}`),
+          fetch(`https://one-bit-pay-server.vercel.app/donations/${params.id}`),
       },
       {
         path: "/dashboard/cashin",

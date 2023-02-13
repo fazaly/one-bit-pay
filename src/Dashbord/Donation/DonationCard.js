@@ -6,14 +6,14 @@ import DonationModal from './DonationModal';
 const DonationCard = ({ institute }) => {
     const [modal, setModal] = useState(false);
     const { Name, img, details, _id } = institute;
-
+    console.log(institute)
     const handleModal = () => {
         setModal(true)
     }
 
 
     return (
-        <div className="card   card-side bg-base-100 shadow-xl">
+        <div className="card  card-side bg-base-100 shadow-xl">
             <div className='flex justify-center w-1/2'>
                 <figure><img src={img} alt="" /></figure>
             </div>
