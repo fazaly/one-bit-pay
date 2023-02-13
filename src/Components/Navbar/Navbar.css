@@ -1,10 +1,14 @@
-.logo{
+.logo {
   height: 22px;
   width: 22px;
   margin-left: 3px;
   margin-top: 2px;
-  
 }
-.logo img{
+.logo img {
   color: red;
+}
+
+#navbar {
+  background: rgba(24, 24, 24, 0.2);
+backdrop-filter: blur(39.5px);
 }

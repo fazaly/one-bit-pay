@@ -32,6 +32,7 @@ import AdminRoutes from "./AdminRoutes";
 import AllAgents from "../Pages/Admin/AllAgents";
 import AgentRequest from "../Pages/Admin/AgentRequest";
 import ChargeCalculator from "../Dashbord/ChargeCalculator/ChargeCalculator";
+import LoadingGif from "../Components/LoadingGif/LoadingGif";
 
 
 export const router = createBrowserRouter([
@@ -64,7 +65,7 @@ export const router = createBrowserRouter([
         path: "/blogpost/:id",
         element: <IndividualBlog></IndividualBlog>,
         loader: ({ params }) =>
-          fetch(` http://localhost:5000/blogs/${params.id}`),
+          fetch(`https://one-bit-pay-server.vercel.app/${params.id}`),
       },
     ],
   },
@@ -129,7 +130,7 @@ export const router = createBrowserRouter([
         path: `/dashboard/donationDetails/:id`,
         element: <DonationDetails></DonationDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/donations/${params.id}`),
+          fetch(`https://one-bit-pay-server.vercel.app/donations/${params.id}`),
       },
       {
         path: "/dashboard/cashin",
@@ -182,6 +183,16 @@ export const router = createBrowserRouter([
         )
       },
       {
+        path: "/dashboard/transactions",
+        element: (
+          <PrivateRoutes>
+            <AgentRoutes>
+              <LoadingGif/>
+            </AgentRoutes>
+          </PrivateRoutes>
+        )
+      },
+      {
         path: "/dashboard/adminOverview",
         element: <AdminRoutes><Admin></Admin></AdminRoutes>
       },
@@ -199,7 +210,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/chargeCalculate",
-        element:<ChargeCalculator></ChargeCalculator>
+        element: <ChargeCalculator></ChargeCalculator>
       },
     ],
   },

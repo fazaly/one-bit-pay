@@ -14,6 +14,12 @@ export const userDetailsApi = createApi({
             }),
             providesTags: ["users"],
         }),
+        getAreNormalUser: builder.query({
+            query: (email) => ({
+                url: `/user/normaluser/${email}`
+            }),
+            providesTags: ["Users"],
+        }),
         getUserLoggedinDetails: builder.query({
             query: (email) => ({
                 url: `/user/${email}`
@@ -47,7 +53,7 @@ export const userDetailsApi = createApi({
                 method: "PUT",
                 body: sendMoneyInfo
             }),
-            invalidatesTags: ["userDetails"],
+            invalidatesTags: ["userDetails", "DonationInistitute"],
 
         }),
         getRechargeHistory: builder.query({
@@ -62,7 +68,7 @@ export const userDetailsApi = createApi({
                 method: "POST",
                 body: data,
             }),
-            invalidatesTags: ["Users", "userDetails"]
+            invalidatesTags: ["users", "userDetails"]
         }),
         getUsersRole: builder.query({
             query: (email) => ({
@@ -105,7 +111,7 @@ export const userDetailsApi = createApi({
                 url: `/users/${id}`,
                 method: "DELETE"
             }),
-            invalidatesTags: ["Users"],
+            invalidatesTags: ["users"],
         }),
         getAgentRequest: builder.query({
             query: () => ({
@@ -129,10 +135,27 @@ export const userDetailsApi = createApi({
             query: () => ({
                 url: `/billCategory`,
             })
+        }),
+        getDonationInistitute: builder.query({
+            query: () => ({
+                url: "/donations"
+            }),
+            providesTags: ["DonationInistitute"]
+        }),
+
+        payBill: builder.mutation({
+            query: (data) => ({
+                url: "/billing",
+                method: "PUT",
+                body: data
+            }),
         })
+
+
+
     })
 });
 
 
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation, useUpdateUserProfileMutation, usePostB2bMutation, useBillCategoriesQuery, useBillCategoryQuery } = userDetailsApi
+export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation, useUpdateUserProfileMutation, usePostB2bMutation, useBillCategoriesQuery, useBillCategoryQuery, useGetDonationInistituteQuery, usePayBillMutation } = userDetailsApi
 
