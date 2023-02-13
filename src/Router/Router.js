@@ -32,6 +32,7 @@ import AdminRoutes from "./AdminRoutes";
 import AllAgents from "../Pages/Admin/AllAgents";
 import AgentRequest from "../Pages/Admin/AgentRequest";
 import ChargeCalculator from "../Dashbord/ChargeCalculator/ChargeCalculator";
+import LoanTermsCondition from "../Dashbord/Loan/LoanTermsCondition";
 
 
 export const router = createBrowserRouter([
@@ -104,6 +105,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/loanRequest",
         element: <Loan></Loan>,
+      },
+      {
+        path: "/dashboard/loantermscondition",
+        element: <LoanTermsCondition></LoanTermsCondition>,
       },
       {
         path: "/dashboard/mobileRecharge",
