@@ -1,8 +1,12 @@
-#hero {
-  width: auto;
-  height: 720px;
-  background: linear-gradient(277.13deg, rgba(255, 255, 255, 0.182) 6.02%, rgba(255, 255, 255, 0.08918) 48.3%, rgba(255, 255, 255, 0.182) 92.02%);
-  box-shadow: inset 65.3333px -65.3333px 65.3333px rgba(194, 194, 194, 0.182), inset -65.3333px 65.3333px 65.3333px rgba(255, 255, 255, 0.182);
-  backdrop-filter: blur(196px);
-border-radius: 14px;
+#hero-cantainer{
+  width: 100%;
+  height: 832px;
+  background-image: url();
+  background-color: #181818;
+  clip-path: polygon(0 0, 100% 0, 100% 76%, 0% 100%);
+}
+
+#second-hero{
+  width: 100%;
+  height: 832px;
 }

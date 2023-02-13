@@ -191,7 +191,8 @@ const DashbordLayout = () => {
                     />
                     <p className="text-lg font-semibold">Cash In</p>
                   </NavLink>
-                  <NavLink to="/dashboard/transaction" className="flex items-center mb-6 mt-4">
+                  
+                  <NavLink to="/dashboard/transactions" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
                       icon={faCommentDollar}
                       className="text-[30px] mr-4"
