@@ -30,8 +30,8 @@ const Login = () => {
 
   useEffect(() => {
     if(!isLoading && isSuccess){
-      toast.success("Login success", {id:"logon"});
       navigate("/");
+      toast.success("Login success", {id:"logon"});
     }else if(isError){
       toast.error(error, {id:"logon"});
     }
@@ -40,25 +40,7 @@ const Login = () => {
   const handleSignIn = (data) => {
     const email = data.email;
     const password = data.password;
-
-    // setSigninError("");
-    // setLoading(true);
-    // signIn(email, password)
-    //   .then((result) => {
-    //     const user = result.user;
-    //     setUser(user);
-    //     // dispatch(setCurrentUser(user))
-    //     setLoading(false);
-    //     navigate('/dashboard');
-    //     toast.success("SignUp Success ✔");
-    //   })
-    //   .catch((err) => {
-    //     console.error(err.message);
-    //     setSigninError(err.message);
-    //     setLoading(false);
-    //     toast.error(err.message);
-    //   });
-    // navigate(from, { replace: true });
+    
     dispatch(loginUser({email, password}));
   };
 
