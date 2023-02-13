@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { HiChevronDoubleRight, HiChevronDoubleLeft } from "react-icons/hi";
 import { Link, NavLink, Outlet } from "react-router-dom";
-import userImage2 from "../images/userImage2.png";
 import { AuthContext } from "../context/AuthProvider";
 import DashBoardNavbar from "../Components/DashBoardNavbar/DashBoardNavbar";
 import "./DashboardLayout.css";
@@ -32,12 +31,9 @@ const DashbordLayout = () => {
   const { user } = useContext(AuthContext);
 
 
-  const email = useSelector(state => state.auth.email)
-  // const loggededUser = currentUser?.email;
-
-  const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email)
+  const email = useSelector(state => state.auth.email);
+  const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email);
   const userDetails = data?.data
-
 
 
   useEffect(() => {
@@ -80,9 +76,6 @@ const DashbordLayout = () => {
             </label>
             {/* <!-- Sidebar content here --> */}
             <div className="w-52 flex flex-col justify-center items-center  rounded-md p-3 ml-3 ">
-              {/* <Link to='/' className='ml-10 text-blue-500'>
-                <FaArrowLeft></FaArrowLeft>
-              </Link> */}
               <Link to='/' className="">
                 <img src={logo} alt='' className='w-46 btn  border-0' />
               </Link>
@@ -191,7 +184,7 @@ const DashbordLayout = () => {
                     />
                     <p className="text-lg font-semibold">Cash In</p>
                   </NavLink>
-                  
+
                   <NavLink to="/dashboard/transactions" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
                       icon={faCommentDollar}

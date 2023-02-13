@@ -1,30 +1,26 @@
 import { faFileSignature } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useContext } from 'react';
-import { FaArrowLeft, FaBackspace, FaBell, FaHome, FaUserEdit } from 'react-icons/fa';
+import React from 'react';
+import { FaBell, FaHome, FaUserEdit } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
-import logo from '../.././images/logo.svg';
+import { Link } from 'react-router-dom';
 import { useGetTransactionHistoryQuery } from '../../features/api/apiSlice';
 import NotificationLog from './NotificationLog';
 import { signOut } from 'firebase/auth';
 import { auth, logoutUser } from '../../features/api/authSlice';
+import userImage from "../../images/userImage2.png"
 
-const DashBoardNavbar = ({ notifi, setNotifi }) => {
+
+const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
     const email = useSelector((state) => state.auth.email);
     const { data } = useGetTransactionHistoryQuery(email);
     const transactions = data?.data;
     const dispatch = useDispatch();
-    const userEmail = useSelector((state) => state.auth.email);
-
     const handleLogOut = () => {
         signOut(auth).then(() => {
             dispatch(logoutUser());
-
         });
     }
-
-
     const handleNotification = () => {
         fetch(`https://one-bit-pay-server.vercel.app/notification/${email}`)
             .then((res) => res.json())
@@ -43,7 +39,7 @@ const DashBoardNavbar = ({ notifi, setNotifi }) => {
                 <div className="flex w-9/12">
                     <div className="navbar grid grid-cols-1 ml-3">
 
-                        <h2 className='text-3xl font-bold'>Hello, Shaleh Ahamad</h2>
+                        <h2 className='text-3xl font-bold'>Hello, <span>{userDetail?.name}</span></h2>
                         <p className='text-gray-300'>Welcome Back!</p>
                     </div>
                     <div className='flex'>
@@ -56,25 +52,32 @@ const DashBoardNavbar = ({ notifi, setNotifi }) => {
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost btn-circle">
                             <div className="indicator">
-                                <FaBell className='text-2xl text-[#F34753] '></FaBell>
+                                <FaBell className='text-2xl text-[#50B8FF] '></FaBell>
                                 {/* <div className=" badge badge-xs indicator-item badge-secondary">2</div> */}
 
                             </div>
                         </label>
-                        <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-52 bg-base-100 shadow">
+                        <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-72 bg-base-100 shadow">
                             <div className="card-body">
-                                <span className="font-bold text-lg">8 Items</span>
-                                <span className="text-info">Subtotal: $999</span>
-                                <div className="card-actions">
-                                    <button className="btn btn-primary btn-block">View cart</button>
-                                </div>
+                                {
+                                    transactions?.slice(0, 6).map((transactionsData) => <NotificationLog transactionsData={transactionsData}></NotificationLog>)
+                                }
+
+
                             </div>
                         </div>
                     </div>
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
-                                <img src="https://potomac.edu/wp-content/uploads/2020/12/benefits-of-coding-e1606911064541.jpg" />
+
+                                {
+                                    userDetail?.imageUrl ?
+                                        <img src={userDetail?.imageUrl} alt="" />
+                                        :
+                                        <img src={userImage} alt="" />
+                                }
+
                             </div>
                         </label>
                         <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-72">
