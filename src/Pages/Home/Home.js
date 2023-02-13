@@ -1,5 +1,6 @@
 import React from 'react';
 import Contact from './Contact/Contact';
+import Features from './Features/Features';
 import FinancialSolutions from './FinancialSolutions/FinancialSolutions';
 import Hero from './Hero/Hero';
 import HeroSlider from './HeroSlider/HeroSlider';
@@ -15,6 +16,7 @@ const Home = () => {
             <Hero/>
             <SendMoneySec/>
             <WithdrawSection/>
+            <Features/>
             {/* <FinancialSolutions></FinancialSolutions> */}
             <ImageGallery></ImageGallery>
             <Contact></Contact>

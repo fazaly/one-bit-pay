@@ -13,11 +13,12 @@ const SendMoneySec = () => {
     backgroundPosition: "center",
   };
   return (
-    <div className="w-full wrapper" style={myStyle}>
+    <div className="w-full wrapper lg:mt-0 mt-14" style={myStyle}>
       <div 
-        className="flex lg:flex-row flex-col justify-around items-center h-full w-full">
-        <div data-aos="zoom-out-left">
+        className="flex lg:flex-row flex-col justify-around items-center h-full w-full overflow-hidden">
+        <div>
           <img
+            data-aos="zoom-out-left"
             src={mobile}
             className="lg:w-[450px] lg:mt-0 mt-16"
             alt=""
