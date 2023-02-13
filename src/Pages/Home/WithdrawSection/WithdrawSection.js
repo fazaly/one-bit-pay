@@ -1,5 +1,5 @@
 import React from "react";
-import line2 from "../../.././images/homeImage/newLine2.png";
+import line2 from "../../.././images/homeImage/Abstract2.png";
 import mobile from "../../.././images/homeImage/withdraw_Mobile.png";
 import AOS from 'aos';
 import 'aos/dist/aos.css'; 
@@ -28,8 +28,9 @@ const WithdrawSection = () => {
             KNOW MORE
           </button>
         </div>
-        <div data-aos="fade-left">
+        <div className="overflow-hidden">
           <img
+            data-aos="fade-left"
             src={mobile}
             className="lg:mb-0 w-[450px] mt-16 lg:mt-0"
             alt=""
