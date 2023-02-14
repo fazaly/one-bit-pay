@@ -35,7 +35,7 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
 
     return (
         <div>
-            <div className="navbar justify-between  ">
+            <div className="navbar justify-between px-4  ">
                 <div className="flex w-9/12">
                     <div className="navbar hidden lg:grid lg:grid-cols-1 ml-3">
 
