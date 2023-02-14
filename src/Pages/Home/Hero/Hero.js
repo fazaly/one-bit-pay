@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Hero.css";
-import heroImage from "../../.././images/homeImage/1.png";
+import heroImage from "../../.././images/homeImage/11.png";
 import mobile from "../../.././images/homeImage/new.png";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -18,7 +18,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative flex justify-center items-center w-full h-screen">
+    <div className="relative flex justify-center items-center w-full h-screen mb-10">
       <div
         id="hero-cantainer"
         className="relative w-full h-screen mx-auto"
@@ -27,7 +27,7 @@ const Hero = () => {
       <div id="second-hero" className="absolute top-0">
         <div className="flex lg:flex-row flex-col justify-around items-center w-full h-scree">
           <div className="lg:mt-10 mt-8 overflow-hidden">
-            <h1 className="lg:text-6xl text-4xl font-medium mt-14 text-[#fff] lg:leading-none leading-9">
+            <h1 className="lg:text-6xl text-4xl font-medium mt-14 text-[#fff] lg:leading-none leading-9 shadow-md">
               Fastest Money
               <br /> Transfer Without <br /> Any Frustrations
             </h1>
@@ -60,7 +60,7 @@ const Hero = () => {
             <img
               src={ball}
               alt=""
-              className="w-32 animate-spin ease-in-out transition-transform duration-75 absolute right-6 bottom-0"
+              className="w-32  transition-transform duration-75 absolute right-6 bottom-0"
             />
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import BillPaySection from './BillPaySection/BillPaySection';
 import Contact from './Contact/Contact';
 import Features from './Features/Features';
 import FinancialSolutions from './FinancialSolutions/FinancialSolutions';
@@ -19,7 +20,6 @@ const Home = () => {
             <WithdrawSection />
             <Features />
             <Testimonials></Testimonials>
-
             {/* <FinancialSolutions></FinancialSolutions> */}
             <ImageGallery></ImageGallery>
             <Contact></Contact>
