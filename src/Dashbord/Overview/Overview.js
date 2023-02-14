@@ -22,14 +22,14 @@ const Overview = () => {
       <div className="md:col-span-8 p-3">
         <OfferCard></OfferCard>
         <div className="grid sm:grid-cols-2 gap-6 my-6">
-          <div className=" p-10 rounded-2xl shadow-xl shadow-gray-400 hover:shadow-2xl hover:shadow-gray-500 transition-all ">
+          <div className=" p-10 rounded-2xl shadow-lg shadow-gray-400 hover:shadow-xl hover:shadow-gray-500 transition-all ">
             <div className="grid grid-cols-1 md:grid-cols-2 items-center mb-6 ">
               <h4 className="text-xl ml-4 font-semibold ">Reports</h4>
               <select className="bg-[#ECEFF6] p-3 rounded-lg  w-full max-w-xs mx-auto">
-                <option disabled selected>This Month</option>
-                <option>This Day</option>
-                <option>This Week</option>
-                <option>This Year</option>
+                <option disabled selected> Monthly</option>
+                <option>Daily</option>
+                <option>Weekly</option>
+                <option>Yearly</option>
               </select>
             </div>
             <Activities userDetails={userDetails}></Activities>
