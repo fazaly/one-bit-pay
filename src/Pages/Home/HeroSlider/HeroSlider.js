@@ -15,24 +15,24 @@ import "swiper/css/autoplay";
 import { Navigation, Pagination, Autoplay } from "swiper";
 
 const HeroSlider = () => {
-    
+
     return (
         <div className='m-12'>
             <Swiper
-                autoplay={{delay: 5000}}
+                autoplay={{ delay: 5000 }}
                 speed={2000}
-                slidesPerView={1} 
+                slidesPerView={1}
                 navigation={true}
                 modules={[Autoplay, Navigation, Pagination]}
-                pagination={{clickable: true}}
+                pagination={{ clickable: true }}
                 msName="mySwiper"
             >
                 <SwiperSlide className='py-24 flex rounded-3xl'>
                     <div className='md:pl-12 lg:pl-24 w-2/4'>
                         <h1 className='text-6xl font-bold pb-6'>
-                            One Tap For 
+                            One Tap For
                             <br />
-                            Mobile 
+                            Mobile
                             <br />
                             Recharge
                         </h1>
@@ -46,7 +46,7 @@ const HeroSlider = () => {
                 <SwiperSlide className='py-24 flex rounded-3xl'>
                     <div className='w-2/4 md:pl-12 lg:pl-24'>
                         <h1 className='text-6xl font-bold pb-6'>
-                            Easy to 
+                            Easy to
                             <br />
                             Pay Bills
                         </h1>
@@ -60,9 +60,9 @@ const HeroSlider = () => {
                 <SwiperSlide className='py-24 flex rounded-3xl'>
                     <div className='w-2/4 md:pl-12 lg:pl-24'>
                         <h1 className='text-6xl font-bold pb-6'>
-                            No Charge 
+                            No Charge
                             <br />
-                            On 
+                            On
                             <br />
                             Send Money
                         </h1>
@@ -73,7 +73,7 @@ const HeroSlider = () => {
                         <img src={hero3} alt="" />
                     </div>
                 </SwiperSlide>
-                
+
             </Swiper>
         </div>
     );

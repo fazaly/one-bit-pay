@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
+// import "swiper/css";
 import "swiper/css/pagination";
 import "./Testimonial.css";
 import { Pagination, Autoplay } from "swiper";
@@ -61,39 +61,41 @@ const Testimonials = () => {
     ]
     return (
         <div className=' bg-white'
-            style={{ backgroundImage: `url(${bgimg})`, backgroundPosition: "center", backgroundRepeat: "no-repeat" }}
         >
             <div className='h-[100vh] w-[95vw] mx-auto flex flex-col'
-
-
             >
-                <h1 className='text-4xl mt-28 font-bold text-center'>Testimonials</h1>
+                <h1 className='text-4xl font-bold text-center'>Testimonials</h1>
                 <h1 className='text-xl  mb-6 text-center'
 
                 >What says our happy customer?</h1>
                 <div
 
                 >
-                    <Swiper
-
-                        slidesPerView={3}
-                        spaceBetween={30}
+                    <Swiper className="bg-slate-500"
                         centeredSlides={true}
                         pagination={{
                             clickable: true,
                         }}
                         breakpoints={{
+                            300: {
+                                width: 300,
+                                slidesPerView: 1,
+                                spaceBetween: 20,
+                            },
                             640: {
+                                width: 640,
                                 slidesPerView: 1,
                                 spaceBetween: 20,
                             },
                             768: {
+                                width: 768,
                                 slidesPerView: 2,
-                                spaceBetween: 40,
+                                spaceBetween: 30,
                             },
                             1024: {
+                                width: 1024,
                                 slidesPerView: 3,
-                                spaceBetween: 30,
+                                spaceBetween: 50,
                             },
                         }}
                         loop={true}
@@ -102,14 +104,13 @@ const Testimonials = () => {
                             disableOnInteraction: false,
                         }}
                         modules={[Pagination, Autoplay]}
-                        className="mySwiper"
                     >
 
                         {datas.map(data =>
                             <SwiperSlide
                                 key={data.id}
                                 style={{ height: "300px", width: "280px" }}
-                                className="rounded-xl px-10 py-2 shadow-xl mb-10 mt-6  relative"
+                                className="rounded-xl px-10 py-2 shadow-xl mb-16 mt-6"
                             >
                                 <div >
                                     <p className='mt-2 text-[16px]'>{data.text}</p>
