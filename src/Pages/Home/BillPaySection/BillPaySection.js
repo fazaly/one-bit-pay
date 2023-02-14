@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import line from '../../../././images/homeImage/lineX.png';
+import line from '../../../././images/homeImage/newPayBill.png';
 import mobile from '../../.././images/homeImage/Pay_bill_mobile.png'
 
 const BillPaySection = () => {
