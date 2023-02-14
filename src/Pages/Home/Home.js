@@ -7,6 +7,7 @@ import Hero from './Hero/Hero';
 import HeroSlider from './HeroSlider/HeroSlider';
 import ImageGallery from './ImageGallery/ImageGallery';
 import SendMoneySec from './sendMoneySection/SendMoneySec';
+import Testimonials from './Testimonials/Testimonials';
 import WithdrawSection from './WithdrawSection/WithdrawSection';
 
 const Home = () => {
@@ -14,11 +15,11 @@ const Home = () => {
     return (
         <div>
             {/* <HeroSlider></HeroSlider> */}
-            <Hero/>
-            <SendMoneySec/>
-            <WithdrawSection/>
-            <Features/>
-            <BillPaySection/>
+            <Hero />
+            <SendMoneySec />
+            <WithdrawSection />
+            <Features />
+            <Testimonials></Testimonials>
             {/* <FinancialSolutions></FinancialSolutions> */}
             <ImageGallery></ImageGallery>
             <Contact></Contact>

@@ -1,13 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import ColumnChart from 'react-apexcharts';
+import Map from './Map';
 
 
 const Admin = () => {
     const { data: users = [] } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('https://one-bit-pay-server.vercel.app/users');
+            const res = await fetch('https://one-bit-pay-server.vercel.app/approvedAgents');
             const data = await res.json();
             return data;
         }
@@ -25,22 +26,22 @@ const Admin = () => {
         setTodoTask("");
     };
 
-    const userCount = users?.filter(users => users?.role === 'user').length;
-    const agentCount = users?.filter(agents => agents?.role === 'agent').length;
-    const adminCount = users?.filter(admins => admins?.role === 'admin').length;
+    // const userCount = users?.filter(users => users?.role === 'user').length;
+    // const agentCount = users?.filter(agents => agents?.role === 'agent').length;
+    // const adminCount = users?.filter(admins => admins?.role === 'admin').length;
 
     const options = {
 
         series: [{
             name: 'Users',
-            data: [userCount]
+            data: [6, 12]
         }, {
             name: 'Agents',
             data: [5, 15]
         },
         {
             name: 'Admin',
-            data: [adminCount]
+            data: [2, 4]
         }],
         options: {
             chart: {
@@ -68,30 +69,45 @@ const Admin = () => {
     };
 
     return (
-        <div>
+        <div className='bg-gray-100 rounded-2xl'>
             <div className="p-10">
-                <h1 className="text-3xl font-medium mb-5">Admin Dashboard</h1>
-                <div className="mb-10">
-                    <h2 className="text-lg font-medium mb-4">Users Statistics</h2>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+                <div className="mb-10 bg-black text-white rounded-xl p-6 h-96">
+                    <h2 className="text-lg font-medium mb-4">Statistics</h2>
                     <ColumnChart options={options} series={options.series} type="bar" />
                 </div>
+                <div className='rounded-xl bg-white p-6 h-96'>
+                    <h2 className="text-lg font-medium mb-4">Customers By Area</h2>
+                    <div className="">
+                    <Map></Map>
+                    </div>
+                </div>
+                </div>
                 <div className="mb-10">
-                    <h2 className="text-lg font-medium mb-4">User List</h2>
+                    <h2 className="text-lg font-medium mb-4">Agent's Work Analysis</h2>
                     <table className="mt-5 w-full text-left table-collapse">
                         <thead>
                             <tr>
                                 <th className="px-4 py-2 border-b border-gray-300">Name</th>
-                                <th className="px-4 py-2 border-b border-gray-300">Email</th>
+                                <th className="px-4 py-2 border-b border-gray-300">Revenue</th>
+                                <th className="px-4 py-2 border-b border-gray-300">New Accounts</th>
+                                <th className="px-4 py-2 border-b border-gray-300">Daily Goal</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {users.map((user) => (
-                                <tr key={user.id}>
+                            {users.map((agent) => (
+                                <tr key={agent.id}>
                                     <td className="px-4 py-2 border-b border-gray-300">
-                                        {user.name}
+                                        {agent.name}
                                     </td>
                                     <td className="px-4 py-2 border-b border-gray-300">
-                                        {user.userEmail}
+                                        50$
+                                    </td>
+                                    <td className="px-4 py-2 border-b border-gray-300">
+                                        10
+                                    </td>
+                                    <td className="px-4 py-2 border-b border-gray-300">
+                                        <small className='text-green-500'>completed</small>
                                     </td>
                                 </tr>
                             ))}
@@ -99,26 +115,26 @@ const Admin = () => {
                     </table>
                 </div>
                 <div className="mb-10">
-                    <h2 className="text-lg font-medium mb-4">To-Do Tasks</h2>
+                    <h2 className="text-lg font-medium mb-4">Set Goals For Upcoming Week</h2>
                     <div className="flex items-center mb-5">
                         <input
                             type="text"
-                            className="w-full px-3 py-2 mr-3 border border-gray-300"
-                            placeholder="Enter task"
+                            className="w-3/4 px-3 py-2 mr-3 border border-gray-300"
+                            placeholder="Enter goal"
                             value={todoTask}
                             onChange={handleTodoInputChange}
                         />
                         <button
-                            className="bg-blue-500 text-white px-3 py-2 hover:bg-blue-600"
+                            className="bg-black text-white px-3 py-2 hover:bg-blue-600"
                             onClick={addTask}
                             disabled={!todoTask}
                         >
-                            Add Task
+                            Add Goal
                         </button>
                     </div>
-                    <ul className="list-decimal pl-5">
+                    <ul className="list-decimal p-6 rounded-xl w-3/4">
                         {tasks.map((task, index) => (
-                            <li key={index} className="mb-2">
+                            <li key={index} className="mb-2 border pl-3">
                                 {task}
                             </li>
                         ))}
