@@ -18,8 +18,9 @@ const Overview = () => {
   const userDetails = data?.data;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-11 gap-2 mt-6">
-      <div className="md:col-span-8 p-3">
+    <div className="grid grid-cols-1 md:grid-cols-11 pl-4 gap-2 mt-6 ">
+
+      <div className="md:col-span-8 p-3 ">
         <OfferCard></OfferCard>
         <div className="grid sm:grid-cols-2 gap-6 my-6">
           <div className=" p-10 rounded-2xl shadow-lg shadow-gray-400 hover:shadow-xl hover:shadow-gray-500 transition-all ">
@@ -40,8 +41,6 @@ const Overview = () => {
           </div>
         </div>
       </div>
-
-
       <div className="col-span-3  grid grid-cols-1 px-4 md:-mt-14 ">
         <div className="grid grid-cols-1 md:grid-cols-2 items-center">
 
@@ -56,6 +55,7 @@ const Overview = () => {
         </div>
 
       </div>
+
 
 
     </div>

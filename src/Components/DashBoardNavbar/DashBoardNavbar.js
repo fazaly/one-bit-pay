@@ -37,13 +37,13 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
         <div>
             <div className="navbar justify-between  ">
                 <div className="flex w-9/12">
-                    <div className="navbar grid grid-cols-1 ml-3">
+                    <div className="navbar hidden lg:grid lg:grid-cols-1 ml-3">
 
-                        <h2 className='text-3xl font-bold'>Hello, <span>{userDetail?.name}</span></h2>
+                        <h2 className='text-2xl font-bold mr-1'>Hi, <span>{userDetail?.name}</span></h2>
                         <p className='text-gray-300'>Welcome Back!</p>
                     </div>
                     <div className='flex'>
-                        <Link className='text-2xl text-[#070733] font-bold  mr-9' to="/">
+                        <Link className='text-2xl text-[#070733] font-bold mr-9' to="/">
                             <FaHome></FaHome>
                         </Link>
                     </div>
@@ -52,7 +52,7 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost btn-circle">
                             <div className="indicator">
-                                <FaBell className='text-2xl text-[#50B8FF] '></FaBell>
+                                <FaBell className='text-2xl text-[#5966FF] '></FaBell>
                                 {/* <div className=" badge badge-xs indicator-item badge-secondary">2</div> */}
 
                             </div>

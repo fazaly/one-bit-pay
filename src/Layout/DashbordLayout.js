@@ -66,12 +66,13 @@ const DashbordLayout = () => {
             <label
               onClick={() => setOpen(!open)}
               htmlFor="my-drawer-2"
-              className=" p-2 w-8 absolute -right-7 rounded-tr-full rounded-br-full duration-300"
+              className=" p-2 w-8 absolute -right-7 rounded-tr-full rounded-br-full duration-300 mt-16"
             >
               {open ? (
-                <HiChevronDoubleRight className="text-lg" />
+                <HiChevronDoubleLeft className="text-lg " />
               ) : (
-                <HiChevronDoubleLeft className="text-lg" />
+                <HiChevronDoubleRight className="text-lg " />
+
               )}
             </label>
             {/* <!-- Sidebar content here --> */}
@@ -232,19 +233,23 @@ const DashbordLayout = () => {
               }
             </div>
 
-            <div className="flex justify-center bg-[#ECEFF6] p-4 mb-3  rounded-xl">
+            <div className="flex justify-center  p-4 mb-3  rounded-xl">
               <img className="w-24" src={sidebarImg} alt="" />
             </div>
-            <Link
-              to="/dashboard/applyForAgent"
-              className="flex items-center btn btn-md "
-            >
-              <FontAwesomeIcon
-                icon={faFileSignature}
-                className="text-[23px] mr-4"
-              />
-              <p className="text-lg font-semibold">Become An Agent</p>
-            </Link>
+
+            {
+              userDetails?.role === 'user' && <Link
+                to="/dashboard/applyForAgent"
+                className="flex items-center btn btn-md "
+              >
+                <FontAwesomeIcon
+                  icon={faFileSignature}
+                  className="text-[23px] mr-4"
+                />
+                <p className="text-lg font-semibold">Become An Agent</p>
+              </Link>
+            }
+
           </ul>
 
         </div>
