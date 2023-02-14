@@ -14,6 +14,12 @@ export const userDetailsApi = createApi({
             }),
             providesTags: ["users"],
         }),
+        getAreNormalUser: builder.query({
+            query: (email) => ({
+                url: `/user/normaluser/${email}`
+            }),
+            providesTags: ["Users"],
+        }),
         getUserLoggedinDetails: builder.query({
             query: (email) => ({
                 url: `/user/${email}`

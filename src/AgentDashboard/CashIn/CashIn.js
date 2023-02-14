@@ -20,15 +20,17 @@ const CashIn = () => {
   const { data: userRole } = useGetUsersRoleQuery(focusEmail);
 
   //post cashin data in database------------
-  const [postData, { isLoading, isSuccess, isError ,error}] = usePostCashInMutation();
+  const [postData, { isLoading, isSuccess, isError, error }] = usePostCashInMutation();
 
   useEffect(() => {
-    if(!isLoading && isSuccess){
-      toast.success("Cash In has been success", {id: "Cash In"});
-    }else if (isError){
-      toast.error(error.message, {id: "Cash In"});
+    if (!isLoading && isSuccess) {
+      toast.success("Cash In has been success", { id: "Cash In" });
+    } else if (isError) {
+      toast.error(error.message, { id: "Cash In" });
     }
   }, [isLoading, isSuccess, isError, error]);
+
+
 
   const handleCashIn = (event) => {
     event.preventDefault();
@@ -53,11 +55,11 @@ const CashIn = () => {
       return toast.error("Minimum sending amount is 10");
     } else if (userRole.userRole === "agent") {
       return toast.error("Cashin in Agent Account Not Possible");
-    }else if(userRole?.status === false){
+    } else if (userRole?.status === false) {
       toast.error("Enter Valid Email");
     } else if (receiverEmail !== email && userDetails?.balance > 10) {
       postData(cashInInfo);
-      if(isSuccess){
+      if (isSuccess) {
         form.reset();
       }
     }
@@ -104,7 +106,7 @@ const CashIn = () => {
                 className={`btn w-full btn-xs rounded-sm border-none hover:bg-[#5966FF]`}
               >
                 {
-                  isLoading ? <ButtonSpinner/> : "CASH IN"
+                  isLoading ? <ButtonSpinner /> : "CASH IN"
                 }
               </button>
             </form>

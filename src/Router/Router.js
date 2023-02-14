@@ -32,7 +32,7 @@ import AdminRoutes from "./AdminRoutes";
 import AllAgents from "../Pages/Admin/AllAgents";
 import AgentRequest from "../Pages/Admin/AgentRequest";
 import ChargeCalculator from "../Dashbord/ChargeCalculator/ChargeCalculator";
-import LoanTermsCondition from "../Dashbord/Loan/LoanTermsCondition";
+import LoadingGif from "../Components/LoadingGif/LoadingGif";
 
 
 export const router = createBrowserRouter([
@@ -106,10 +106,7 @@ export const router = createBrowserRouter([
         path: "/dashboard/loanRequest",
         element: <Loan></Loan>,
       },
-      {
-        path: "/dashboard/loantermscondition",
-        element: <LoanTermsCondition></LoanTermsCondition>,
-      },
+
       {
         path: "/dashboard/mobileRecharge",
         element: <MobileRecharge></MobileRecharge>,
@@ -182,6 +179,16 @@ export const router = createBrowserRouter([
           <PrivateRoutes>
             <AgentRoutes>
               <AgentMobileRecharge />
+            </AgentRoutes>
+          </PrivateRoutes>
+        )
+      },
+      {
+        path: "/dashboard/transactions",
+        element: (
+          <PrivateRoutes>
+            <AgentRoutes>
+              <LoadingGif />
             </AgentRoutes>
           </PrivateRoutes>
         )

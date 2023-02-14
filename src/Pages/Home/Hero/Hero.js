@@ -1,31 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Hero.css";
-import HeroImg from '../../.././images/New-01.svg';
+import heroImage from "../../.././images/homeImage/1.png";
+import mobile from "../../.././images/homeImage/new.png";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { HiArrowSmRight } from "react-icons/hi";
+import ball from "../../.././images/homeImage/ball2.png";
 
 const Hero = () => {
+  const email = useSelector((state) => state.auth.email);
+  const [isHoverd, setIsHoverd] = useState(false);
+  const myStyle = {
+    backgroundImage: `url(${heroImage})`,
+    backgroundImageRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
+
   return (
-    <div className="relative max-w-[1240px] mx-auto">
-      
-      <div className="absolute top-8 right-4">
-        <div
-          id="hero-circle"
-          className="bg-[#00AAFF] w-96 h-96 rounded-full ml-96"
-        ></div>
-        <div
-          id="hero-circle"
-          className="bg-[#8759f1] w-60 mr-96 h-60 rounded-full"
-        ></div>
-      </div>
-      <div id="hero" className="lg:mt-10 flex flex-col-reverse lg:flex-row justify-between items-center">
-        <div className="lg:w-1/2 lg:p-6 p-4">
-            <h1 className="text-4xl font-semibold lg:text-left text-center">Welcome to</h1>
-            <h1 className="text-6xl font-bold text-[#5966FF] lg:text-left text-center">OneBitPay</h1>
-            <h1 className="text-3xl font-semibold mt-3 text-[#00AAFF] lg:text-left text-center">The best way to pay</h1>
-            <p className="text-lg mt-5 mb-5 lg:text-left text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus.</p>
-            <p className="text-center lg:text-left"><button className="btn border-0 rounded-full bg-[#5966FF] text-white w-40">GET STARTED</button></p>
-        </div>
-        <div className="lg:w-1/2">
-            <img src={HeroImg} alt="" className="w-full"/>
+    <div className="relative flex justify-center items-center w-full h-screen">
+      <div
+        id="hero-cantainer"
+        className="relative w-full h-screen mx-auto"
+        style={myStyle}
+      ></div>
+      <div id="second-hero" className="absolute top-0">
+        <div className="flex lg:flex-row flex-col justify-around items-center w-full h-scree">
+          <div className="lg:mt-10 mt-8 overflow-hidden">
+            <h1 className="lg:text-6xl text-4xl font-medium mt-14 text-[#fff] lg:leading-none leading-9">
+              Fastest Money
+              <br /> Transfer Without <br /> Any Frustrations
+            </h1>
+            <p className="text-lg font-medium mt-4 text-white">
+              The best way to pay money with OneBitPay <br /> Payment
+              system with high security
+            </p>
+            <Link
+              onMouseEnter={() => setIsHoverd(true)}
+              onMouseLeave={() => setIsHoverd(false)}
+              to={email ? "/dashboard" : "/login"}
+              className="btn shadow-md bg-[#5966FF]
+           hover:bg-[#5966FF] mt-8 rounded-full ease-in-out transition-all"
+            >
+              {isHoverd ? (
+                <>
+                  <span>START NOW</span> <HiArrowSmRight className="text-2xl" />
+                </>
+              ) : (
+                `START NOW`
+              )}
+            </Link>
+          </div>
+          <div data-aos="zoom-in-up" className="lg:mr-16 lg:mt-10">
+            <img
+              src={mobile}
+              alt=""
+              className="lg:w-96 w-80 lg:mt-28 mt-2"
+            />
+            <img
+              src={ball}
+              alt=""
+              className="w-32 animate-spin ease-in-out transition-transform duration-75 absolute right-6 bottom-0"
+            />
+          </div>
         </div>
       </div>
     </div>

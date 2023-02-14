@@ -2,6 +2,7 @@ import React from 'react';
 import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
+import LoadingGif from '../Components/LoadingGif/LoadingGif';
 import Spinner from '../Components/Spinner/Spinner';
 import { AuthContext } from '../context/AuthProvider';
 
@@ -13,7 +14,7 @@ const PrivateRoutes = ({children}) => {
     const location = useLocation();
 
     if(isLoading){
-        return <Spinner/>;
+        return <LoadingGif/>;
     }
 
     if(email){
