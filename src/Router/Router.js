@@ -26,13 +26,17 @@ import B2B from "../AgentDashboard/B2B/B2B";
 import AgentOverview from "../AgentDashboard/AgentOverview/AgentOverview";
 import BillPayAgent from "../AgentDashboard/BillPayAgent/BillPayAgent";
 import AgentMobileRecharge from "../AgentDashboard/AgentMobileRecharge/AgentMobileRecharge";
-import Admin from "../Pages/Admin/Admin";
+import Admin from "../Pages/Admin/Overview/Admin";
 import AllUsers from "../Pages/Admin/AllUsers";
 import AdminRoutes from "./AdminRoutes";
 import AllAgents from "../Pages/Admin/AllAgents";
 import AgentRequest from "../Pages/Admin/AgentRequest";
 import ChargeCalculator from "../Dashbord/ChargeCalculator/ChargeCalculator";
 import LoadingGif from "../Components/LoadingGif/LoadingGif";
+import CookiePolicy from "../Pages/CookiePolicy/CookiePolicy";
+import SendMoneyGuide from "../Pages/SendMoneyGuide/SendMoneyGuide";
+import WithdrawGuide from "../Pages/WithdrawGuide/WithdrawGuide";
+import PayBillGuide from "../Pages/PayBillGuide/PayBillGuide";
 
 
 export const router = createBrowserRouter([
@@ -67,6 +71,22 @@ export const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`https://one-bit-pay-server.vercel.app/${params.id}`),
       },
+      {
+        path:"/cookie",
+        element: <CookiePolicy/>
+      },
+      {
+        path:"/send_money_Ggide",
+        element: <SendMoneyGuide/>
+      },
+      {
+        path:"/withdraw_gide",
+        element: <WithdrawGuide/>
+      },
+      {
+        path:"/pay_bill_gide",
+        element: <PayBillGuide/>
+      }
     ],
   },
   {
@@ -106,6 +126,7 @@ export const router = createBrowserRouter([
         path: "/dashboard/loanRequest",
         element: <Loan></Loan>,
       },
+
       {
         path: "/dashboard/mobileRecharge",
         element: <MobileRecharge></MobileRecharge>,
@@ -187,7 +208,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoutes>
             <AgentRoutes>
-              <LoadingGif/>
+              <LoadingGif />
             </AgentRoutes>
           </PrivateRoutes>
         )

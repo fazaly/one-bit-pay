@@ -1,5 +1,7 @@
 import React from 'react';
 import { useDeletUserMutation, useGetUserDetailsQuery, useMakeAdminMutation } from '../../features/api/apiSlice';
+import userImg from '../../images/user.jpg';
+import { RiDeleteBin5Fill, RiAdminFill, RiCheckFill } from "react-icons/ri";
 
 const AllUsers = () => {
     const { data, isLoading, isSuccess, isError } = useGetUserDetailsQuery();
@@ -19,32 +21,43 @@ const AllUsers = () => {
             <table className="table w-full">
                 <thead>
                     <tr>
-                        <th>No.</th>
                         <th>User Name</th>
-                        <th>User Email</th>
-                        <th><p className="mr-10 text-center">Actions</p></th>
+                        <th>Role</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         users?.map((user, i) =>
                             <tr key={user._id}>
-                                <td>{i + 1}</td>
-                                <td>{user.name}</td>
-                                <td>{user.userEmail}</td>
+                                <td className='flex items-center'>
+                                    <img className='w-20 h-20 rounded-full mr-6' src={userImg} alt="" />
+                                    <div>
+                                        <p className="text-[#5966FF] font-medium text-xl">{user.name}</p>
+                                        <small className='text-gray-500'>{user.userEmail}</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p className='font-semibold'>{user.role}</p>
+                                </td>
                                 <td>
                                     {user?.role !== 'admin' ?
                                         <>
-                                            <button onClick={() => makeAdmin(user?._id)} className="btn btn-sm mr-6">Make Admin</button>
                                             <button
-                                                onClick={() => deleteUser(user?._id)}
-                                                className='btn btn-sm bg-red-500'
+                                            onClick={() => makeAdmin(user?._id)}
+                                            className="text-xl mr-6"
+                                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Make Admin"
+                                            ><RiAdminFill></RiAdminFill></button>
+                                            <button
+                                            onClick={() => deleteUser(user?._id)}
+                                            className='text-red-500 text-xl'
+                                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete User"
                                             >
-                                                Delete
+                                                <RiDeleteBin5Fill></RiDeleteBin5Fill>
                                             </button>
                                         </>
                                         :
-                                        <p>Admin</p>
+                                        <p className='text-center text-green-400 text-3xl font-bold'><RiCheckFill></RiCheckFill></p>
                                     }
 
                                 </td>
