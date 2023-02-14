@@ -106,6 +106,7 @@ export const router = createBrowserRouter([
         path: "/dashboard/loanRequest",
         element: <Loan></Loan>,
       },
+
       {
         path: "/dashboard/mobileRecharge",
         element: <MobileRecharge></MobileRecharge>,
@@ -187,7 +188,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoutes>
             <AgentRoutes>
-              <LoadingGif/>
+              <LoadingGif />
             </AgentRoutes>
           </PrivateRoutes>
         )

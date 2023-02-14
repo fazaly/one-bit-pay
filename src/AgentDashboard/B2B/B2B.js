@@ -15,19 +15,20 @@ const B2B = () => {
     const userDetails = data?.data;
     const { data: userRole } = useGetUsersRoleQuery(focusEmail);
     const [postB2bData, { isLoading, isSuccess }] = usePostB2bMutation()
+    console.log(userRole)
 
     // todays transaction
     const { data: transactions } = useGetTransactionHistoryQuery(email)
     const date = format(new Date(), "PP");
     const todaysTransition = transactions?.data?.filter(td => td.time === date && td.type === "b2bTransition" && td.senderEmail === email)
     const todaysTransitionAmount = todaysTransition?.reduce((a, curr) => a + curr.amount, 0)
-    console.log(isLoading, isSuccess)
+
+    const todaysTransitionReceived = transactions?.data?.filter(td => td.time === date && td.type === "b2bTransition" && td.receiverEmail === email)
+    const todaysTransitionReceivedAmount = todaysTransitionReceived?.reduce((a, curr) => a + curr.amount, 0)
+    console.log(todaysTransitionReceivedAmount)
 
     useEffect(() => {
-        if (isLoading) {
-            toast.loading('Sending..', { id: "b2b transition" })
-        }
-        else if (isSuccess) {
+        if (!isLoading && isSuccess) {
             toast.success("Transition success", { id: "b2b transition" })
         }
     }, [isLoading, isSuccess])
@@ -57,6 +58,9 @@ const B2B = () => {
         }
         else if (userRole.userRole !== "agent") {
             return toast.error("Please enter a valid agent email for transfer money");
+        }
+        else if (!userRole.userRole) {
+            return toast.error("Please enter a valid a email");
         }
         else if (receiverEmail !== email && userDetails?.balance > 100) {
             postB2bData(transferInfo)
@@ -137,14 +141,8 @@ const B2B = () => {
                             <h1 className="font-bold text-xl text-[#5966FF] opacity-90">
                                 Todays Transaction
                             </h1>
-                            <h1 className='text-gray-500 text-xl font-bold'>You made</h1>
-                            <h1 className="font-bold text-3xl text-gray-600">
-                                ${todaysTransitionAmount}.00
-
-                                {/* {
-                                    transactionData.data.filter(td => td.time === date && td.type === "b2bTransition").length
-                                } */}
-                            </h1>
+                            <h1 className='text-gray-600 text-xl mt-2 font-bold'>You sent: <strong>${todaysTransitionAmount}.00</strong></h1>
+                            <h1 className='text-gray-600 text-xl font-bold'>You received: <strong> ${todaysTransitionReceivedAmount}.00</strong></h1>
                         </div>
                     </div>
                 </div>
