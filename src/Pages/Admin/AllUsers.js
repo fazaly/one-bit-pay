@@ -2,6 +2,7 @@ import React from 'react';
 import { useDeletUserMutation, useGetUserDetailsQuery, useMakeAdminMutation } from '../../features/api/apiSlice';
 import userImg from '../../images/user.jpg';
 import { RiDeleteBin5Fill, RiAdminFill, RiCheckFill } from "react-icons/ri";
+import userImage from "../../images/userImage2.png";
 
 const AllUsers = () => {
     const { data, isLoading, isSuccess, isError } = useGetUserDetailsQuery();
@@ -31,9 +32,16 @@ const AllUsers = () => {
                         users?.map((user, i) =>
                             <tr key={user._id}>
                                 <td className='flex items-center'>
-                                    <img className='w-20 h-20 rounded-full mr-6' src={userImg} alt="" />
+                                    <div className='w-20 rounded-full'>
+                                        {
+                                            user?.imageUrl ?
+                                                <img className='w-14 h-14 rounded-full mr-6' src={user?.imageUrl} alt="" />
+                                                :
+                                                <img className='w-14 h-14 rounded-full mr-6' src={userImage} alt="" />
+                                        }
+                                    </div>
                                     <div>
-                                        <p className="text-[#5966FF] font-medium text-xl">{user.name}</p>
+                                        <p className="text-[#5966FF] font-medium text-lg">{user.name}</p>
                                         <small className='text-gray-500'>{user.userEmail}</small>
                                     </div>
                                 </td>
@@ -44,14 +52,14 @@ const AllUsers = () => {
                                     {user?.role !== 'admin' ?
                                         <>
                                             <button
-                                            onClick={() => makeAdmin(user?._id)}
-                                            className="text-xl mr-6"
-                                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Make Admin"
+                                                onClick={() => makeAdmin(user?._id)}
+                                                className="text-xl mr-6"
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Make Admin"
                                             ><RiAdminFill></RiAdminFill></button>
                                             <button
-                                            onClick={() => deleteUser(user?._id)}
-                                            className='text-red-500 text-xl'
-                                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete User"
+                                                onClick={() => deleteUser(user?._id)}
+                                                className='text-red-500 text-xl'
+                                                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete User"
                                             >
                                                 <RiDeleteBin5Fill></RiDeleteBin5Fill>
                                             </button>
