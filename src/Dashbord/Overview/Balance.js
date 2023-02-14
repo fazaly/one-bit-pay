@@ -8,7 +8,7 @@ const Balance = ({ userDetails }) => {
         <div className='bg-black tex-white rounded-2xl grid grid-cols-1  items-center pl-8 p-4  shadow-2xl shadow-slate-500 h-48' style={{ backgroundImage: `url(${cardBg})`, backgroundRepeat: 'no-repeat', backgroundSize: "cover" }} >
             <div>
                 <p className='text-xs '>Balance</p>
-                <p className='text-3xl font-bold tracking-widest'>${userDetails?.balance}.00</p>
+                <p className='text-2xl lg:text-3xl font-bold lg:tracking-widest'>${userDetails?.balance}.00</p>
             </div>
             <div>
                 <p className='text-xs '>Card Id</p>

@@ -89,8 +89,8 @@ const SendMoney = () => {
 
   return (
     <div>
-      <div className="flex gap-4 lg:flex-row flex-col">
-        <div className="card lg:w-80 w-96 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
+      <div className="flex gap-4 lg:flex-row flex-col justify-center items-center">
+        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
           <div className="flex items-center justify-center h-screen flex-col">
             <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
               Current Balance
@@ -101,7 +101,7 @@ const SendMoney = () => {
           </div>
         </div>
 
-        <div className="card lg:w-80 w-96 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
+        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
           <div className="flex items-center justify-center h-screen flex-col p-6">
             <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
               Send Money
@@ -125,7 +125,7 @@ const SendMoney = () => {
               <p className="">
                 <button
                   type="submit"
-                  className="btn w-full btn-xs rounded-sm border-none hover:bg-[#5966FF]"
+                  className="btn btn-primary btn-sm w-full  rounded-lg border-none hover:bg-[#5966FF]"
                 >
                   {isLoading ? <ButtonSpinner /> : "SEND NOW"}
                 </button>
@@ -134,7 +134,7 @@ const SendMoney = () => {
           </div>
         </div>
 
-        <div className="card lg:w-80 w-96 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
+        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
           <div className="flex items-center justify-center h-screen flex-col">
             <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
               Today's Transaction
