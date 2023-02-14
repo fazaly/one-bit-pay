@@ -16,7 +16,10 @@ const Blog = () => {
     }, [])
     return (
         <div>
-            <section className="max-w-[1440px] mx-auto mt-20">
+            <div className='w-full h-16'>
+                
+            </div>
+            <section className="max-w-[1440px] mx-auto">
                 <div>
                     <div className="flex flex-wrap justify-center">
                         <div className="w-full">
