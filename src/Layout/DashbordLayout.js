@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { HiChevronDoubleRight, HiChevronDoubleLeft } from "react-icons/hi";
 import { Link, NavLink, Outlet } from "react-router-dom";
-import userImage2 from "../images/userImage2.png";
 import { AuthContext } from "../context/AuthProvider";
 import DashBoardNavbar from "../Components/DashBoardNavbar/DashBoardNavbar";
 import "./DashboardLayout.css";
 import { HiViewGridAdd, HiCurrencyDollar } from "react-icons/hi";
-import { FaUserEdit, FaMobile, FaHandshake, FaDonate } from "react-icons/fa";
+import { FaUserEdit, FaMobile, FaHandshake, FaDonate, FaArrowLeft } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SlCalculator } from "react-icons/sl";
 import {
@@ -24,21 +23,18 @@ import {
 import useRole from "../Hooks/useRole";
 import { useGetTransactionHistoryQuery, useGetUserDetailsQuery, useGetUserLoggedinDetailsQuery } from "../features/api/apiSlice";
 import { useSelector } from "react-redux";
-
+import logo from "../images/logo.svg"
+import sidebarImg from "../images/dasboard/18953931_6075540-removebg-preview.png"
 const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
   const [notifi, setNotifi] = useState(false);
   const { user } = useContext(AuthContext);
 
 
-  const email = useSelector(state => state.auth.email)
-  // const loggededUser = currentUser?.email;
-
-  const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email)
+  const email = useSelector(state => state.auth.email);
+  const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email);
   const userDetails = data?.data
 
-  console.log(email)
-  console.log(userDetails)
 
   useEffect(() => {
     if (userDetails?.notification) {
@@ -66,7 +62,7 @@ const DashbordLayout = () => {
         </div>
         <div className="drawer-side shadow-2xl ml-4">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-72 bg-[#251F71] text-white relative ">
+          <ul className="menu p-4 w-72 bg-white text-black relative ">
             <label
               onClick={() => setOpen(!open)}
               htmlFor="my-drawer-2"
@@ -79,58 +75,21 @@ const DashbordLayout = () => {
               )}
             </label>
             {/* <!-- Sidebar content here --> */}
-            <div className="w-52 flex flex-col justify-center items-center  rounded-md p-3  mb-4 ml-3 ">
-              <div className="mr-2">
-                {userDetails?.userPhoto ?
-                  <>
-                    <NavLink to="/dashboard/editProfile">
-                      <img
-                        src={userDetails?.userPhoto}
-                        alt=""
-                        className="w-20 rounded-full"
-                      />
-                    </NavLink>
-                  </>
-                  :
-                  <>
-                    <NavLink to="/dashboard/editProfile">
-                      <img
-                        src={userImage2}
-                        alt=""
-                        className="w-20 rounded-full"
-                      />
-                    </NavLink>
-                  </>
-                }
-              </div>
-              {
-                isLoading ? <p>Loading</p>
-                  :
-                  <div>
-                    <span className=""><h1 className="font-bold text-lg">{userDetails?.name}</h1></span>
-                    <h1 className="text-sm ">{userDetails?.userEmail}</h1>
-                  </div>
-
-              }
+            <div className="w-52 flex flex-col justify-center items-center  rounded-md p-3 ml-3 ">
+              <Link to='/' className="">
+                <img src={logo} alt='' className='w-46 btn  border-0' />
+              </Link>
 
             </div>
             <div className=" p-4">
               {
-                userDetails?.role === 'user' && <div className="grid grid-cols-1 gap-4">
+                userDetails?.role === 'user' && <div className="grid grid-cols-1 gap-5">
                   <NavLink
                     to="/dashboard/overview"
                     className="flex justify-items-start "
                   >
                     <HiViewGridAdd className="text-[30px] mr-4" />
                     <p className="text-lg font-semibold">OverView</p>
-                  </NavLink>
-
-                  <NavLink
-                    to="/dashboard/editProfile"
-                    className="flex  justify-items-start "
-                  >
-                    <FaUserEdit className="text-[30px] mr-4" />
-                    <p className="text-lg font-semibold">Update Profile</p>
                   </NavLink>
 
                   <NavLink
@@ -191,7 +150,7 @@ const DashbordLayout = () => {
                     />
                     <p className="text-lg font-semibold">Donation</p>
                   </NavLink>
-                  <NavLink
+                  {/* <NavLink
                     to="/dashboard/chargeCalculate"
                     className="flex items-center "
                   >
@@ -199,18 +158,9 @@ const DashbordLayout = () => {
                       className="text-[25px] mr-4"
                     />
                     <p className="text-lg font-semibold">Charge Calculator</p>
-                  </NavLink>
+                  </NavLink> */}
 
-                  <NavLink
-                    to="/dashboard/applyForAgent"
-                    className="flex items-center"
-                  >
-                    <FontAwesomeIcon
-                      icon={faFileSignature}
-                      className="text-[25px] mr-4"
-                    />
-                    <p className="text-lg font-semibold">Become An Agent</p>
-                  </NavLink>
+
                 </div>
               }
 
@@ -281,7 +231,22 @@ const DashbordLayout = () => {
                 </div>
               }
             </div>
+
+            <div className="bg-[#ECEFF6] p-6 m-8 rounded-xl">
+              <img className="w-36" src={sidebarImg} alt="" />
+            </div>
+            <Link
+              to="/dashboard/applyForAgent"
+              className="flex items-center btn "
+            >
+              <FontAwesomeIcon
+                icon={faFileSignature}
+                className="text-[25px] mr-4"
+              />
+              <p className="text-lg font-semibold">Become An Agent</p>
+            </Link>
           </ul>
+
         </div>
       </div>
     </div>

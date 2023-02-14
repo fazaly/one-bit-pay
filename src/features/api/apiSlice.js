@@ -3,8 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userDetailsApi = createApi({
     reducerPath: "userDetailsApi",
     baseQuery: fetchBaseQuery({
-        // baseUrl: `https://one-bit-pay-server.vercel.app`,
-        baseUrl: `http://localhost:5000`
+        baseUrl: `https://one-bit-pay-server.vercel.app`,
+        // baseUrl: `http://localhost:5000`
     }),
     tagTypes: ["users", "userDetails"],
     endpoints: (builder) => ({
@@ -13,6 +13,12 @@ export const userDetailsApi = createApi({
                 url: "/users"
             }),
             providesTags: ["users"],
+        }),
+        getAreNormalUser: builder.query({
+            query: (email) => ({
+                url: `/user/normaluser/${email}`
+            }),
+            providesTags: ["Users"],
         }),
         getUserLoggedinDetails: builder.query({
             query: (email) => ({

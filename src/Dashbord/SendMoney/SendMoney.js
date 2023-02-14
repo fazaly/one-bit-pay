@@ -5,6 +5,7 @@ import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import { toast } from "react-hot-toast";
 import dateTime from "date-time";
 import {
+  useGetTransactionHistoryQuery,
   useGetUserDetailsQuery,
   useGetUserLoggedinDetailsQuery,
   useGetUsersRoleQuery,
@@ -21,6 +22,16 @@ const SendMoney = () => {
   const dispatch = useDispatch();
 
   const email = useSelector((state) => state.auth.email);
+  const { transactionsData } = useGetTransactionHistoryQuery(email);
+  const transactions = transactionsData?.data;
+  let total = 0
+
+  transactions?.foreach((transaction) => {
+    total += transaction.amount;
+    console.log(transaction)
+
+  })
+
   const { data: userRole } = useGetUsersRoleQuery(`${receiver}`);
   console.log(userRole?.status);
 
@@ -131,7 +142,7 @@ const SendMoney = () => {
             <h1 className="font-bold text-xl text-slate-700">
               You made <br />{" "}
               <span className="text-3xl text-[#5966FF]">
-                ${userDetails?.balance}
+                {total}
               </span>{" "}
               <br /> transaction today
             </h1>
