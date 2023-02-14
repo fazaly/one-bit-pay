@@ -19,6 +19,7 @@ const Home = () => {
             <SendMoneySec />
             <WithdrawSection />
             <Features />
+            <BillPaySection/>
             <Testimonials></Testimonials>
             {/* <FinancialSolutions></FinancialSolutions> */}
             <ImageGallery></ImageGallery>
