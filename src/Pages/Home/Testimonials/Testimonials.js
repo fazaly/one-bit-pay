@@ -61,7 +61,7 @@ const Testimonials = () => {
     ]
     return (
         <div className=' bg-white'
-        // style={{ backgroundImage: `url(${bgimg})`, backgroundPosition: "top 50px", backgroundRepeat: "no-repeat" }}
+            style={{ backgroundImage: `url(${bgimg})`, backgroundPosition: "center", backgroundRepeat: "no-repeat" }}
         >
             <div className='h-[100vh] w-[95vw] mx-auto flex flex-col'
 
