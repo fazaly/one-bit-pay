@@ -13,19 +13,30 @@ const Withdraw = () => {
   const handleWithdraw = (event) => {
     event.preventDefault();
     const form = event.target;
-    const receiverEmail = form.receiverEmail.value;
+    const agentEmail = form.receiverEmail.value;
     const amount = form.amount.value;
     const senderEmail = user?.email;
     const time = format(new Date(), "PP");
     const WithdrawInfo = {
       senderEmail,
-      receiverEmail,
+      agentEmail,
       amount: parseInt(amount),
       time,
       type: "Withdraw"
     };
     console.log(WithdrawInfo);
-    toast.success('Successfully You have Withdraw')
+    fetch("http://localhost:5000/withdraw", {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(WithdrawInfo)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        toast.success('Successfully You have Withdraw')
+      })
   }
   return (
     <div className='pt-10'>
@@ -57,7 +68,7 @@ const Withdraw = () => {
                 type="text"
                 name="receiverEmail"
                 required
-                placeholder="receiverEmail"
+                placeholder="agentEmail"
                 className=" w-full border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
               />
               <input
