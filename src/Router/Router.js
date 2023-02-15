@@ -76,6 +76,8 @@ export const router = createBrowserRouter([
       {
         path: '/about',
         element: <AboutUs></AboutUs>
+      },
+      {
         path:"/cookie",
         element: <CookiePolicy/>
       },

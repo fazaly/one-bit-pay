@@ -1,14 +1,25 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import ColumnChart from 'react-apexcharts';
+import Counter from './Counter';
 import Map from './Map';
 
 
+
 const Admin = () => {
+    const { data: agents = [] } = useQuery({
+        queryKey: ['agents'],
+        queryFn: async () => {
+            const res = await fetch('https://one-bit-pay-server.vercel.app/approvedAgents');
+            const data = await res.json();
+            return data;
+        }
+    })
+
     const { data: users = [] } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('https://one-bit-pay-server.vercel.app/approvedAgents');
+            const res = await fetch('https://one-bit-pay-server.vercel.app/users');
             const data = await res.json();
             return data;
         }
@@ -26,22 +37,22 @@ const Admin = () => {
         setTodoTask("");
     };
 
-    // const userCount = users?.filter(users => users?.role === 'user').length;
-    // const agentCount = users?.filter(agents => agents?.role === 'agent').length;
-    // const adminCount = users?.filter(admins => admins?.role === 'admin').length;
+    const userCount = users?.filter(users => users?.role === 'user').length;
+    const agentCount = users?.filter(agents => agents?.role === 'agent').length;
+    const adminCount = users?.filter(admins => admins?.role === 'admin').length;
 
     const options = {
 
         series: [{
             name: 'Users',
-            data: [6, 12]
+            data: [userCount, 0]
         }, {
             name: 'Agents',
-            data: [5, 15]
+            data: [agentCount, 0]
         },
         {
             name: 'Admin',
-            data: [2, 4]
+            data: [adminCount, 0]
         }],
         options: {
             chart: {
@@ -54,15 +65,6 @@ const Admin = () => {
             stroke: {
                 curve: 'smooth'
             },
-            xaxis: {
-                type: 'datetime',
-                categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-            },
-            tooltip: {
-                x: {
-                    format: 'dd/MM/yy HH:mm'
-                },
-            },
         },
 
 
@@ -71,17 +73,20 @@ const Admin = () => {
     return (
         <div className='bg-gray-100 rounded-2xl'>
             <div className="p-10">
+
+                <Counter></Counter>
+
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-                <div className="mb-10 bg-black text-white rounded-xl p-6 h-96">
-                    <h2 className="text-lg font-medium mb-4">Statistics</h2>
-                    <ColumnChart options={options} series={options.series} type="bar" />
-                </div>
-                <div className='rounded-xl bg-white p-6 h-96'>
-                    <h2 className="text-lg font-medium mb-4">Customers By Area</h2>
-                    <div className="">
-                    <Map></Map>
+                    <div className="mb-10 bg-black rounded-xl p-6 h-96">
+                        <h2 className="text-lg text-white font-medium mb-4">Statistics</h2>
+                        <ColumnChart options={options} series={options.series} type="bar" />
                     </div>
-                </div>
+                    <div className='rounded-xl bg-white p-6 h-96'>
+                        <h2 className="text-lg font-medium mb-4">Customers By Area</h2>
+                        <div className="">
+                            <Map></Map>
+                        </div>
+                    </div>
                 </div>
                 <div className="mb-10">
                     <h2 className="text-lg font-medium mb-4">Agent's Work Analysis</h2>
@@ -95,8 +100,8 @@ const Admin = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {users.map((agent) => (
-                                <tr key={agent.id}>
+                            {agents.map((agent) => (
+                                <tr key={agent._id}>
                                     <td className="px-4 py-2 border-b border-gray-300">
                                         {agent.name}
                                     </td>
@@ -125,7 +130,7 @@ const Admin = () => {
                             onChange={handleTodoInputChange}
                         />
                         <button
-                            className="bg-black text-white px-3 py-2 hover:bg-blue-600"
+                            className="bg-black text-white px-3 py-2 hover:bg-[#5966FF]"
                             onClick={addTask}
                             disabled={!todoTask}
                         >
