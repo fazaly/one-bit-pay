@@ -30,6 +30,8 @@ import Admin from "../Pages/Admin/Overview/Admin";
 import AllUsers from "../Pages/Admin/AllUsers";
 import AdminRoutes from "./AdminRoutes";
 import AllAgents from "../Pages/Admin/AllAgents";
+import ApplyForLoan from "../Dashbord/ApplyForLoan/ApplyForLoan";
+import AboutUs from "../Pages/AboutUs/AboutUs";
 import AgentRequest from "../Pages/Admin/AgentRequest";
 import ChargeCalculator from "../Dashbord/ChargeCalculator/ChargeCalculator";
 import LoadingGif from "../Components/LoadingGif/LoadingGif";
@@ -70,6 +72,10 @@ export const router = createBrowserRouter([
         element: <IndividualBlog></IndividualBlog>,
         loader: ({ params }) =>
           fetch(`https://one-bit-pay-server.vercel.app/${params.id}`),
+      },
+      {
+        path: '/about',
+        element: <AboutUs></AboutUs>
       },
       {
         path: "/cookie",
