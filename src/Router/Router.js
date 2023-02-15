@@ -37,7 +37,7 @@ import CookiePolicy from "../Pages/CookiePolicy/CookiePolicy";
 import SendMoneyGuide from "../Pages/SendMoneyGuide/SendMoneyGuide";
 import WithdrawGuide from "../Pages/WithdrawGuide/WithdrawGuide";
 import PayBillGuide from "../Pages/PayBillGuide/PayBillGuide";
-
+import LoanTermsCondition from "../Dashbord/Loan/LoanTermsCondition";
 
 export const router = createBrowserRouter([
   {
@@ -72,20 +72,20 @@ export const router = createBrowserRouter([
           fetch(`https://one-bit-pay-server.vercel.app/${params.id}`),
       },
       {
-        path:"/cookie",
-        element: <CookiePolicy/>
+        path: "/cookie",
+        element: <CookiePolicy />
       },
       {
-        path:"/send_money_Ggide",
-        element: <SendMoneyGuide/>
+        path: "/send_money_Ggide",
+        element: <SendMoneyGuide />
       },
       {
-        path:"/withdraw_gide",
-        element: <WithdrawGuide/>
+        path: "/withdraw_gide",
+        element: <WithdrawGuide />
       },
       {
-        path:"/pay_bill_gide",
-        element: <PayBillGuide/>
+        path: "/pay_bill_gide",
+        element: <PayBillGuide />
       }
     ],
   },
@@ -125,6 +125,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/loanRequest",
         element: <Loan></Loan>,
+      },
+      {
+        path: "/dashboard/loantermscondition",
+        element: <LoanTermsCondition></LoanTermsCondition>,
       },
 
       {

@@ -61,7 +61,7 @@ const Testimonials = () => {
         },
     ]
     return (
-        <div className=' mx-auto sm:py-10 flex items-center justify-center '
+        <div className='mx-auto py-10 bg-[#F5F8FF] flex items-center justify-center '
         >
             <div>
                 <h1 className='text-4xl font-bold text-center'>Testimonials</h1>
@@ -103,16 +103,16 @@ const Testimonials = () => {
                                 spaceBetween: 30,
                             },
                         }}
-                        style={{ width: "90vw" }}
-                        className="mySwiper "
+                        style={{ width: "76vw" }}
+                        className="mySwiper lg:ml-4 "
                     >
 
                         <div>
                             {datas.map(data =>
                                 <SwiperSlide
                                     key={data.id}
-                                    className="rounded-xl px-10 py-2 bg-stone-100 hover:shadow-2xl hover:bg-transparent cursor-pointer shadow-xl
-                                     mb-16 mt-6"
+                                    className="rounded-xl px-10 py-2 hover:shadow-2xl cursor-pointer shadow-xl
+                                     mb-16 mt-4"
                                 >
                                     <div >
                                         <p className='mt-2 text-[16px]'>{data.text}</p>
