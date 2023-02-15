@@ -40,6 +40,8 @@ import SendMoneyGuide from "../Pages/SendMoneyGuide/SendMoneyGuide";
 import WithdrawGuide from "../Pages/WithdrawGuide/WithdrawGuide";
 import PayBillGuide from "../Pages/PayBillGuide/PayBillGuide";
 import LoanTermsCondition from "../Dashbord/Loan/LoanTermsCondition";
+import LoanRequest from "../Pages/Admin/LoanRequestList";
+import LoanRequestList from "../Pages/Admin/LoanRequestList";
 
 export const router = createBrowserRouter([
   {
@@ -71,7 +73,7 @@ export const router = createBrowserRouter([
         path: "/blogpost/:id",
         element: <IndividualBlog></IndividualBlog>,
         loader: ({ params }) =>
-          fetch(`https://one-bit-pay-server.vercel.app/${params.id}`),
+          fetch(`https://one-bit-pay-server.vercel.app/blogs/${params.id}`),
       },
       {
         path: '/about',
@@ -242,6 +244,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/chargeCalculate",
         element: <ChargeCalculator></ChargeCalculator>
+      },
+      {
+        path: "/dashboard/loanRequestList",
+        element: <LoanRequestList></LoanRequestList>
       },
     ],
   },

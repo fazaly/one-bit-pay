@@ -206,6 +206,13 @@ const DashbordLayout = () => {
                     />
                     <p className="text-lg font-semibold">OverView</p>
                   </NavLink>
+                  <NavLink to="/dashboard/loanRequestList" className="flex items-center mb-6 mt-4">
+                    <FontAwesomeIcon
+                      icon={faFileSignature}
+                      className="text-[25px] mr-4"
+                    />
+                    <p className="text-lg font-semibold">Loan Requests</p>
+                  </NavLink>
                   <NavLink to="/dashboard/agentRequest" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
                       icon={faFileSignature}
