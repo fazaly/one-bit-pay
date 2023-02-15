@@ -280,6 +280,7 @@ const Loan = () => {
                   {errors.reasonForLoan?.type === 'required' && <p className="text-red-700">{errors.reasonForLoan.message}</p>}
                 </div>
               </div>
+              <Link to="/dashboard/loancondition"><h1 className="text-red-500">See Full term and condition and Eligibity of loan</h1></Link>
             </div>
 
             <div className="flex justify-between items-center">
