@@ -83,8 +83,8 @@ const Admin = () => {
                     </div>
                     <div className='rounded-xl bg-white p-6 h-96'>
                         <h2 className="text-lg font-medium mb-4">Customers By Area</h2>
-                        <div className="">
-                            <Map></Map>
+                        <div>
+                            <Map users={users}></Map>
                         </div>
                     </div>
                 </div>
