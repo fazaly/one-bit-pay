@@ -1,19 +1,24 @@
 import React from "react";
 import { VectorMap } from "react-jvectormap";
-const mapData = {
-  CN: 100000,
-  IN: 9900,
-  SA: 86,
-  EG: 70,
-  SE: 0,
-  FI: 0,
-  FR: 0,
-  US: 20
-};
-const handleClick = (e, countryCode) => {
-  console.log(countryCode);
-};
-const Map = () => {
+
+const Map = ({users}) => {
+  const mapData = {
+    CN: 100000,
+    IN: 9900,
+    SA: 86,
+    EG: 70,
+    SE: 0,
+    FI: 0,
+    FR: 0,
+    US: 20
+  };
+
+  // const mapData = users?.map(user => console.log(user.address));
+
+  const handleClick = (e, countryCode) => {
+    console.log(countryCode);
+  };
+  
   return (
     <div>
       <VectorMap

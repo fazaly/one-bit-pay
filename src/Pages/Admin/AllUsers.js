@@ -23,6 +23,7 @@ const AllUsers = () => {
                 <thead>
                     <tr>
                         <th>User Name</th>
+                        <th>Joined Date</th>
                         <th>Role</th>
                         <th>Actions</th>
                     </tr>
@@ -45,6 +46,7 @@ const AllUsers = () => {
                                         <small className='text-gray-500'>{user.userEmail}</small>
                                     </div>
                                 </td>
+                                <td><small>{user.date}</small></td>
                                 <td>
                                     <p className='font-semibold'>{user.role}</p>
                                 </td>
