@@ -22,6 +22,7 @@ const AllUsers = () => {
                 <thead>
                     <tr>
                         <th>User Name</th>
+                        <th>Joined Date</th>
                         <th>Role</th>
                         <th>Actions</th>
                     </tr>
@@ -31,12 +32,13 @@ const AllUsers = () => {
                         users?.map((user, i) =>
                             <tr key={user._id}>
                                 <td className='flex items-center'>
-                                    <img className='w-20 h-20 rounded-full mr-6' src={userImg} alt="" />
+                                    <img className='w-12 h-1git2 rounded-full mr-6' src={userImg} alt="" />
                                     <div>
                                         <p className="text-[#5966FF] font-medium text-xl">{user.name}</p>
                                         <small className='text-gray-500'>{user.userEmail}</small>
                                     </div>
                                 </td>
+                                <td><small>{user.date}</small></td>
                                 <td>
                                     <p className='font-semibold'>{user.role}</p>
                                 </td>
