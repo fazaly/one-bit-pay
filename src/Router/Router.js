@@ -30,9 +30,15 @@ import Admin from "../Pages/Admin/Overview/Admin";
 import AllUsers from "../Pages/Admin/AllUsers";
 import AdminRoutes from "./AdminRoutes";
 import AllAgents from "../Pages/Admin/AllAgents";
+import ApplyForLoan from "../Dashbord/ApplyForLoan/ApplyForLoan";
+import AboutUs from "../Pages/AboutUs/AboutUs";
 import AgentRequest from "../Pages/Admin/AgentRequest";
 import ChargeCalculator from "../Dashbord/ChargeCalculator/ChargeCalculator";
 import LoadingGif from "../Components/LoadingGif/LoadingGif";
+import CookiePolicy from "../Pages/CookiePolicy/CookiePolicy";
+import SendMoneyGuide from "../Pages/SendMoneyGuide/SendMoneyGuide";
+import WithdrawGuide from "../Pages/WithdrawGuide/WithdrawGuide";
+import PayBillGuide from "../Pages/PayBillGuide/PayBillGuide";
 
 
 export const router = createBrowserRouter([
@@ -67,6 +73,24 @@ export const router = createBrowserRouter([
         loader: ({ params }) =>
           fetch(`https://one-bit-pay-server.vercel.app/${params.id}`),
       },
+      {
+        path: '/about',
+        element: <AboutUs></AboutUs>
+        path:"/cookie",
+        element: <CookiePolicy/>
+      },
+      {
+        path:"/send_money_Ggide",
+        element: <SendMoneyGuide/>
+      },
+      {
+        path:"/withdraw_gide",
+        element: <WithdrawGuide/>
+      },
+      {
+        path:"/pay_bill_gide",
+        element: <PayBillGuide/>
+      }
     ],
   },
   {
@@ -106,6 +130,7 @@ export const router = createBrowserRouter([
         path: "/dashboard/loanRequest",
         element: <Loan></Loan>,
       },
+
       {
         path: "/dashboard/mobileRecharge",
         element: <MobileRecharge></MobileRecharge>,
@@ -187,7 +212,7 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoutes>
             <AgentRoutes>
-              <LoadingGif/>
+              <LoadingGif />
             </AgentRoutes>
           </PrivateRoutes>
         )

@@ -66,16 +66,17 @@ const DashbordLayout = () => {
             <label
               onClick={() => setOpen(!open)}
               htmlFor="my-drawer-2"
-              className=" p-2 w-8 absolute -right-7 rounded-tr-full rounded-br-full duration-300"
+              className=" p-2 w-8 absolute -right-7 rounded-tr-full rounded-br-full duration-300 mt-16"
             >
               {open ? (
-                <HiChevronDoubleRight className="text-lg" />
+                <HiChevronDoubleLeft className="text-lg " />
               ) : (
-                <HiChevronDoubleLeft className="text-lg" />
+                <HiChevronDoubleRight className="text-lg " />
+
               )}
             </label>
             {/* <!-- Sidebar content here --> */}
-            <div className="w-52 flex flex-col justify-center items-center  rounded-md p-3 ml-3 ">
+            <div className="w-52 flex flex-col justify-center items-center  rounded-md p-2 ml-3 ">
               <Link to='/' className="">
                 <img src={logo} alt='' className='w-46 btn  border-0' />
               </Link>
@@ -88,7 +89,7 @@ const DashbordLayout = () => {
                     to="/dashboard/overview"
                     className="flex justify-items-start "
                   >
-                    <HiViewGridAdd className="text-[30px] mr-4" />
+                    <HiViewGridAdd className="text-[25px] mr-4" />
                     <p className="text-lg font-semibold">OverView</p>
                   </NavLink>
 
@@ -96,7 +97,7 @@ const DashbordLayout = () => {
                     to="/dashboard/sendMoney"
                     className="flex items-center "
                   >
-                    <HiCurrencyDollar className="text-[30px] mr-4" />
+                    <HiCurrencyDollar className="text-[25px] mr-4" />
                     <p className="text-lg font-semibold">Send Money</p>
                   </NavLink>
 
@@ -115,7 +116,7 @@ const DashbordLayout = () => {
                     to="/dashboard/mobileRecharge"
                     className="flex items-center"
                   >
-                    <FaMobile className="text-[25px] mr-4" />
+                    <FaMobile className="text-[23px] mr-4" />
                     <p className="text-lg font-semibold">Mobile Recharge</p>
                   </NavLink>
 
@@ -125,7 +126,7 @@ const DashbordLayout = () => {
                   >
                     <FontAwesomeIcon
                       icon={faCreditCard}
-                      className="text-[25px] mr-4"
+                      className="text-[23px] mr-4"
                     />
                     <p className="text-lg font-semibold">Bill Pay</p>
                   </NavLink>
@@ -136,7 +137,7 @@ const DashbordLayout = () => {
                   >
                     <FontAwesomeIcon
                       icon={faSackDollar}
-                      className="text-[25px] mr-4"
+                      className="text-[23px] mr-4"
                     />
                     <p className="text-lg font-semibold">Loan Request</p>
                   </NavLink>
@@ -146,7 +147,7 @@ const DashbordLayout = () => {
                   >
                     <FontAwesomeIcon
                       icon={faDollar}
-                      className="text-[25px] mr-4"
+                      className="text-[23px] mr-4"
                     />
                     <p className="text-lg font-semibold">Donation</p>
                   </NavLink>
@@ -232,19 +233,23 @@ const DashbordLayout = () => {
               }
             </div>
 
-            <div className="bg-[#ECEFF6] p-6 m-8 rounded-xl">
-              <img className="w-36" src={sidebarImg} alt="" />
+            <div className="flex justify-center  p-4 mb-3  rounded-xl">
+              <img className="w-24" src={sidebarImg} alt="" />
             </div>
-            <Link
-              to="/dashboard/applyForAgent"
-              className="flex items-center btn "
-            >
-              <FontAwesomeIcon
-                icon={faFileSignature}
-                className="text-[25px] mr-4"
-              />
-              <p className="text-lg font-semibold">Become An Agent</p>
-            </Link>
+
+            {
+              userDetails?.role === 'user' && <Link
+                to="/dashboard/applyForAgent"
+                className="flex items-center btn btn-md "
+              >
+                <FontAwesomeIcon
+                  icon={faFileSignature}
+                  className="text-[23px] mr-4"
+                />
+                <p className="text-lg font-semibold">Become An Agent</p>
+              </Link>
+            }
+
           </ul>
 
         </div>

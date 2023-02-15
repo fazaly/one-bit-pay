@@ -17,8 +17,8 @@ const MoneyTransferHistory = ({ email, type }) => {
                     <thead className='text-slate-900 uppercase'>
                         <tr>
                             <th></th>
-                            <th>sender email</th>
-                            <th>reaciver eMAIL</th>
+                            <th>sent</th>
+                            <th>reacived</th>
                             <th>AMOUNT</th>
                             <th>TRANSACTION ID</th>
                             <th>DATE & TIME</th>
@@ -45,18 +45,27 @@ const MoneyTransferHistory = ({ email, type }) => {
                                                 transaction?.senderEmail === email && <th><p><HiArrowSmUp className='bg-red-500 text-white rounded-full text-xl' /></p></th>
                                             } */}
                                             {
-                                                transaction?.senderEmail === email &&
-                                                <>
-                                                    <td>
-                                                        <HiArrowSmUp
-                                                            className='bg-red-500 text-white rounded-full text-xl'
-                                                        /></td>
-                                                    <td>{transaction?.senderEmail}</td>
-                                                    <td>{transaction?.receiverEmail}</td>
-                                                    <td>{transaction?.amount}</td>
-                                                    <td>{transaction?.transactionId}</td>
-                                                    <td>{transaction?.time}</td>
-                                                </>
+                                                transaction?.senderEmail === email ?
+                                                    <>
+                                                        <th><p><HiArrowSmDown className='bg-green-500 text-white rounded-full text-xl' /></p></th>
+                                                        <td>{transaction?.senderEmail}</td>
+                                                        <td>{transaction?.receiverEmail}</td>
+                                                        <td>{transaction?.amount}</td>
+                                                        <td>{transaction?.transactionId}</td>
+                                                        <td>{transaction?.time}</td>
+                                                    </>
+                                                    :
+                                                    <>
+                                                        <td>
+                                                            <HiArrowSmUp
+                                                                className='bg-red-500 text-white rounded-full text-xl'
+                                                            /></td>
+                                                        <td>{transaction?.senderEmail}</td>
+                                                        <td>{transaction?.receiverEmail}</td>
+                                                        <td>{transaction?.amount}</td>
+                                                        <td>{transaction?.transactionId}</td>
+                                                        <td>{transaction?.time}</td>
+                                                    </>
                                             }
                                         </tr>
                                     })
