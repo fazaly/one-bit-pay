@@ -74,7 +74,7 @@ const Loan = () => {
               <h1 className="text-xl pl-2 mt-4 font-bold text-gray-500">Personal information</h1>
               <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-2">
                 <div className="w-full flex-1 mx-2 svelte-1l8159u">
-                  <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
+                  <div className="font-bold h-6 mt-3 text-[#303640] text-md leading-8 ">
                     First Name
                   </div>
                   <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
@@ -90,7 +90,7 @@ const Loan = () => {
                   {errors.firstName?.type === 'required' && <p className="text-red-700 text-xs">{errors.firstName.message}</p>}
                 </div>
                 <div className="w-full flex-1 mx-2 svelte-1l8159u">
-                  <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
+                  <div className="font-bold h-6 mt-3 text-[#303640] text-md leading-8 ">
                     Last Name
                   </div>
                   <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
@@ -110,7 +110,7 @@ const Loan = () => {
 
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
               <div className="w-full flex-1 mx-2 svelte-1l8159u">
-                <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
+                <div className="font-bold h-6 mt-3 text-[#303640] text-md leading-8 ">
                   Address
                 </div>
                 <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
@@ -126,7 +126,7 @@ const Loan = () => {
                 {errors.address?.type === 'required' && <p className="text-red-700 text-xs">{errors.address.message}</p>}
               </div>
               <div className="w-full flex-1 mx-2 svelte-1l8159u">
-                <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
+                <div className="font-bold h-6 mt-3 text-[#303640] text-md leading-8 ">
                   NID Number
                 </div>
                 <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
@@ -142,7 +142,7 @@ const Loan = () => {
                 {errors.nidNumber?.type === 'required' && <p className="text-red-700 text-xs">{errors.nidNumber.message}</p>}
               </div>
               <div className="w-full flex-1 mx-2 svelte-1l8159u">
-                <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
+                <div className="font-bold h-6 mt-3 text-[#303640] text-md leading-8 ">
                   Phone Number
                 </div>
                 <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
@@ -159,7 +159,7 @@ const Loan = () => {
               </div>
 
               <div className="w-full flex-1 mx-2 svelte-1l8159u">
-                <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
+                <div className="font-bold h-6 mt-3 text-[#303640] text-md leading-8 ">
                   Gender
                 </div>
                 <div className="text-gray-800">
@@ -175,7 +175,7 @@ const Loan = () => {
                 {errors.gender?.type === 'required' && <p className="text-red-700 text-xs">{errors.gender.message}</p>}
               </div>
               <div className="w-full flex-1 mx-2 svelte-1l8159u">
-                <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
+                <div className="font-bold h-6 mt-3 text-[#303640] text-md leading-8 ">
                   Profession
                 </div>
                 <div >
@@ -193,7 +193,7 @@ const Loan = () => {
                 {errors.profession?.type === 'required' && <p className="text-red-700 text-xs">{errors.profession.message}</p>}
               </div>
               <div className="w-full flex-1 mx-2 svelte-1l8159u">
-                <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
+                <div className="font-bold h-6 mt-3 text-[#303640] text-md leading-8 ">
                   Date of birth
                 </div>
                 <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
@@ -215,7 +215,7 @@ const Loan = () => {
               <h1 className="text-xl pl-2 mt-6 font-bold text-gray-500">Loan Information</h1>
               <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-2">
                 <div className="w-full mx-2 svelte-1l8159u">
-                  <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
+                  <div className="font-bold h-6 mt-3 text-[#303640] text-md leading-8 ">
                     Desire amount
                   </div>
                   <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
@@ -231,7 +231,7 @@ const Loan = () => {
                   {errors.desireAmount?.type === 'required' && <p className="text-red-700 text-xs">{errors.desireAmount.message}</p>}
                 </div>
                 <div className="w-full mx-2 svelte-1l8159u">
-                  <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
+                  <div className="font-bold h-6 mt-3 text-[#303640] text-md leading-8 ">
                     Duration in year
                   </div>
                   <div >
@@ -250,7 +250,7 @@ const Loan = () => {
                   {errors.duration?.type === 'required' && <p className="text-red-700 text-xs">{errors.duration.message}</p>}
                 </div>
                 <div className="w-full mx-2 svelte-1l8159u">
-                  <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
+                  <div className="font-bold h-6 mt-3 text-[#303640] text-md leading-8 ">
                     Anoual income
                   </div>
                   <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
@@ -267,7 +267,7 @@ const Loan = () => {
                 </div>
 
                 <div className="lg:w-2/3 md:w-full w-full lg:col-span-3 md:col-span-3 mx-2 svelte-1l8159u">
-                  <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
+                  <div className="font-bold h-6 mt-3 text-[#303640] text-md leading-8 ">
                     Tell us, why you want loan?
                   </div>
                   <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
@@ -291,7 +291,7 @@ const Loan = () => {
                   onChange={handleToggle}
                   className="mr-2"
                 />
-                Are you agree with our <Link className="text-[#00AAFF]" to="/dashboard/loantermscondition">terms & condition</Link>?
+                Are you agree with our <Link className="text-[#5966FF]" to="/dashboard/loantermscondition">terms & condition</Link>?
               </label>
               <div className="flex">
                 <button
