@@ -1,9 +1,18 @@
 .swiper {
-    width: 100%;
-    padding: 0 20px;
-    height: 60vh;
+    /* width: 90%;
+    height: 100%;
+    padding: 30px; */
+    /* margin: 30px; */
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
 }
 
 .swiper-slide {
     background: white;
+    height: 340px;
+    width: 350px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
 }
