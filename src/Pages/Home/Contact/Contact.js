@@ -1,7 +1,12 @@
 import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'react-hot-toast';
+import { FaLocationArrow } from "react-icons/fa";
+import { BsTelephoneFill } from "react-icons/bs";
+import { FaMailBulk } from "react-icons/fa";
 
+import "./Contact.css"
+import img from "../../../../src/images/homeImage/contact.png"
 const Contact = () => {
 
     const form = useRef();
@@ -10,66 +15,61 @@ const Contact = () => {
         e.preventDefault();
 
         emailjs.sendForm('service_w6svlhk', 'template_xzkrtc7', form.current, 'q_62p3f56iW_fG_dP')
-        .then((result) => {
-            console.log(result.text);
-            e.target.reset();
-            toast.success('Message send Successfully.');
-        }, (error) => {
-            console.log(error.text);
-        });
+            .then((result) => {
+                console.log(result.text);
+                e.target.reset();
+                toast.success('Message send Successfully.');
+            }, (error) => {
+                console.log(error.text);
+            });
     };
 
     return (
-        <div>
-            <section className='py-3 mb-10' id='Contact'>
-                <h3 className="text-center text-black text-3xl font-bold mt-5 mb-5">Want to talk to us?</h3>
-                <h3 className='text-center text-black text-2xl mt-3 mb-5'>Feel free to knock anytime for any queries regarding 1BitPay.</h3>
-                <section className="py-10 mx-12 rounded-2xl bg-gray-800 text-white">
-                    <div className="grid grid-cols-1 mt-5 px-10 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
-                        <div className="py-6 md:py-0 md:px-6">
-                            <h1 className="text-6xl font-bold text-[#00AAFF]">Get in touch</h1>
-                            <p className="pt-2 text-3xl pb-4">Fill in the form to start a conversation</p>
-                            <div className="space-y-4">
-                                <p className="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-10 h-10 mr-2 sm:mr-6">
-                                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"></path>
-                                    </svg>
-                                    <span className='text-xl'>Gulshan, Dhaka, Bangladesh</span>
-                                </p>
-                                <p className="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-10 h-10 mr-2 sm:mr-6">
-                                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
-                                    </svg>
-                                    <span className='text-xl'>(+88) 0197700000</span>
-                                </p>
-                                <p className="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-10 h-10 mr-2 sm:mr-6">
-                                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                                    </svg>
-                                    <span className='text-xl'>Email: onebitpay@gmail.com</span>
-                                </p>
-                            </div>
-                        </div>
-                        <form ref={form} onSubmit={sendEmail} className="flex flex-col py-8 space-y-6 md:py-0 md:px-6 ">
-                            <label className="block">
-                                <span className="mb-1">Full name</span>
-                                <input type="text" name="user_name" placeholder="Enter Name" className="block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-75 text-black py-3 px-5" required />
-                            </label>
-                            <label className="block">
-                                <span className="mb-1">Email address</span>
-                                <input type="email" name="user_email" placeholder="Enter Email" className="block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-75 text-black py-3 px-5" required />
-                            </label>
-                            <label className="block">
-                                <span className="mb-1">Message</span>
-                                <textarea name='message' rows="3" className="block w-full rounded-md focus:ring focus:ring-opacity-75 px-5 text-black" placeholder='Type Your Message' required></textarea>
-                            </label>
-                            <button type="submit" value='send' className=" w-full btn rounded text-lg hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF] transition-all hover:from-[#8759f1] text-white">Send Email</button>
-                        </form>
+        <section className='relative flex  mt-28 justify-center items-center overflow-visible w-full' >
+            <div id='contact-container'
+                className='relative'
+            >
+
+            </div>
+            <div id='contact-2nd-part' className="grid lg:grid-cols-2 py-4 sm:grid-rows-1 md:grid-rows-1 items-center absolute lg:top-36 top-16 rounded-xl shadow-xl lg:w-[941px] lg:h-[550px] h-[630px] overflow-hidden mx-10 bg-[#ffffff]">
+                {/* ================
+               first part start
+               absolute top-20
+               =================== */}
+                <div className="px-6 sm:w-full ">
+                    <h1 className="lg:text-5xl font-bold text-4xl">Get in touch</h1>
+                    <p className="pt-2 lg:text-xl text-lg pb-4">We are here for you! how can we help?</p>
+                    <form ref={form} onSubmit={sendEmail} className="flex flex-col gap-3 ">
+                        <input type="text" name="user_name" placeholder="Enter Your Name" className="block w-full outline-[#5966FF] rounded-md shadow-sm text-black py-3 px-5 bg-[#E7E8FF]" required />
+                        <input type="email" name="user_email" placeholder="Enter Your Email" className="block w-full rounded-md shadow-sm text-black py-3 px-5 bg-[#E7E8FF] outline-[#5966FF]" required />
+                        <textarea name='message' rows="5" className="block hover:border-[#5966FF] w-full sm:rows-3 rounded-md px-5 text-black bg-[#E7E8FF] outline-[#5966FF]" placeholder='Enter Your Message...' required></textarea>
+                        <button type="submit" value='send' className=" w-full btn rounded border-none mt-2 hover:text-gray-100 bg-[#5966FF] text-white">Submit</button>
+                    </form>
+                </div>
+                {/* ================
+                2nd part start
+                ================== */}
+                <div className=" p-10 sm:w-full ">
+                    <div className='hidden lg:block md:block'>
+                        <img src={img} alt="" className='w-full  object-cover mb-1' />
                     </div>
-                </section>
-            </section>
-        </div>
+                    <div>
+                        <p className="flex items-center mb-2">
+                            <FaLocationArrow className='text-2xl text-[#5966FF]' />
+                            <span className='text-black font-bold ml-2 '>Dhaka, Bangladesh</span>
+                        </p>
+                        <p className="flex items-center mb-2">
+                            <BsTelephoneFill className='text-2xl text-[#5966FF]' />
+                            <span className='text-black font-bold ml-2 '> (+88) 0197700000</span>
+                        </p>
+                        <p className="flex items-center mb-2">
+                            <FaMailBulk className='text-2xl text-[#5966FF]' />
+                            <span className='text-black font-bold ml-2 '> onebitpay@gmail.com</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
     );
 };
 

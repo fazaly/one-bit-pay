@@ -87,7 +87,7 @@ const Loan = () => {
                       className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
                     />
                   </div>
-                  {errors.firstName?.type === 'required' && <p className="text-red-700">{errors.firstName.message}</p>}
+                  {errors.firstName?.type === 'required' && <p className="text-red-700 text-xs">{errors.firstName.message}</p>}
                 </div>
                 <div className="w-full flex-1 mx-2 svelte-1l8159u">
                   <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
@@ -103,7 +103,7 @@ const Loan = () => {
                       className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
                     />
                   </div>
-                  {errors.lastName?.type === 'required' && <p className="text-red-700">{errors.lastName.message}</p>}
+                  {errors.lastName?.type === 'required' && <p className="text-red-700 text-xs">{errors.lastName.message}</p>}
                 </div>
               </div>
             </div>
@@ -123,7 +123,7 @@ const Loan = () => {
                     className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
                   />
                 </div>
-                {errors.address?.type === 'required' && <p className="text-red-700">{errors.address.message}</p>}
+                {errors.address?.type === 'required' && <p className="text-red-700 text-xs">{errors.address.message}</p>}
               </div>
               <div className="w-full flex-1 mx-2 svelte-1l8159u">
                 <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
@@ -139,7 +139,7 @@ const Loan = () => {
                     className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
                   />
                 </div>
-                {errors.nidNumber?.type === 'required' && <p className="text-red-700">{errors.nidNumber.message}</p>}
+                {errors.nidNumber?.type === 'required' && <p className="text-red-700 text-xs">{errors.nidNumber.message}</p>}
               </div>
               <div className="w-full flex-1 mx-2 svelte-1l8159u">
                 <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
@@ -155,7 +155,7 @@ const Loan = () => {
                     className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
                   />
                 </div>
-                {errors.phnNumber?.type === 'required' && <p className="text-red-700">{errors.phnNumber.message}</p>}
+                {errors.phnNumber?.type === 'required' && <p className="text-red-700 text-xs">{errors.phnNumber.message}</p>}
               </div>
 
               <div className="w-full flex-1 mx-2 svelte-1l8159u">
@@ -172,7 +172,7 @@ const Loan = () => {
                     <option value="transgender">Transgender</option>
                   </select>
                 </div>
-                {errors.gender?.type === 'required' && <p className="text-red-700">{errors.gender.message}</p>}
+                {errors.gender?.type === 'required' && <p className="text-red-700 text-xs">{errors.gender.message}</p>}
               </div>
               <div className="w-full flex-1 mx-2 svelte-1l8159u">
                 <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
@@ -190,7 +190,7 @@ const Loan = () => {
                     <option value="others">Others</option>
                   </select>
                 </div>
-                {errors.profession?.type === 'required' && <p className="text-red-700">{errors.profession.message}</p>}
+                {errors.profession?.type === 'required' && <p className="text-red-700 text-xs">{errors.profession.message}</p>}
               </div>
               <div className="w-full flex-1 mx-2 svelte-1l8159u">
                 <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
@@ -206,7 +206,7 @@ const Loan = () => {
                     className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
                   />
                 </div>
-                {errors.birthDate?.type === 'required' && <p className="text-red-700">{errors.birthDate.message}</p>}
+                {errors.birthDate?.type === 'required' && <p className="text-red-700 text-xs">{errors.birthDate.message}</p>}
               </div>
             </div>
 
@@ -228,7 +228,7 @@ const Loan = () => {
                       className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
                     />
                   </div>
-                  {errors.desireAmount?.type === 'required' && <p className="text-red-700">{errors.desireAmount.message}</p>}
+                  {errors.desireAmount?.type === 'required' && <p className="text-red-700 text-xs">{errors.desireAmount.message}</p>}
                 </div>
                 <div className="w-full mx-2 svelte-1l8159u">
                   <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
@@ -247,7 +247,7 @@ const Loan = () => {
                       <option value="10">10</option>
                     </select>
                   </div>
-                  {errors.duration?.type === 'required' && <p className="text-red-700">{errors.duration.message}</p>}
+                  {errors.duration?.type === 'required' && <p className="text-red-700 text-xs">{errors.duration.message}</p>}
                 </div>
                 <div className="w-full mx-2 svelte-1l8159u">
                   <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 ">
@@ -263,7 +263,7 @@ const Loan = () => {
                       className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
                     />
                   </div>
-                  {errors.anoualIncome?.type === 'required' && <p className="text-red-700">{errors.anoualIncome.message}</p>}
+                  {errors.anoualIncome?.type === 'required' && <p className="text-red-700 text-xs">{errors.anoualIncome.message}</p>}
                 </div>
 
                 <div className="lg:w-2/3 md:w-full w-full lg:col-span-3 md:col-span-3 mx-2 svelte-1l8159u">
@@ -277,7 +277,7 @@ const Loan = () => {
                       {...register("reasonForLoan", { required: "Reason for loan is required" })}
                       className="p-1 px-2 lg:h-[100px] appearance-none outline-none w-full text-gray-800" placeholder="Why you want to loan"></textarea>
                   </div>
-                  {errors.reasonForLoan?.type === 'required' && <p className="text-red-700">{errors.reasonForLoan.message}</p>}
+                  {errors.reasonForLoan?.type === 'required' && <p className="text-red-700 text-xs">{errors.reasonForLoan.message}</p>}
                 </div>
               </div>
               <Link to="/dashboard/loancondition"><h1 className="text-red-500">See Full term and condition and Eligibity of loan</h1></Link>
@@ -296,15 +296,15 @@ const Loan = () => {
               <div className="flex">
                 <button
                   type="reset"
-                  className="text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF]  hover:from-[#8759f1] text-white duration-200 ease-in-out transition" >
+                  className="btn shadow-md bg-slate-800  rounded-xl border-none ease-in-out transition-all" >
                   Reset
                 </button>
                 {
                   <button
                     type="submit"
                     disabled={!isChecked}
-                    className="text-base  ml-4  hover:scale-110 focus:outline-none flex justify-center
-               px-4 py-2 rounded font-bold cursor-pointer hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF]  hover:from-[#8759f1] text-white duration-200 ease-in-out transition">
+                    className="btn shadow-md bg-[#5966FF]
+                    hover:bg-[#5966FF] rounded-xl border-none btn-md ml-2 ease-in-out transition-all">
                     Apply for loan
                   </button>
                 }
