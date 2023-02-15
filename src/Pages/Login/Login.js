@@ -8,11 +8,15 @@ import { AuthContext } from "../../context/AuthProvider";
 import signin from "../../images/LoginPage.svg";
 import { setCurrentUser } from "../../features/api/courrentUserSlice";
 import { loginUser } from "../../features/api/authSlice";
-
+import background from "../../././images/LoginBorder.png";
+import "./Login.css";
+import loginImage from "../../././images/loginImage.png";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const {isLoading, isError, error, isSuccess} = useSelector((state) => state.auth);
+  const { isLoading, isError, error, isSuccess } = useSelector(
+    (state) => state.auth
+  );
   const {
     register,
     formState: { errors },
@@ -20,7 +24,7 @@ const Login = () => {
   } = useForm();
 
   const [userEmail, setUserEmail] = useState("");
-  const { passwordReset} = useContext(AuthContext);
+  const { passwordReset } = useContext(AuthContext);
   const [signinError, setSigninError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -29,19 +33,19 @@ const Login = () => {
   const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
-    if(!isLoading && isSuccess){
+    if (!isLoading && isSuccess) {
       navigate("/");
-      toast.success("Login success", {id:"logon"});
-    }else if(isError){
-      toast.error(error, {id:"logon"});
+      toast.success("Login success", { id: "logon" });
+    } else if (isError) {
+      toast.error(error, { id: "logon" });
     }
-  },[isError, error, isSuccess, isLoading, navigate])
+  }, [isError, error, isSuccess, isLoading, navigate]);
 
   const handleSignIn = (data) => {
     const email = data.email;
     const password = data.password;
-    
-    dispatch(loginUser({email, password}));
+
+    dispatch(loginUser({ email, password }));
   };
 
   const handleEmailBlur = (event) => {
@@ -59,100 +63,29 @@ const Login = () => {
       });
   };
 
+  const loginStyle = {
+    backgroundImage: `url(${background})`,
+    backgroundImageRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
+
   return (
-    <div className="hero min-h-screen relative">
-      <div className="hero-content to">
-        <div className="text-center hidden lg:block">
-          <img src={signin} alt="" className="w-[500px]" />
-          <h1 className="text-3xl font-semibold text-[#5966FF]">
-            To Access All Features <br /> Please{" "}
-            <span className="text-5xl font-bold">SIGN IN</span>
-          </h1>
-        </div>
-        <div className="bg-[#5966FF] lg:min-w-[500px] min-w-[380px] min-h-screen flex justify-center items-center">
-          <div className="card flex-shrink-0  shadow-2xl ">
-            <form
-              onSubmit={handleSubmit(handleSignIn)}
-              className="card-body space-y-2 rounded-xl bg-white"
-            >
-              <h4 className="text-black font-bold text-center text-2xl mb-2">
-                SIGN IN
-              </h4>
-              <div className="form-control">
-                <input
-                  {...register("email", {
-                    required: "Email is required",
-                  })}
-                  onBlur={handleEmailBlur}
-                  type="text"
-                  name="email"
-                  placeholder="Email"
-                  className="input input-bordered border-black"
-                />
-                {errors.email && (
-                  <p className="text-red-500" role="alert">
-                    {errors.email?.message}
-                  </p>
-                )}
-              </div>
-
-              <div className="form-control">
-                <input
-                  {...register("password", {
-                    required: "Password is required",
-                    minLength: { value: 6, message: "Password is Wrong" },
-                  })}
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  className="input input-bordered border-black"
-                />
-                {errors.password && (
-                  <p className="text-red-500" role="alert">
-                    {errors.password?.message}
-                  </p>
-                )}
-                <label className="label">
-                  <button
-                    onClick={handlePasswordReset}
-                    className="label-text-alt link link-hover"
-                  >
-                    Forgot password?
-                  </button>
-                </label>
-              </div>
-
-              <div className="form-control">
-                <button type="submit" className="btn bg-black">
-                  {
-                    isError ? <ButtonSpinner /> : "SIGN IN"
-                  }
-                </button>
-                {signinError && <p className="text-red-500">{signinError}</p>}
-              </div>
-              <p className="text-xs text-center">
-                New to OneBitPay?
-                <Link className="text-[#5966FF] font-semibold" to="/signUp">
-                  &nbsp;SIGN UP
-                </Link>
-              </p>
-            </form>
+    <div className="w-full h-screen">
+      <div className="flex justify-center">
+        <div
+          style={loginStyle}
+          className="w-7/12 h-screen bg-[#181818] flex justify-center items-center"
+        >
+          <div id="image-container" className="w-96 h-4/6 rounded-xl flex flex-col justify-center items-center">
+            <img src={loginImage} alt="" className="w-72" />
+            <div className="relative">
+              <h1 className="text-white font-semibold text-xl">To Access All Features <br/> Please</h1>
+              <span className="text-3xl text-white font-bold absolute right-9 top-7">SIGN IN</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="tabs rotate-90 absolute top-1/2 left-0">
-        <Link
-          to={"/login"}
-          className="tab tab-bordered  font-semibold tab-active"
-        >
-          SIGN IN
-        </Link>
-        <Link
-          to={"/signUp"}
-          className="tab tab-bordered font-semibold"
-        >
-          SIGN UP
-        </Link>
+        <div className="w-5/12 h-screen bg-[#FFF]"></div>
       </div>
     </div>
   );

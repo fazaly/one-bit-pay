@@ -14,15 +14,12 @@ const Home = () => {
 
     return (
         <div>
-            {/* <HeroSlider></HeroSlider> */}
             <Hero />
             <SendMoneySec />
             <WithdrawSection />
             <Features />
             <BillPaySection />
             <Testimonials></Testimonials>
-            {/* <FinancialSolutions></FinancialSolutions> */}
-            <ImageGallery></ImageGallery>
             <Contact></Contact>
         </div>
     );
