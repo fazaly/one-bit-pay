@@ -253,16 +253,16 @@ const cCodes = [
 ];
 
 const MobileRecharge = () => {
-  const [postData, {isLoading, isSuccess}] = usePostRechargeDataMutation();
-  const { email } = useSelector(state => state?.currentUser?.user)
+  const [postData, { isLoading, isSuccess }] = usePostRechargeDataMutation();
+  const email = useSelector(state => state.auth.email)
   const { data } = useGetUserLoggedinDetailsQuery(email);
   const userDetails = data?.data;
 
   useEffect(() => {
-    if(!isLoading && isSuccess){
+    if (!isLoading && isSuccess) {
       toast.success("Mobile Recharge Success");
     }
-  },[isLoading ,isSuccess])
+  }, [isLoading, isSuccess])
 
 
   const handleRecharge = (event) => {
@@ -286,7 +286,7 @@ const MobileRecharge = () => {
       toast.error("insufficient balance");
     } else if (balance > 1000) {
       toast.error("Maximum Recharge $1000");
-    }else if(balance > userDetails.balance){
+    } else if (balance > userDetails.balance) {
       toast.error("insufficient balance");
     } else if (balance >= 5 && balance <= 1000) {
       postData(rechargeInfo);
@@ -297,7 +297,7 @@ const MobileRecharge = () => {
     <div>
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="CARD-1">
-          <div className="card lg:w-80 w-96 h-48 bg-white text-primary-content mx-auto shadow-lg">
+          <div className="card lg:w-80 w-72 h-48 bg-white text-primary-content mx-auto shadow-lg">
             <div className="card-body">
               <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
                 Main Balance
@@ -309,7 +309,7 @@ const MobileRecharge = () => {
           </div>
         </div>
         <div>
-          <div className="card lg:w-80 w-96 bg-white text-primary-content mx-auto shadow-xl">
+          <div className="card lg:w-80 w-72 h-48 bg-white text-primary-content mx-auto shadow-xl">
             <div className="CARD-2">
               <form
                 onSubmit={handleRecharge}
@@ -359,7 +359,7 @@ const MobileRecharge = () => {
                     <button
                       onClick={() => handleRecharge}
                       type="submit"
-                      className="btn w-full btn-xs rounded-sm mt-2 hover:bg-[#5966FF] border-none"
+                      className="mt-2 btn btn-primary btn-sm w-full  rounded-lg border-none hover:bg-[#5966FF]"
                     >
                       {isLoading ? <ButtonSpinner /> : "CONFIRM"}
                     </button>
@@ -370,7 +370,7 @@ const MobileRecharge = () => {
           </div>
         </div>
         <div className="CARD-3">
-          <div className="card lg:w-80 w-96 h-48 bg-white text-primary-content mx-auto shadow-lg">
+          <div className="card lg:w-80 w-72 h-48 bg-white text-primary-content mx-auto shadow-lg">
             <div className="card-body">
               <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
                 Total Overview
@@ -383,7 +383,7 @@ const MobileRecharge = () => {
         </div>
       </div>
       <div className="mt-6">
-        <RechargeHistory/>
+        <RechargeHistory />
       </div>
     </div>
   );

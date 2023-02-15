@@ -1,24 +1,19 @@
 import React from 'react';
-import { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router';
-import { AuthContext } from '../context/AuthProvider';
-import useAgent from '../Hooks/useAgent';
+import { useGetUsersRoleQuery } from '../features/api/apiSlice';
 
 const AgentRoutes = ({ children }) => {
-    const { user, loading } = useContext(AuthContext);
-
     const email = useSelector((state) => state.auth.email);
+    const { data } = useGetUsersRoleQuery(email);
     const isLoading = useSelector((state) => state.auth.isLoading);
-
-    const [isAgent, agentLoading] = useAgent(email);
     const location = useLocation();
 
-    if (isLoading || agentLoading) {
+    if (isLoading || data?.userRole !== "agent") {
         return <div>Loading...</div>;
     }
 
-    if (email || isAgent) {
+    if (email || data?.userRole === "agent") {
         return children;
     }
 

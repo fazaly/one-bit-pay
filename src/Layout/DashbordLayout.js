@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { HiChevronDoubleRight, HiChevronDoubleLeft } from "react-icons/hi";
 import { Link, NavLink, Outlet } from "react-router-dom";
-import userImage2 from "../images/userImage2.png";
 import { AuthContext } from "../context/AuthProvider";
 import DashBoardNavbar from "../Components/DashBoardNavbar/DashBoardNavbar";
 import "./DashboardLayout.css";
 import { HiViewGridAdd, HiCurrencyDollar } from "react-icons/hi";
-import { FaUserEdit, FaMobile, FaHandshake, FaDonate } from "react-icons/fa";
+import { FaUserEdit, FaMobile, FaHandshake, FaDonate, FaArrowLeft } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SlCalculator } from "react-icons/sl";
 import {
   faSackDollar,
   faFileSignature,
@@ -20,26 +20,20 @@ import {
   faMoneyBills,
   faDollar,
 } from "@fortawesome/free-solid-svg-icons";
-import useAgent from "../Hooks/useAgent";
-import useUser from "../Hooks/useUser";
-import useAdmin from "../Hooks/useAdmin";
 import useRole from "../Hooks/useRole";
 import { useGetTransactionHistoryQuery, useGetUserDetailsQuery, useGetUserLoggedinDetailsQuery } from "../features/api/apiSlice";
 import { useSelector } from "react-redux";
-
+import logo from "../images/logo.svg"
+import sidebarImg from "../images/dasboard/18953931_6075540-removebg-preview.png"
 const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
   const [notifi, setNotifi] = useState(false);
-  // const [userDetails, setUserDetails] = useState([]);
   const { user } = useContext(AuthContext);
-  const [userRole] = useRole(user?.email);
 
-  const  email  = useSelector(state => state.auth.email)
-  // const loggededUser = currentUser?.email;
 
-  const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email)
+  const email = useSelector(state => state.auth.email);
+  const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email);
   const userDetails = data?.data
-
 
 
   useEffect(() => {
@@ -68,78 +62,42 @@ const DashbordLayout = () => {
         </div>
         <div className="drawer-side shadow-2xl ml-4">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-72 bg-[#251F71] text-white relative ">
+          <ul className="menu p-4 w-72 bg-white text-black relative ">
             <label
               onClick={() => setOpen(!open)}
               htmlFor="my-drawer-2"
-              className=" p-2 w-8 absolute -right-7 rounded-tr-full rounded-br-full duration-300"
+              className=" p-2 w-8 absolute -right-7 rounded-tr-full rounded-br-full duration-300 mt-16"
             >
               {open ? (
-                <HiChevronDoubleRight className="text-lg" />
+                <HiChevronDoubleLeft className="text-lg " />
               ) : (
-                <HiChevronDoubleLeft className="text-lg" />
+                <HiChevronDoubleRight className="text-lg " />
+
               )}
             </label>
             {/* <!-- Sidebar content here --> */}
-            <div className="w-52 flex flex-col justify-center items-center  rounded-md p-3  mb-4 ml-3 ">
-              <div className="mr-2">
-                {userDetails?.userPhoto ?
-                  <>
-                    <NavLink to="/dashboard/editProfile">
-                      <img
-                        src={userDetails?.userPhoto}
-                        alt=""
-                        className="w-20 rounded-full"
-                      />
-                    </NavLink>
-                  </>
-                  :
-                  <>
-                    <NavLink to="/dashboard/editProfile">
-                      <img
-                        src={userImage2}
-                        alt=""
-                        className="w-20 rounded-full"
-                      />
-                    </NavLink>
-                  </>
-                }
-              </div>
-              {
-                isLoading ? <p>Loading</p>
-                  :
-                  <div>
-                    <span className=""><h1 className="font-bold text-lg">{userDetails?.name}</h1></span>
-                    <h1 className="text-sm ">{userDetails?.userEmail}</h1>
-                  </div>
-
-              }
+            <div className="w-52 flex flex-col justify-center items-center  rounded-md p-2 ml-3 ">
+              <Link to='/' className="">
+                <img src={logo} alt='' className='w-46 btn  border-0' />
+              </Link>
 
             </div>
             <div className=" p-4">
               {
-                userDetails?.role === 'user' && <div className="grid grid-cols-1 gap-4">
+                userDetails?.role === 'user' && <div className="grid grid-cols-1 gap-5">
                   <NavLink
                     to="/dashboard/overview"
                     className="flex justify-items-start "
                   >
-                    <HiViewGridAdd className="text-[30px] mr-4" />
+                    <HiViewGridAdd className="text-[25px] mr-4" />
                     <p className="text-lg font-semibold">OverView</p>
-                  </NavLink>
-
-                  <NavLink
-                    to="/dashboard/editProfile"
-                    className="flex  justify-items-start "
-                  >
-                    <FaUserEdit className="text-[30px] mr-4" />
-                    <p className="text-lg font-semibold">Update Profile</p>
                   </NavLink>
 
                   <NavLink
                     to="/dashboard/sendMoney"
                     className="flex items-center "
                   >
-                    <HiCurrencyDollar className="text-[30px] mr-4" />
+                    <HiCurrencyDollar className="text-[25px] mr-4" />
                     <p className="text-lg font-semibold">Send Money</p>
                   </NavLink>
 
@@ -158,7 +116,7 @@ const DashbordLayout = () => {
                     to="/dashboard/mobileRecharge"
                     className="flex items-center"
                   >
-                    <FaMobile className="text-[25px] mr-4" />
+                    <FaMobile className="text-[23px] mr-4" />
                     <p className="text-lg font-semibold">Mobile Recharge</p>
                   </NavLink>
 
@@ -168,7 +126,7 @@ const DashbordLayout = () => {
                   >
                     <FontAwesomeIcon
                       icon={faCreditCard}
-                      className="text-[25px] mr-4"
+                      className="text-[23px] mr-4"
                     />
                     <p className="text-lg font-semibold">Bill Pay</p>
                   </NavLink>
@@ -179,7 +137,7 @@ const DashbordLayout = () => {
                   >
                     <FontAwesomeIcon
                       icon={faSackDollar}
-                      className="text-[25px] mr-4"
+                      className="text-[23px] mr-4"
                     />
                     <p className="text-lg font-semibold">Loan Request</p>
                   </NavLink>
@@ -189,21 +147,21 @@ const DashbordLayout = () => {
                   >
                     <FontAwesomeIcon
                       icon={faDollar}
-                      className="text-[25px] mr-4"
+                      className="text-[23px] mr-4"
                     />
                     <p className="text-lg font-semibold">Donation</p>
                   </NavLink>
-
-                  <NavLink
-                    to="/dashboard/applyForAgent"
-                    className="flex items-center"
+                  {/* <NavLink
+                    to="/dashboard/chargeCalculate"
+                    className="flex items-center "
                   >
-                    <FontAwesomeIcon
-                      icon={faFileSignature}
+                    <SlCalculator
                       className="text-[25px] mr-4"
                     />
-                    <p className="text-lg font-semibold">Become An Agent</p>
-                  </NavLink>
+                    <p className="text-lg font-semibold">Charge Calculator</p>
+                  </NavLink> */}
+
+
                 </div>
               }
 
@@ -228,17 +186,12 @@ const DashbordLayout = () => {
                     <p className="text-lg font-semibold">Cash In</p>
                   </NavLink>
 
-                  <NavLink to="/dashboard/billpayagent" className="flex items-center mb-6 mt-4">
+                  <NavLink to="/dashboard/transactions" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
-                      icon={faCreditCard}
-                      className="text-[25px] mr-4"
+                      icon={faCommentDollar}
+                      className="text-[30px] mr-4"
                     />
-                    <p className="text-lg font-semibold">Bill Pay</p>
-                  </NavLink>
-
-                  <NavLink to="/dashboard/rechargeagent" className="flex items-center mb-6 mt-4">
-                    <FaMobile className="text-[25px] mr-4" />
-                    <p className="text-lg font-semibold">Mobile Recharge</p>
+                    <p className="text-lg font-semibold">Transaction's</p>
                   </NavLink>
                 </div>
               }
@@ -279,7 +232,26 @@ const DashbordLayout = () => {
                 </div>
               }
             </div>
+
+            <div className="flex justify-center  p-4 mb-3  rounded-xl">
+              <img className="w-24" src={sidebarImg} alt="" />
+            </div>
+
+            {
+              userDetails?.role === 'user' && <Link
+                to="/dashboard/applyForAgent"
+                className="flex items-center btn btn-md "
+              >
+                <FontAwesomeIcon
+                  icon={faFileSignature}
+                  className="text-[23px] mr-4"
+                />
+                <p className="text-lg font-semibold">Become An Agent</p>
+              </Link>
+            }
+
           </ul>
+
         </div>
       </div>
     </div>

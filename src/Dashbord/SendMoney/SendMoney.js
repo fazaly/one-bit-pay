@@ -3,36 +3,53 @@ import SendMoneyHistory from "../../Components/TransactionHistory/SendMoneyHisto
 import { AuthContext } from "../../context/AuthProvider";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import { toast } from "react-hot-toast";
-import dateTime from 'date-time';
-import { useGetUserDetailsQuery, useGetUserLoggedinDetailsQuery, useSendMoneyMutation } from "../../features/api/apiSlice";
+import dateTime from "date-time";
+import {
+  useGetTransactionHistoryQuery,
+  useGetUserDetailsQuery,
+  useGetUserLoggedinDetailsQuery,
+  useGetUsersRoleQuery,
+  useSendMoneyMutation,
+} from "../../features/api/apiSlice";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
 
 const SendMoney = () => {
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [sendMoney, { isLoading, isSuccess, isError }] = useSendMoneyMutation();
+  const [receiver, setReceiver] = useState("");
+  const dispatch = useDispatch();
 
-  const currentUser = useSelector(state => state?.currentUser?.user)
-  const loggededUser = currentUser?.email
+  const email = useSelector((state) => state.auth.email);
+  const { transactionsData } = useGetTransactionHistoryQuery(email);
+  const transactions = transactionsData?.data;
+  let total = 0
 
+  transactions?.foreach((transaction) => {
+    total += transaction.amount;
+    console.log(transaction)
 
-  const { data } = useGetUserLoggedinDetailsQuery(loggededUser)
+  })
+
+  const { data: userRole } = useGetUsersRoleQuery(`${receiver}`);
+  console.log(userRole?.status);
+
+  const { data } = useGetUserLoggedinDetailsQuery(email);
   const userDetails = data?.data;
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Send money success", { id: "senMoney" });
-
+      toast.success("You Successfully Send Money", {
+        id: "sendMoney",
+      });
     }
-    if (isError) {
-      toast.success("Failed to sending money! Please try again", { id: "sendMoney" });
-
+    if (!isSuccess && isError) {
+      toast.success("Failed to sending money! Please try again", {
+        id: "sendMoney",
+      });
     }
-
-  }, [isSuccess, isError])
-
+  }, [isSuccess, isError]);
 
   const handleSendMoney = (event) => {
     event.preventDefault();
@@ -40,39 +57,40 @@ const SendMoney = () => {
     const receiverEmail = form.receiverEmail.value;
     const amount = form.amount.value;
     const senderEmail = user?.email;
-    const time = dateTime({ showTimeZone: true })
+    const time = dateTime({ showTimeZone: true });
     const sendMoneyInfo = {
       senderEmail,
       receiverEmail,
       amount: parseInt(amount),
       time,
-      type: "balanceTransfer"
+      type: "balanceTransfer",
     };
 
     if (receiverEmail === user?.email) {
       toast.error("Send money not possible own account");
-
     } else if (userDetails?.balance <= 10) {
       toast.error("insufficient balance");
-
     } else if (amount < 10) {
-      toast.error('Minimum sending amount is 10');
-
-    } else if (receiverEmail !== user?.email && userDetails?.balance > 10) {
-
-      sendMoney(sendMoneyInfo)
-      form.reset()
-
+      toast.error("Minimum sending amount is 10");
+    } else if (userRole.userRole === "agent") {
+      toast.error("Send money not possible in agent account");
+    } else if (userRole?.status === false) {
+      toast.error("Enter Valid Email");
+    } else if (receiverEmail !== user?.email && userDetails?.balance > 10 && userDetails.role === "user") {
+      sendMoney(sendMoneyInfo);
+      form.reset();
     }
   };
 
-
-
+  const handleFocus = (e) => {
+    setReceiver(e);
+    console.log(e)
+  }
 
   return (
     <div>
-      <div className="flex gap-4 lg:flex-row flex-col">
-        <div className="card lg:w-80 w-96 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
+      <div className="flex gap-4 lg:flex-row flex-col justify-center items-center">
+        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
           <div className="flex items-center justify-center h-screen flex-col">
             <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
               Current Balance
@@ -83,7 +101,7 @@ const SendMoney = () => {
           </div>
         </div>
 
-        <div className="card lg:w-80 w-96 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
+        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
           <div className="flex items-center justify-center h-screen flex-col p-6">
             <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
               Send Money
@@ -93,6 +111,7 @@ const SendMoney = () => {
                 type="text"
                 name="receiverEmail"
                 required
+                onBlur={(e) => handleFocus(e.target.value)}
                 placeholder="receiver email"
                 className=" w-full border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
               />
@@ -106,7 +125,7 @@ const SendMoney = () => {
               <p className="">
                 <button
                   type="submit"
-                  className="btn w-full btn-xs rounded-sm border-none hover:bg-[#5966FF]"
+                  className="btn btn-primary btn-sm w-full  rounded-lg border-none hover:bg-[#5966FF]"
                 >
                   {isLoading ? <ButtonSpinner /> : "SEND NOW"}
                 </button>
@@ -115,7 +134,7 @@ const SendMoney = () => {
           </div>
         </div>
 
-        <div className="card lg:w-80 w-96 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
+        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
           <div className="flex items-center justify-center h-screen flex-col">
             <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
               Today's Transaction
@@ -123,7 +142,7 @@ const SendMoney = () => {
             <h1 className="font-bold text-xl text-slate-700">
               You made <br />{" "}
               <span className="text-3xl text-[#5966FF]">
-                ${userDetails?.balance}
+                {total}
               </span>{" "}
               <br /> transaction today
             </h1>
@@ -137,7 +156,11 @@ const SendMoney = () => {
             <h1 className="font-bold text-xl text-[#5966FF] opacity-50 mb-4">
               History
             </h1>
-            <SendMoneyHistory email={currentUser?.email} loading={loading} type={"balanceTransfer"} />
+            <SendMoneyHistory
+              email={email}
+              loading={loading}
+              type={"balanceTransfer"}
+            />
           </div>
         </div>
       </div>

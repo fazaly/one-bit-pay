@@ -1,47 +1,50 @@
 import React from "react";
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 import {
-    Radar,
-    RadarChart,
-    PolarGrid,
-    PolarAngleAxis,
-    PolarRadiusAxis
-  } from "recharts";
+  Radar,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis
+} from "recharts";
 import { AuthContext } from "../../../context/AuthProvider";
+import { useGetUserLoggedinDetailsQuery } from "../../../features/api/apiSlice";
 
 
 
 const Chart2 = () => {
-    const {user, userDetails} = useContext(AuthContext);
+  const email = useSelector((state) => state.auth.email);
+  const { data: userDetails } = useGetUserLoggedinDetailsQuery(email)
 
-    const data = [
-        {
-          subject: "Main Balance",
-          A: userDetails?.balance,
-          fullBalance: 50000
-        },
-        {
-          subject: "Received",
-          A: 98,
-          fullMark: 1500
-        },
-        {
-          subject: "Sended",
-          A: 86,
-          fullMark: 1500
-        },
-        {
-          subject: "Geography",
-          A: 99,
-          fullMark: 1500
-        },
-        {
-          subject: "Physics",
-          A: 85,
-          fullMark: 1500
-        },
-      ];
-    
+  const data = [
+    {
+      subject: "Main Balance",
+      A: 50000,
+      fullBalance: 50000
+    },
+    {
+      subject: "Received",
+      A: 10000,
+      fullMark: 10000
+    },
+    {
+      subject: "Sended",
+      A: 15050,
+      fullMark: 1550
+    },
+    {
+      subject: "Mobile Recharge",
+      A: 5500,
+      fullMark: 550
+    },
+    {
+      subject: "Donation",
+      A: 85,
+      fullMark: 1230
+    },
+  ];
+
   return (
     <RadarChart
       cx={150}

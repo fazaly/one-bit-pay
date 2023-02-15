@@ -10,6 +10,7 @@ const Loan = () => {
   const { userDetails } = useContext(AuthContext)
   const { register, reset, formState: { errors }, handleSubmit } = useForm();
   const date = format(new Date(), "PP");
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleLoanReqSubmit = (data) => {
     const loanApplicantData = {
@@ -49,6 +50,10 @@ const Loan = () => {
 
   };
 
+
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
+  };
 
   return (
     <div className="px-10 py-4">
@@ -278,18 +283,32 @@ const Loan = () => {
               <Link to="/dashboard/loancondition"><h1 className="text-red-500">See Full term and condition and Eligibity of loan</h1></Link>
             </div>
 
-            <div className="flex justify-end">
-              <button
-                type="reset"
-                className="text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF]  hover:from-[#8759f1] text-white duration-200 ease-in-out transition" >
-                Reset
-              </button>
-              <button
-                type="submit"
-                className="text-base  ml-4  hover:scale-110 focus:outline-none flex justify-center
+            <div className="flex justify-between items-center">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={handleToggle}
+                  className="mr-2"
+                />
+                Are you agree with our <Link className="text-[#00AAFF]" to="/dashboard/loantermscondition">terms & condition</Link>?
+              </label>
+              <div className="flex">
+                <button
+                  type="reset"
+                  className="text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF]  hover:from-[#8759f1] text-white duration-200 ease-in-out transition" >
+                  Reset
+                </button>
+                {
+                  <button
+                    type="submit"
+                    disabled={!isChecked}
+                    className="text-base  ml-4  hover:scale-110 focus:outline-none flex justify-center
                px-4 py-2 rounded font-bold cursor-pointer hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF]  hover:from-[#8759f1] text-white duration-200 ease-in-out transition">
-                Apply for loan
-              </button>
+                    Apply for loan
+                  </button>
+                }
+              </div>
             </div>
           </div>
         </form>

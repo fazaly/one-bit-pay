@@ -1,14 +1,31 @@
-import React from "react";
-import { useContext } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { AuthContext } from "../../context/AuthProvider";
+import { useSelector } from "react-redux";
+import { useGetUserLoggedinDetailsQuery, useUpdateUserProfileMutation } from "../../features/api/apiSlice";
 import './UpdateProfile.css';
+import updateInfoImg from "../../images/dasboard/overview.png"
 
 const UpdateProfile = () => {
-  const { user, userDetails } = useContext(AuthContext);
+  const email = useSelector((state) => state.auth.email);
+  const { data } = useGetUserLoggedinDetailsQuery(email)
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const imageHostKey = process.env.REACT_APP_imgHostKey
+  const [postUpdateData, { isLoading, isSuccess, isError, error }] = useUpdateUserProfileMutation(email)
+  const userDetails = data?.data
+  console.log(userDetails, email)
+
+  useEffect(() => {
+
+    if (isError && error) {
+      toast.error(error, { id: "data update" })
+    }
+    else if (!isLoading && isSuccess) {
+      toast.success("Updated successfully", { id: "data update" })
+      reset()
+    }
+  }, [isLoading, isSuccess, isError, error, reset])
+
 
   const handleUpdate = (data) => {
     const image = data.image[0]
@@ -29,51 +46,37 @@ const UpdateProfile = () => {
             imageUrl: imgdata.data.url,
             nidNumber: data.nidNumber,
             phnNumber: data.phoneNumber,
-            birthDate: data.birthDay
+            birthDate: data.birthDay,
+            userEmail: email
           }
-          handleUpdateUser(userData)
+          // console.log(userData)
+          postUpdateData(userData)
         }
       })
   }
 
-
-  const handleUpdateUser = userData => {
-    fetch(` https://one-bit-pay-server.vercel.app/userUpdate/${user.email}`, {
-      method: "PUT",
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(user)
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data.acknowledged) {
-          toast.success("User Info updated successfully")
-          reset()
-        }
-      })
-  }
   return (
     <form
       onSubmit={handleSubmit(handleUpdate)}
-      className="w-full flex bg-white rounded-lg shadow-xl lg:mt-5 mt-16 mb-5">
-      <div className="lg:w-32 w-10 min-h-full bg-[#5966FF]">
-        <h1 className="text-[#5966FF]"></h1>
-      </div>
-
-      <div className="p-4">
-        {/* Input fields */}
-        <h1 className="text-2xl font-semibold uppercase text-slate-800">
-          Update Your Informations
-        </h1>
-        <div className="grid lg:grid-cols-2 gap-6 mx-auto mt-5">
-          <div className="lg:w-96 w-72">
+      className="">
+      <div className="">
+        <div className="mb-10">
+          <div className="bg-[#ECEFF6] grid grid-cols-1 md:grid-cols-2 justify-center items-center relative mt-20">
+            <div className="p-4">
+              <h4 className="text-gray-400 text-3xl">Update Your </h4>
+              <span className="text-black text-3xl">Information</span>
+            </div>
+            <img className="right-24 bottom-0 absolute" src={updateInfoImg} alt="" />
+          </div>
+        </div>
+        <div className=" grid grid-cols-2 gap-14">
+          <div className="p-10 rounded-3xl shadow-2xl shadow-slate-500 hover:shadow-2xl hover:shadow-gray-500 transition-all">
             <div className="form-control w-full ">
               <label className="label">
                 <span className="label-text"> Your name</span>
               </label>
               <input
-                defaultValue={userDetails.name}
+                defaultValue={userDetails?.name}
                 type="text"
                 placeholder="Type here"
                 name="name"
@@ -88,8 +91,8 @@ const UpdateProfile = () => {
                 <span className="label-text"> Your email</span>
               </label>
               <input
-                defaultValue={userDetails.userEmail}
                 disabled
+                defaultValue={userDetails?.userEmail}
                 type="email"
                 placeholder="Type here"
                 className="input  w-full "
@@ -127,41 +130,44 @@ const UpdateProfile = () => {
             </div>
           </div>
 
-          <div className="lg:w-96 w-72">
-            <div className="form-control w-full ">
-              <label className="label">
-                <span className="label-text"> Your address</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Type here"
-                className="input  w-full "
-                name="address"
-                {...register('address', { required: 'address is required' })}
-              />
-              {errors.address && <p className="text-xs text-red-600 ml-6 mt-1">{errors.address?.message}</p>}
-              <div className="divider mt-0 mb-0"></div>
+          <div>
+
+            <div className="p-10 rounded-3xl shadow-2xl shadow-slate-500 hover:shadow-2xl hover:shadow-gray-500 transition-all mb-8">
+              <div className="form-control w-full ">
+                <label className="label">
+                  <span className="label-text"> Your address</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Type here"
+                  className="input  w-full "
+                  name="address"
+                  {...register('address', { required: 'address is required' })}
+                />
+                {errors.address && <p className="text-xs text-red-600 ml-6 mt-1">{errors.address?.message}</p>}
+                <div className="divider mt-0 mb-0"></div>
+              </div>
+              <div className="form-control w-full ">
+                <label className="label">
+                  <span className="label-text"> Your phone number</span>
+                </label>
+                <input
+                  type="number"
+                  placeholder="Type here"
+                  className="input  w-full "
+                  name="phoneNumber"
+                  {...register('phoneNumber', { required: 'phone Number is required' })}
+                />
+                {errors.phoneNumber && <p className="text-xs text-red-600 ml-6 mt-1">{errors.phoneNumber?.message}</p>}
+                <div className="divider mt-0 mb-0"></div>
+              </div>
             </div>
-            <div className="form-control w-full ">
-              <label className="label">
-                <span className="label-text"> Your phone number</span>
-              </label>
-              <input
-                type="number"
-                placeholder="Type here"
-                className="input  w-full "
-                name="phoneNumber"
-                {...register('phoneNumber', { required: 'phone Number is required' })}
-              />
-              {errors.phoneNumber && <p className="text-xs text-red-600 ml-6 mt-1">{errors.phoneNumber?.message}</p>}
-              <div className="divider mt-0 mb-0"></div>
-            </div>
-            <div className="form-control w-full ">
+            <div className="form-control w-full p-10 rounded-3xl shadow-2xl shadow-slate-500 hover:shadow-2xl hover:shadow-gray-500 transition-all">
               <div>
-                <div className="font-bold h-6 mt-3 text-[#000] text-md leading-8">
+                <div className="">
                   Image
                 </div>
-                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                <div className="">
                   <div className="space-y-1 text-center">
                     <svg
                       className="mx-auto h-12 w-12 text-[#00AAFF]"
@@ -177,7 +183,7 @@ const UpdateProfile = () => {
                         strokeLinejoin="round"
                       />
                     </svg>
-                    <div className="flex text-sm text-gray-600">
+                    <div className="">
                       <label
                         htmlFor="file-upload"
                         className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
@@ -192,21 +198,23 @@ const UpdateProfile = () => {
                         />
                         {errors.image && <p className="text-xs text-red-600 ml-6 mt-1">{errors.image?.message}</p>}
                       </label>
-                      <p className="pl-1 text-gray-700">or drag and drop</p>
+                      <p className="">or drag and drop</p>
                     </div>
-                    <p className="text-xs text-gray-700">
+                    <p className="">
                       PNG, JPG, GIF up to 10MB
                     </p>
                   </div>
                 </div>
               </div>
             </div>
+
           </div>
+
         </div>
         <div className="flex justify-between items-center mt-5">
-          <input type="reset" value="reset all" className="btn bg-transparent hover:bg-transparent hover:text-[#939cff] text-[#5966FF] border-none btn-xs" />
+          <input type="reset" value="reset all" className="btn bg-transparent hover:bg-transparent hover:text-[#939cff] text-[#070733] border-none btn-xs" />
 
-          <input type="submit" value="submit" className="btn bg-[#5966FF] rounded-full border-none" />
+          <input type="submit" value="submit" className="btn bg-[#070733] rounded-lg border-none" />
 
         </div>
       </div>

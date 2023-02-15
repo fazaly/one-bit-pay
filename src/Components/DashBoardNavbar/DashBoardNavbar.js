@@ -1,32 +1,28 @@
-import React, { useContext } from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { FaArrowLeft, FaBackspace } from 'react-icons/fa';
+import { faFileSignature } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import { FaBell, FaHome, FaUserEdit } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import logo from '../.././images/logo.svg';
-import { AuthContext } from '../../context/AuthProvider';
+import { useGetTransactionHistoryQuery } from '../../features/api/apiSlice';
 import NotificationLog from './NotificationLog';
-
-const DashBoardNavbar = ({ userDetails, notifi, setNotifi }) => {
-    const { user } = useContext(AuthContext);
-    const [transactions, setTransactions] = useState([]);
-    // const [notification, setnotification] = useState(notifi)
-
-    useEffect(() => {
-        fetch(`https://one-bit-pay-server.vercel.app/transactionSend/${user?.email}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.status) {
-                    setTransactions(data.data);
-                    // console.log(transactions);
-                }
-            })
-
-    }, [notifi, user])
+import { signOut } from 'firebase/auth';
+import { auth, logoutUser } from '../../features/api/authSlice';
+import userImage from "../../images/userImage2.png"
 
 
+const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
+    const email = useSelector((state) => state.auth.email);
+    const { data } = useGetTransactionHistoryQuery(email);
+    const transactions = data?.data;
+    const dispatch = useDispatch();
+    const handleLogOut = () => {
+        signOut(auth).then(() => {
+            dispatch(logoutUser());
+        });
+    }
     const handleNotification = () => {
-        fetch(`https://one-bit-pay-server.vercel.app/notification/${user?.email}`)
+        fetch(`https://one-bit-pay-server.vercel.app/notification/${email}`)
             .then((res) => res.json())
             .then((data) => {
                 if (data.status) {
@@ -35,54 +31,86 @@ const DashBoardNavbar = ({ userDetails, notifi, setNotifi }) => {
             });
 
     }
+
+
     return (
         <div>
-            <div className="navbar rounded-xl shadow-md bg-base-100 mb-8">
-                <div className="navbar-start">
-                    <Link to='/' className='ml-10 text-blue-500'>
-                        <FaArrowLeft></FaArrowLeft>
-                    </Link>
+            <div className="navbar justify-between px-4  ">
+                <div className="flex w-9/12">
+                    <div className="navbar hidden lg:grid lg:grid-cols-1 ml-3">
 
+                        <h2 className='text-2xl font-bold mr-1'>Hi, <span>{userDetail?.name}</span></h2>
+                        <p className='text-gray-300'>Welcome Back!</p>
+                    </div>
+                    <div className='flex'>
+                        <Link className='text-2xl text-[#070733] font-bold mr-9' to="/">
+                            <FaHome></FaHome>
+                        </Link>
+                    </div>
                 </div>
-                <div className="navbar-center">
-
-                    <img src={logo} alt='' className='w-36 btn bg-transparent border-0' />
-                    {/* <a className="btn btn-ghost normal-case text-2xl text-[#5966FF]">OneBitPay</a> */}
-                </div>
-                <div className="navbar-end">
-                    <button className="btn btn-ghost btn-circle">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                    </button>
-                    <div className="dropdown dropdown-bottom dropdown-end">
-                        <label tabIndex={0} className=""><button className="btn btn-ghost btn-circle">
+                <div className="flex w-3/12 justify-between">
+                    <div className="dropdown dropdown-end">
+                        <label tabIndex={0} className="btn btn-ghost btn-circle">
                             <div className="indicator">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                                </svg>
+                                <FaBell className='text-2xl text-[#5966FF] '></FaBell>
+                                {/* <div className=" badge badge-xs indicator-item badge-secondary">2</div> */}
+
+                            </div>
+                        </label>
+                        <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-72 bg-base-100 shadow">
+                            <div className="card-body">
+                                {
+                                    transactions?.slice(0, 6).map((transactionsData) => <NotificationLog transactionsData={transactionsData}></NotificationLog>)
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div className="dropdown dropdown-end">
+                        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                            <div className="w-10 rounded-full">
 
                                 {
-
-                                    notifi && <span onClick={handleNotification} className="badge badge-xs badge-primary indicator-item p-2">
-                                        1
-                                    </span>
+                                    userDetail?.imageUrl ?
+                                        <img src={userDetail?.imageUrl} alt="" />
+                                        :
+                                        <img src={userImage} alt="" />
                                 }
 
                             </div>
-                        </button></label>
-                        <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-80">
-                            <div className='grid grid-cols-1 gap-1 p-2'>
-                                {
-                                    transactions.slice(0, 5).filter((data) => data.notification === true
-                                    ).map((transactionsData) => <NotificationLog
-                                        key={transactionsData._id}
-                                        transactionsData={transactionsData}></NotificationLog>)
-                                }
-                            </div>
+                        </label>
+                        <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-72">
+                            <li>
+                                <Link to="/dashboard/editProfile"
+                                    className="flex  justify-items-start "
+                                >
+                                    <FaUserEdit className="text-[30px] mr-4" />
+                                    <p className="text-lg font-semibold">Profile
+                                    </p>
+                                </Link>
+
+                            </li>
+                            <li>
+                                <Link
+                                    to="/dashboard/applyForAgent"
+                                    className="flex items-center"
+                                >
+                                    <FontAwesomeIcon
+                                        icon={faFileSignature}
+                                        className="text-[25px] mr-4"
+                                    />
+                                    <p className="text-lg font-semibold">Become An Agent</p>
+                                </Link>
+                            </li>
+                            <li className='font-semibold'>
+                                <button onClick={handleLogOut} className='btn btn-ghost'>Sign Out</button>
+                            </li>
                         </ul>
                     </div>
-
                 </div>
             </div>
-            {/* <div className="divider"></div> */}
+
         </div>
     );
 };
