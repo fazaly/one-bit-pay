@@ -1,21 +1,44 @@
 import { format } from 'date-fns';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { toast } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 import Typewriter from 'typewriter-effect';
 import ButtonSpinner from '../../Components/ButtonSpinner/ButtonSpinner';
+import SendMoneyHistory from '../../Components/TransactionHistory/SendMoneyHistory';
 import { AuthContext } from '../../context/AuthProvider';
+import { useGetTransactionHistoryQuery, useGetUserLoggedinDetailsQuery, useWithdrawMutation } from '../../features/api/apiSlice';
 import WithdrawHistory from './WithdrawHistory';
 
 const Withdraw = () => {
-  const { user, userDetails } = useContext(AuthContext)
-  const [loading, setLoading] = useState(false);
+  const email = useSelector((state) => state.auth.email);
+  const { data } = useGetUserLoggedinDetailsQuery(email);
+  const userDetails = data?.data;
+  const { transactionsData } = useGetTransactionHistoryQuery(email);
+
+  const [withdraw, { isLoading, isSuccess, isError }] = useWithdrawMutation()
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("You Successfully withdraw Money", {
+        id: "withdraw",
+      });
+    }
+    if (!isSuccess && isError) {
+      toast.error("Failed to withdraw! Please try again", {
+        id: "withdraw",
+      });
+    }
+  }, [isSuccess, isError]);
+
+
+
   const handleWithdraw = (event) => {
     event.preventDefault();
     const form = event.target;
     const agentEmail = form.receiverEmail.value;
     const amount = form.amount.value;
-    const senderEmail = user?.email;
+    const senderEmail = email;
     const time = format(new Date(), "PP");
     const WithdrawInfo = {
       senderEmail,
@@ -24,20 +47,11 @@ const Withdraw = () => {
       time,
       type: "Withdraw"
     };
-    console.log(WithdrawInfo);
-    fetch("http://localhost:5000/withdraw", {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(WithdrawInfo)
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        toast.success('Successfully You have Withdraw')
-      })
+
+    withdraw(WithdrawInfo);
+
   }
+
   return (
     <div className='pt-10'>
       <div className="flex gap-4 lg:flex-row flex-col justify-center items-center">
@@ -83,7 +97,7 @@ const Withdraw = () => {
                   type="submit"
                   className="btn btn-primary btn-sm w-full  rounded-lg border-none hover:bg-[#5966FF]"
                 >
-                  {loading ? <ButtonSpinner /> : "Withdraw Now"}
+                  {isLoading ? <ButtonSpinner /> : "Withdraw Now"}
                 </button>
               </p>
             </form>
@@ -111,7 +125,10 @@ const Withdraw = () => {
             <h1 className="font-bold text-xl text-[#5966FF] opacity-100 p-6">
               History
             </h1>
-            <WithdrawHistory></WithdrawHistory>
+            <SendMoneyHistory
+              email={email}
+              type={"withdraw"}
+            />
           </div>
         </div>
       </div>
