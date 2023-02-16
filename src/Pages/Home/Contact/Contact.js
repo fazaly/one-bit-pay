@@ -31,7 +31,7 @@ const Contact = () => {
             <div className="w-full h-screen absolute top-0 left-0 flex justify-center items-center lg:p-0 p-5">
                 <div className="flex lg:flex-row flex-col lg:p-0 p-6 justify-center items-center bg-white rounded-xl shadow-xl">
 
-                    <div className="px-6">
+                    <div className="px-6 ">
                         <h1 className="lg:text-5xl font-bold text-4xl">Get in touch</h1>
                         <p className="pt-2 lg:text-xl text-lg pb-4">
                             We are here for you! how can we help?
