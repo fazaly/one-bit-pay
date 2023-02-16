@@ -10,19 +10,18 @@ const WithdrawSection = () => {
   const myStyle = {
     backgroundImage: `url(${line2})`,
     backgroundImageRepeat: "no-repeat",
-    width: "100%",
     backgroundColor: "#FFF",
     backgroundSize: "cover",
     backgroundPosition: "center",
   };
   return (
-    <div className="w-full h-screen" style={myStyle} >
+    <div className="w-full h-screen lg:mb-0 md:mb-12 mb-12" style={myStyle} >
       <div className="flex lg:flex-row flex-col-reverse justify-around items-center h-full w-full">
         <div className="" data-aos="fade-right">
           <p className="text-[#5966FF] font-semibold text-xl mb-2">
             Online money transfer platform
           </p>
-          <h1 className="lg:text-6xl text-4xl font-semibold mb-4">
+          <h1 className="lg:text-6xl md:text-5xl text-4xl font-semibold mb-4">
             Easiest Way To <br/> Withdraw Money
           </h1>
           <Link to={'/withdraw_gide'} className="btn bg-[#5966FF] border-0" type="">
@@ -33,7 +32,7 @@ const WithdrawSection = () => {
           <img
             data-aos="fade-left"
             src={mobile}
-            className="lg:mb-0 w-[450px] mt-16 lg:mt-0"
+            className="lg:mb-0 lg:w-[400px] md:w-[520px] mt-16 lg:mt-0"
             alt=""
           />
         </div>

@@ -1,0 +1,4 @@
+#image-container {
+    background: rgba(255, 255, 255, 0.26);
+    backdrop-filter: blur(8.5px);
+}
