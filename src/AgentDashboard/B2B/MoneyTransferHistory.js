@@ -37,13 +37,9 @@ const MoneyTransferHistory = ({ email, type }) => {
                                         else {
                                             return data
                                         }
-
                                     }
                                     ).map((transaction, i) => {
                                         return <tr key={i}>
-                                            {/* {
-                                                transaction?.senderEmail === email && <th><p><HiArrowSmUp className='bg-red-500 text-white rounded-full text-xl' /></p></th>
-                                            } */}
                                             {
                                                 transaction?.senderEmail === email ?
                                                     <>
