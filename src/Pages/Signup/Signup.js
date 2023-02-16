@@ -84,10 +84,10 @@ const Signup = () => {
 
   return (
     <div className="w-full h-screen">
-      <div className="flex justify-center">
+      <div className="flex lg:flex-row md:flex-row flex-col justify-center ">
         <div
           style={registerStyle}
-          className="w-6/12 h-screen bg-[#181818] flex justify-center items-center"
+          className="lg:w-6/12 h-screen lg:static hidden bg-[#181818] lg:flex justify-center items-center"
         >
           <div
             id="image-container"
@@ -104,7 +104,7 @@ const Signup = () => {
             </div>
           </div>
         </div>
-        <div className="w-6/12 h-screen bg-[#FFF] flex justify-center items-center relative">
+        <div className="lg:w-6/12 md:w-full h-screen bg-[#FFF] flex justify-center items-center relative">
           <Link to={'/'} className="absolute top-8 right-0">
             <div className="w-32 h-10 bg-[#181818] rounded-tl-full rounded-bl-full flex justify-center items-center hover:bg-[#5966FF] transition-all cursor-pointer">
               <HiOutlineHome className="text-white text-2xl mb-1 mr-2" />
