@@ -31,7 +31,7 @@ const Activities = ({ userDetails }) => {
                         <p className='text-blue-300'><small>09-01-2023</small></p>
                     </div>
                     <div className='bg-red-100 px-2 rounded-lg'>
-                        <span className='font-semibold text-red-500 '>$2050</span>
+                        <span className='font-semibold text-red-500 '>$59950</span>
                     </div>
                 </div>
                 <div className='flex justify-between items-center  p-2 rounded-xl shadow-lg shadow-slate-100  hover:shadow-gray-300 transition-all cursor-pointer'>
@@ -41,7 +41,7 @@ const Activities = ({ userDetails }) => {
                         <p className='text-blue-300'><small>09-02-2023</small></p>
                     </div>
                     <div className='bg-green-100 px-2 rounded-lg'>
-                        <span className='font-semibold text-green-500 '>$2050</span>
+                        <span className='font-semibold text-green-500 '>$2150</span>
                     </div>
                 </div>
                 <div className='flex justify-between items-center  p-2 rounded-xl shadow-xl shadow-slate-100  hover:shadow-gray-300 transition-all cursor-pointer'>
@@ -51,7 +51,7 @@ const Activities = ({ userDetails }) => {
                         <p className='text-blue-300'><small>09-02-2023</small></p>
                     </div>
                     <div className='bg-red-100 px-2 rounded-lg'>
-                        <span className='font-semibold text-red-500 '>$2050</span>
+                        <span className='font-semibold text-red-500 '>$1050</span>
                     </div>
                 </div>
             </div>

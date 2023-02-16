@@ -23,8 +23,8 @@ const Balance = ({ userDetails }) => {
                 }
             </div>
             <div className='flex justify-between'>
-                <Link className='btn btn-sm'>Add Found</Link>
-                <Link className='btn btn-sm btn-ghost btn-active '>Withdraw</Link>
+                <Link to="/dashboard/loanRequest" className='btn btn-sm'>Add Found</Link>
+                <Link to="/dashboard/withdraw" className='btn btn-sm btn-ghost btn-active '>Withdraw</Link>
             </div>
 
         </div>

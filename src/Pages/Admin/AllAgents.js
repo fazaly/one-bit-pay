@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDeletUserMutation, useGetUserDetailsQuery } from '../../features/api/apiSlice';
-import agentImg from '../../images/user.jpg';
+import userImage from "../../images/userImage2.png";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 
 const AllAgents = () => {
@@ -23,9 +23,16 @@ const AllAgents = () => {
                         users?.filter(agents => agents?.role === 'agent').map((user, i) =>
                             <tr key={user._id}>
                                 <td className='flex items-center'>
-                                    <img className='w-12 h-12 rounded-xl mr-6' src={agentImg} alt="" />
+                                    <div className='w-20 rounded-full'>
+                                        {
+                                            user?.imageUrl ?
+                                                <img className='w-14 h-14 rounded-full mr-6' src={user?.imageUrl} alt="" />
+                                                :
+                                                <img className='w-14 h-14 rounded-full mr-6' src={userImage} alt="" />
+                                        }
+                                    </div>
                                     <div>
-                                        <p className="text-[#5966FF] font-medium text-xl">{user.name}</p>
+                                        <p className="text-[#070733] font-medium text-lg">{user.name}</p>
                                         <small className='text-gray-500'>{user.userEmail}</small>
                                     </div>
                                 </td>
