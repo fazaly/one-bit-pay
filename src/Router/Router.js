@@ -42,6 +42,7 @@ import PayBillGuide from "../Pages/PayBillGuide/PayBillGuide";
 import LoanTermsCondition from "../Dashbord/Loan/LoanTermsCondition";
 import LoanRequest from "../Pages/Admin/LoanRequestList";
 import LoanRequestList from "../Pages/Admin/LoanRequestList";
+import LoanRequestDetails from "../Pages/Admin/LoanRequestDetails";
 
 export const router = createBrowserRouter([
   {
@@ -250,6 +251,12 @@ export const router = createBrowserRouter([
         path: "/dashboard/loanRequestList",
         element: <LoanRequestList></LoanRequestList>
       },
+      {
+        path: "/dashboard/loanRequestDetails/:id",
+        element: <LoanRequestDetails></LoanRequestDetails>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/loanRequestDetails/${params.id}`),
+      }
     ],
   },
 ]);
