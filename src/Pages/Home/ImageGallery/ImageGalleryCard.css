@@ -1,7 +1,0 @@
-/* .hoverEffect {
-    transition: .5s;
-} */
-
-.hoverEffect:hover {
-    transform: scale(1.3);
-}

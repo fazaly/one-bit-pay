@@ -1,19 +1,32 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthProvider";
-import signup from "../../images/signUp.svg";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import { useAddUserMutation } from "../../features/api/apiSlice"
+import { HiOutlineHome } from "react-icons/hi";
+import background from "../../././images/LoginImage7.png";
+import signupImage from "../.././images/Login/Authentication.gif";
+import { useDispatch, useSelector } from "react-redux";
+import { createUser } from "../../features/api/authSlice";
 
 const Signup = () => {
-  const [loading, setLoading] = useState(false);
-  const { createUser, user, setUser } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const email = useSelector((state) => state.auth.email);
+  const [createdUser, setCreatedUser] = useState({});
+  
   const [signupError, setSignupError] = useState("");
   const navigate = useNavigate();
-
   const [saveUser, { isLoading, isError, isSuccess }] = useAddUserMutation();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (email) {
+      saveUser(createdUser);
+      toast.success("Sign Up Success");
+      navigate("/");
+    }
+  },[email])
 
   useEffect(() => {
     if (isLoading) {
@@ -22,11 +35,12 @@ const Signup = () => {
     if (isSuccess) {
       toast.success("SIGN UP SUCCESS ✔", { id: "addUser" });
       navigate("/");
+      setLoading(false);
     }
     if (isError) {
       toast.success("Something Wrong Please try again!", { id: "addUser" });
     }
-  }, [isLoading, isSuccess, isError])
+  }, [isLoading, isSuccess, isError, navigate])
 
   const {
     register,
@@ -38,7 +52,6 @@ const Signup = () => {
   password.current = watch("password", "");
 
   const handleSignUp = (info) => {
-    setLoading(true);
     const name = info.name;
     const email = info.email;
     const password = info.password;
@@ -47,43 +60,59 @@ const Signup = () => {
     const date = `${current.getDate()}-${current.getMonth() + 1}-${current.getFullYear()}`;
 
     setSignupError("");
-    createUser(email, password)
-      .then((result) => {
-        const user = result.user;
-        const userData = {
-          name,
-          userEmail: email,
-          password,
-          confirmPass: confirm,
-          balance: 10000,
-          accountType: "user",
-          role: "user",
-          date
-        };
-        //save user by RTK
-        saveUser(userData);
+    const userData = {
+      name,
+      userEmail: email,
+      password,
+      confirmPass: confirm,
+      balance: 10000,
+      accountType: "user",
+      role: "user",
+      date
+    };
+    setLoading(true);
+    dispatch(createUser({email, password}));
+    setCreatedUser(userData);
+  };
 
-      })
-      .catch((err) => {
-        // console.error(err.message);
-        setSignupError(err.message);
-        setLoading(false);
-      });
+  const registerStyle = {
+    backgroundImage: `url(${background})`,
+    backgroundImageRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
   };
 
   return (
-    <div className="hero min-h-screen relative">
-      <div className="hero-content flex-col lg:flex-row">
-        <div className="text-center hidden lg:block">
-          <img src={signup} alt="" className="w-[450px]" />
-          <h1 className="text-3xl font-semibold text-[#5966FF]">
-            To Access All Features <br /> Please{" "}
-            <span className="text-5xl font-bold">SIGN UP</span>
-          </h1>
+    <div className="w-full h-screen">
+      <div className="flex lg:flex-row md:flex-row flex-col justify-center ">
+        <div
+          style={registerStyle}
+          className="lg:w-6/12 h-screen lg:static hidden bg-[#181818] lg:flex justify-center items-center"
+        >
+          <div
+            id="image-container"
+            className="w-96 h-4/6 rounded-xl flex flex-col justify-center items-center"
+          >
+            <img src={signupImage} alt="" className="w-72" />
+            <div className="relative">
+              <h1 className="text-white font-semibold text-xl">
+                To Access All Features <br /> Please
+              </h1>
+              <span className="text-3xl text-white font-bold absolute right-7 top-7">
+                SIGN UP
+              </span>
+            </div>
+          </div>
         </div>
-        <div className="bg-[#5966FF] p-28">
-          <div className="card flex-shrink-0 w-full shadow-2xl ">
-            <form
+        <div className="lg:w-6/12 md:w-full h-screen bg-[#FFF] flex justify-center items-center relative">
+          <Link to={'/'} className="absolute top-8 right-0">
+            <div className="w-32 h-10 bg-[#181818] rounded-tl-full rounded-bl-full flex justify-center items-center hover:bg-[#5966FF] transition-all cursor-pointer">
+              <HiOutlineHome className="text-white text-2xl mb-1 mr-2" />
+              <h1 className="text-white text-lg">HOME</h1>
+            </div>
+          </Link>
+          <div className="w-96 h-4/6 p-6 flex justify-center items-center">
+          <form
               onSubmit={handleSubmit(handleSignUp)}
               className="card-body space-y-2 rounded-[14px] bg-white"
             >
@@ -156,17 +185,6 @@ const Signup = () => {
             </form>
           </div>
         </div>
-      </div>
-      <div className="tabs rotate-90 absolute top-1/2 left-0">
-        <Link to={"/login"} className="tab tab-bordered font-semibold">
-          SIGN IN
-        </Link>
-        <Link
-          to={"/signUp"}
-          className="tab tab-bordered font-semibold tab-active"
-        >
-          SIGN UP
-        </Link>
       </div>
     </div>
   );

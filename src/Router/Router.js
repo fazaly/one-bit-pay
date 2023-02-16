@@ -40,6 +40,9 @@ import SendMoneyGuide from "../Pages/SendMoneyGuide/SendMoneyGuide";
 import WithdrawGuide from "../Pages/WithdrawGuide/WithdrawGuide";
 import PayBillGuide from "../Pages/PayBillGuide/PayBillGuide";
 import LoanTermsCondition from "../Dashbord/Loan/LoanTermsCondition";
+import LoanRequest from "../Pages/Admin/LoanRequestList";
+import LoanRequestList from "../Pages/Admin/LoanRequestList";
+import LoanRequestDetails from "../Pages/Admin/LoanRequestDetails";
 
 export const router = createBrowserRouter([
   {
@@ -55,14 +58,7 @@ export const router = createBrowserRouter([
         path: "/home",
         element: <Home></Home>,
       },
-      {
-        path: "/login",
-        element: <Login></Login>,
-      },
-      {
-        path: "/signUp",
-        element: <Signup></Signup>,
-      },
+      // ====================
       {
         path: "/blog",
         element: <Blog></Blog>,
@@ -71,7 +67,7 @@ export const router = createBrowserRouter([
         path: "/blogpost/:id",
         element: <IndividualBlog></IndividualBlog>,
         loader: ({ params }) =>
-          fetch(`https://one-bit-pay-server.vercel.app/${params.id}`),
+          fetch(`https://one-bit-pay-server.vercel.app/blogs/${params.id}`),
       },
       {
         path: '/about',
@@ -94,6 +90,14 @@ export const router = createBrowserRouter([
         element: <PayBillGuide />
       }
     ],
+  },
+  {
+    path: "/login",
+    element: <Login></Login>,
+  },
+  {
+    path: "/signUp",
+    element: <Signup></Signup>,
   },
   {
     path: "/dashboard",
@@ -243,6 +247,16 @@ export const router = createBrowserRouter([
         path: "/dashboard/chargeCalculate",
         element: <ChargeCalculator></ChargeCalculator>
       },
+      {
+        path: "/dashboard/loanRequestList",
+        element: <LoanRequestList></LoanRequestList>
+      },
+      {
+        path: "/dashboard/loanRequestDetails/:id",
+        element: <LoanRequestDetails></LoanRequestDetails>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/loanRequestDetails/${params.id}`),
+      }
     ],
   },
 ]);

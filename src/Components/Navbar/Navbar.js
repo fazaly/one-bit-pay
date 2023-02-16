@@ -15,7 +15,7 @@ const Navbar = () => {
 
     const handleLogOut = () => {
         signOut(auth).then(() => {
-            dispatch(logoutUser());
+            dispatch(logoutUser(""));
 
         });
     }
@@ -29,12 +29,12 @@ const Navbar = () => {
                 <>
                     <li> <Link to='/dashboard' className='font-semibold mr-5' >Dashboard</Link></li>
                     <li className='font-semibold'>
-                        <button onClick={handleLogOut} className='btn btn-ghost'>Sign Out</button>
+                        <button onClick={() =>handleLogOut()} className='btn btn-ghost'>Sign Out</button>
                     </li>
                 </>
                 :
                 <>
-                    <li className='font-semibold mr-5'><Link to='/login'>Login</Link></li>
+                    <li className='font-semibold mr-5'><Link to={'/login'}>Login</Link></li>
                 </>
         }
     </>

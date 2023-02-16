@@ -23,7 +23,6 @@ const SendMoneyHistory = ({ email, type }) => {
                             <th>Status</th>
                             <th>AMOUNT</th>
                             <th>TRANSACTION ID</th>
-                            <th>DATE & TIME</th>
                         </tr>
                     </thead>
                     <tbody className='text-slate-700'>
@@ -63,10 +62,10 @@ const SendMoneyHistory = ({ email, type }) => {
                                             </td>
                                             <td>{transaction?.amount}</td>
                                             <td >{transaction?.transactionId}</td>
-                                            <td >
-                                                {/* <ReactTimeAgo date={Date.parse(transaction.time)}
-                                                    locale="en" timeStyle="round-minute" /> */}
-                                            </td>
+                                            {/* <td >
+                                                <ReactTimeAgo date={Date.parse(transaction.time)}
+                                                    locale="en" timeStyle="round-minute" />
+                                            </td> */}
                                         </tr>
                                     })
                                 }
