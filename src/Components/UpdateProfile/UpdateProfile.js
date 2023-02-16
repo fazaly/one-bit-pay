@@ -83,7 +83,7 @@ const UpdateProfile = () => {
                 className="input  w-full "
                 {...register('name', { required: 'Name is required' })}
               />
-              {errors.name && <p className="text-xs text-red-600 ml-6 mt-1">{errors.name?.message}</p>}
+              {errors.name && <p className="text-sm text-red-600 ml-6 mt-1">{errors.name?.message}</p>}
               <div className="divider mt-0 mb-0"></div>
             </div>
             <div className="form-control w-full ">
@@ -111,7 +111,7 @@ const UpdateProfile = () => {
                 name="nidNumber"
                 {...register('nidNumber', { required: 'nidNumber is required' })}
               />
-              {errors.nidNumber && <p className="text-xs text-red-600 ml-6 mt-1">{errors.nidNumber?.message}</p>}
+              {errors.nidNumber && <p className="text-sm text-red-600 ml-6 mt-1">{errors.nidNumber?.message}</p>}
               <div className="divider mt-0 mb-0"></div>
             </div>
             <div className="form-control w-full ">
@@ -125,7 +125,7 @@ const UpdateProfile = () => {
                 name="birthDay"
                 {...register('birthDay', { required: 'birthDay is required' })}
               />
-              {errors.birthDay && <p className="text-xs text-red-600 ml-6 mt-1">{errors.birthDay?.message}</p>}
+              {errors.birthDay && <p className="text-sm text-red-600 ml-6 mt-1">{errors.birthDay?.message}</p>}
               <div className="divider mt-0 mb-0"></div>
             </div>
           </div>
@@ -143,7 +143,7 @@ const UpdateProfile = () => {
                   name="address"
                   {...register('address', { required: 'address is required' })}
                 />
-                {errors.address && <p className="text-xs text-red-600 ml-6 mt-1">{errors.address?.message}</p>}
+                {errors.address && <p className="text-sm text-red-600 ml-6 mt-1">{errors.address?.message}</p>}
                 <div className="divider mt-0 mb-0"></div>
               </div>
               <div className="form-control w-full ">
@@ -157,7 +157,7 @@ const UpdateProfile = () => {
                   name="phoneNumber"
                   {...register('phoneNumber', { required: 'phone Number is required' })}
                 />
-                {errors.phoneNumber && <p className="text-xs text-red-600 ml-6 mt-1">{errors.phoneNumber?.message}</p>}
+                {errors.phoneNumber && <p className="text-sm text-red-600 ml-6 mt-1">{errors.phoneNumber?.message}</p>}
                 <div className="divider mt-0 mb-0"></div>
               </div>
             </div>
@@ -195,7 +195,7 @@ const UpdateProfile = () => {
                           className="sr-only"
                           {...register('image', { required: 'image is required' })}
                         />
-                        {errors.image && <p className="text-xs text-red-600 ml-6 mt-1">{errors.image?.message}</p>}
+                        {errors.image && <p className="text-sm text-red-600 ml-6 mt-1">{errors.image?.message}</p>}
                       </label>
                       <p className="">or drag and drop</p>
                     </div>
