@@ -29,7 +29,7 @@ const LoanListTable = ({ loanList }) => {
                         <p>approved</p>
                     </>
                     :
-                    <Link className='btn btn-sm btn-success'>Details</Link>
+                    <Link to={`/dashboard/loanRequestDetails/${loanList._id}`} className='btn btn-sm btn-success'>Details</Link>
 
                 }
 
