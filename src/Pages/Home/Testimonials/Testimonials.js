@@ -62,8 +62,7 @@ const Testimonials = () => {
     ]
     return (
         <div className='mx-auto py-10 bg-[#F5F8FF] flex items-center justify-center'
-            style={{ backgroundImage: `url(${bgimg})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", marginBottom: "100px" }}
-        >
+            style={{ backgroundImage: `url(${bgimg})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", marginBottom: "100px" }}>
             <div>
                 <h1 className='text-4xl font-bold text-center'>Testimonials</h1>
                 <h1 className='text-xl mt-3 mb-6 text-center'
