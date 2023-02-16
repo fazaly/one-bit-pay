@@ -28,7 +28,6 @@ const ApplyForAgent = () => {
   }, [error, isError, isLoading, isSuccess, reset])
 
   const handleupdateInfo = (data) => {
-    console.log(data);
 
     const userData = {
       fname: data.first_name,
@@ -40,7 +39,6 @@ const ApplyForAgent = () => {
       number: data.number,
       status: 'pending'
     };
-    console.log(userData);
 
     const image = userData.img;
 
@@ -74,13 +72,13 @@ const ApplyForAgent = () => {
   };
   return (
     <div>
-      <div className="p-5">
+      <div className="px-5">
         <div className="mx-4 p-4">
           <div className="flex">
             <span className="min-w-2 min-h-4 mr-2 bg-[#5966FF] text-[#5966FF]">
               |
             </span>{" "}
-            <h1 className="lg:text-2xl text-xl font-bold uppercase">
+            <h1 className="lg:text-2xl text-xl font-bold ">
               Please Provide Your All Informations
             </h1>
           </div>
@@ -88,20 +86,20 @@ const ApplyForAgent = () => {
         <Form
           id="user"
           onSubmit={handleSubmit(handleupdateInfo)}
-          className="mt-4 px-12 py-4"
+          className="mt-2 px-12 py-2"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
             <div className="w-full flex-1 mx-2 svelte-1l8159u">
               <div className="text-black h-6 mt-1  leading-8 font-semibold">
                 First Name
               </div>
-              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+              <div>
                 <input
                   type="text"
                   name="first_name"
-                  placeholder="first name"
+                  placeholder="Your first name"
                   {...register("first_name", { required: "First name is required" })}
-                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                  className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                 />{" "}
               </div>
               {errors.first_name?.type === 'required' && <p className="text-red-700 text-sm">{errors.first_name.message}</p>}
@@ -110,13 +108,13 @@ const ApplyForAgent = () => {
               <div className="text-black h-6 mt-1 leading-8 font-semibold">
                 Last Name
               </div>
-              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+              <div >
                 <input
                   type="text"
                   name="last_name"
-                  placeholder="last name"
+                  placeholder="Your last name"
                   {...register("last_name", { required: "Last name is required" })}
-                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                  className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                 />{" "}
               </div>
               {errors.last_name?.type === 'required' && <p className="text-red-700 text-sm">{errors.last_name.message}</p>}
@@ -125,13 +123,13 @@ const ApplyForAgent = () => {
               <div className="text-black h-6 mt-1 leading-8 font-semibold">
                 Business Location
               </div>
-              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+              <div >
                 <input
                   name="businessLocation"
                   type="text"
-                  placeholder="enter place name"
+                  placeholder="Enter place name"
                   {...register("businessLocation", { required: "Business location is required" })}
-                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                  className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                 />{" "}
               </div>
               {errors.businessLocation?.type === 'required' && <p className="text-red-700 text-sm">{errors.businessLocation.message}</p>}
@@ -140,13 +138,13 @@ const ApplyForAgent = () => {
               <div className="text-black h-6 mt-1 leading-8 font-semibold">
                 NID Number
               </div>
-              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+              <div >
                 <input
                   type="number"
                   name="nidNumber"
-                  placeholder="enter nid number"
+                  placeholder="Enter nid number"
                   {...register("nidNumber", { required: "NID number is required" })}
-                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                  className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                 />{" "}
               </div>
               {errors.nidNumber?.type === 'required' && <p className="text-red-700 text-sm">{errors.nidNumber.message}</p>}
@@ -155,13 +153,13 @@ const ApplyForAgent = () => {
               <div className="text-black h-6 mt-1 leading-8 font-semibold">
                 TIN ID
               </div>
-              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+              <div >
                 <input
                   type="number"
                   name="tinNumber"
-                  placeholder="enter tin number"
+                  placeholder="Enter tin number"
                   {...register("tinNumber", { required: "TIN ID is required" })}
-                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                  className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                 />{" "}
               </div>
               {errors.tinNumber?.type === 'required' && <p className="text-red-700 text-sm">{errors.tinNumber.message}</p>}
@@ -170,26 +168,26 @@ const ApplyForAgent = () => {
               <div className="text-black h-6 mt-1 leading-8 font-semibold">
                 Phone Number
               </div>
-              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+              <div >
                 <input
                   type="number"
                   name="number"
                   placeholder="018XXXXXXXX"
                   {...register("number", { required: "Phone number is required" })}
-                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                  className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                 />{" "}
               </div>
               {errors.number?.type === 'required' && <p className="text-red-700 text-sm">{errors.number.message}</p>}
             </div>
 
             <div>
-              <div className="text-black h-6 my-1 ml-2 leading-8 font-semibold">
+              <div className="text-black h-6 my-1 ml-2  font-semibold">
                 Image
               </div>
-              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+              <div className="mt-1 flex justify-center px-6 pt-2 pb-2 border-2 border-gray-300 border-dashed rounded-md">
                 <div className="space-y-1 text-center">
                   <svg
-                    className="mx-auto h-12 w-12 "
+                    className="mx-auto h-8 w-16 "
                     stroke="currentColor"
                     fill="none"
                     viewBox="0 0 48 48"
@@ -225,7 +223,7 @@ const ApplyForAgent = () => {
               </div>
             </div>
           </div>
-          <div className="flex p-2 mt-4">
+          <div className="flex p-2 mt-2">
             <div className="flex-auto flex justify-end">
               <button
                 type="reset"

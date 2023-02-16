@@ -58,7 +58,7 @@ const Contact = () => {
                             <textarea
                                 name="message"
                                 rows="5"
-                                className="block hover:border-[#5966FF]  sm:rows-3 rounded-md px-5 text-black bg-[#E7E8FF] outline-[#5966FF]"
+                                className="block hover:border-[#5966FF] outline-[#5966FF] sm:rows-3 rounded-md px-5 text-black bg-[#E7E8FF] "
                                 placeholder="Enter Your Message..."
                                 required
                             ></textarea>
@@ -73,7 +73,7 @@ const Contact = () => {
                     </div>
 
                     <div className="p-10">
-                        <div className="hidden lg:block md:block">
+                        <div className="hidden lg:block">
                             <img src={img} alt="" className="w-full  object-cover mb-1" />
                         </div>
                         <div>
