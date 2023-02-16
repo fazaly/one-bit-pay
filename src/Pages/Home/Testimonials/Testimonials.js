@@ -6,7 +6,7 @@ import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import "./Testimonial.css";
 import { Pagination, Autoplay } from "swiper";
-// import bgimg from "../../../../src/images/testimonial/lineCtmonialbg.png"
+import bgimg from "../../../../src/images/testimonial/lineCtmonialbg.png"
 
 const Testimonials = () => {
     const datas = [
@@ -61,16 +61,14 @@ const Testimonials = () => {
         },
     ]
     return (
-        <div className='mx-auto py-10 bg-[#F5F8FF] flex items-center justify-center '
+        <div className='mx-auto py-10 bg-[#F5F8FF] flex items-center justify-center'
+            style={{ backgroundImage: `url(${bgimg})`, backgroundRepeat: "no-repeat", backgroundPosition: "center", marginBottom: "100px" }}
         >
             <div>
                 <h1 className='text-4xl font-bold text-center'>Testimonials</h1>
                 <h1 className='text-xl mt-3 mb-6 text-center'
-
                 >What says our happy customer?</h1>
-                <div
-
-                >
+                <div>
                     <Swiper
                         slidesPerView={1}
                         spaceBetween={30}
@@ -104,16 +102,14 @@ const Testimonials = () => {
                             },
                         }}
                         style={{ width: "76vw" }}
-                        className="mySwiper lg:ml-4 "
-                    >
+                        className="mySwiper lg:ml-4 ">
 
                         <div>
                             {datas.map(data =>
                                 <SwiperSlide
                                     key={data.id}
                                     className="rounded-xl px-10 py-2 hover:shadow-2xl cursor-pointer shadow-xl
-                                     mb-16 mt-4"
-                                >
+                                     mb-16 mt-4">
                                     <div >
                                         <p className='mt-2 text-[16px]'>{data.text}</p>
                                         <div className=" flex justify-between items-center mt-2">
