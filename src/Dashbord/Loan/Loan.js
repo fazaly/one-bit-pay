@@ -1,13 +1,12 @@
 import { format } from "date-fns";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthProvider";
-import { useApplyForAgentMutation, useApplyForLoanMutation } from "../../features/api/apiSlice";
+import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
+import { useApplyForLoanMutation } from "../../features/api/apiSlice";
 
 const Loan = () => {
   const email = useSelector((state) => state.auth.email);
@@ -52,23 +51,7 @@ const Loan = () => {
     }
 
     applyForLoan(loanApplicantData);
-    // if (userDetails.userEmail) {
-    //   fetch("http://localhost:5000/loanApplicantData", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify(loanApplicantData)
-    //   })
-    //     .then(res => res.json())
-    //     .then(data => {
-    //       if (data.acknowledged) {
-    //         toast.success("loan request successfull")
-    //         reset()
-    //       }
-    //     })
-
-    // }
+    reset()
 
   };
 
@@ -311,7 +294,9 @@ const Loan = () => {
                     disabled={!isChecked}
                     className="btn shadow-md bg-black
                     hover:bg-[#5966FF] rounded-xl border-none ml-2 ease-in-out transition-all">
-                    Apply for loan
+                    {
+                      isLoading ? <ButtonSpinner /> : "Apply for loan"
+                    }
                   </button>
                 }
               </div>
