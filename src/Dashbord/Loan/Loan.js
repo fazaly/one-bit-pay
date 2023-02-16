@@ -29,7 +29,7 @@ const Loan = () => {
       loanRequest: "pending",
       applyDate: date
     }
-    console.log(loanApplicantData)
+
     if (userDetails.userEmail) {
       fetch("http://localhost:5000/loanApplicantData", {
         method: "POST",
@@ -45,19 +45,15 @@ const Loan = () => {
             reset()
           }
         })
-
     }
-
   };
-
 
   const handleToggle = () => {
     setIsChecked(!isChecked);
   };
 
   return (
-    <div className="px-10 py-4">
-
+    <section className="px-10 py-4">
       <div className="flex">
         <span className="min-w-2 min-h-4 mr-2 bg-[#5966FF] text-[#5966FF]">
           |
@@ -66,11 +62,11 @@ const Loan = () => {
           Please Provide Your All Informations for loan
         </h1>
       </div>
-
       <div className="mt-4">
         <form onSubmit={handleSubmit(handleLoanReqSubmit)}>
           <div className="px-6 py-1 rounded-xl">
             <div>
+              {/* ==========personal info collection============ */}
               <h1 className="text-xl pl-2 mt-2 font-bold text-gray-500">Personal information</h1>
               <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-2">
                 <div className="w-full flex-1 mx-2 svelte-1l8159u">
@@ -83,9 +79,7 @@ const Loan = () => {
                       type="text"
                       name="firstName"
                       placeholder="First name"
-                      // {...register("first_name", { required: true })}
-                      className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
-                    />
+                      className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800" />
                   </div>
                   {errors.firstName?.type === 'required' && <p className="text-red-700 text-sm">{errors.firstName.message}</p>}
                 </div>
@@ -99,7 +93,6 @@ const Loan = () => {
                       type="text"
                       name="lastName"
                       placeholder="Last name"
-                      // {...register("first_name", { required: true })}
                       className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                     />
                   </div>
@@ -107,7 +100,6 @@ const Loan = () => {
                 </div>
               </div>
             </div>
-
             <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
               <div className="w-full flex-1 mx-2 svelte-1l8159u">
                 <div className="font-semibold h-6 mt-1 text-[#303640]  leading-8 ">
@@ -119,9 +111,7 @@ const Loan = () => {
                     type="text"
                     name="address"
                     placeholder="Address"
-                    // {...register("first_name", { required: true })}
-                    className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
-                  />
+                    className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800" />
                 </div>
                 {errors.address?.type === 'required' && <p className="text-red-700 text-sm">{errors.address.message}</p>}
               </div>
@@ -135,9 +125,7 @@ const Loan = () => {
                     type="number"
                     name="nidNumber"
                     placeholder="NID Number"
-                    // {...register("first_name", { required: true })}
-                    className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
-                  />
+                    className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800" />
                 </div>
                 {errors.nidNumber?.type === 'required' && <p className="text-red-700 text-sm">{errors.nidNumber.message}</p>}
               </div>
@@ -151,9 +139,7 @@ const Loan = () => {
                     type="number"
                     name="phnNumber"
                     placeholder="015XXXXXXXX"
-                    // {...register("first_name", { required: true })}
-                    className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
-                  />
+                    className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800" />
                 </div>
                 {errors.phnNumber?.type === 'required' && <p className="text-red-700 text-sm">{errors.phnNumber.message}</p>}
               </div>
@@ -202,15 +188,13 @@ const Loan = () => {
                     type="date"
                     name="birthDate"
                     placeholder="Date of birth"
-                    // {...register("first_name", { required: true })}
-                    className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
-                  />
+                    className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800" />
                 </div>
                 {errors.birthDate?.type === 'required' && <p className="text-red-700 text-sm">{errors.birthDate.message}</p>}
               </div>
             </div>
 
-
+            {/* ==== loan info collection==== */}
             <div className="mt-4">
               <h1 className="text-xl pl-2 mt-4 font-semibold text-gray-500">Loan Information</h1>
               <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-2">
@@ -224,7 +208,6 @@ const Loan = () => {
                       type="number"
                       name="desireAmount"
                       placeholder="$ Amount you want"
-                      // {...register("first_name", { required: true })}
                       className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                     />
                   </div>
@@ -259,7 +242,6 @@ const Loan = () => {
                       type="number"
                       name="anoualIncome"
                       placeholder="$ Your anoual income"
-                      // {...register("first_name", { required: true })}
                       className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                     />
                   </div>
@@ -280,6 +262,7 @@ const Loan = () => {
                   {errors.reasonForLoan?.type === 'required' && <p className="text-red-700 text-sm">{errors.reasonForLoan.message}</p>}
                 </div>
               </div>
+              {/* =============loan condition route========== */}
               <Link to="/dashboard/loantermscondition"><h1 className="text-[#5966FF] my-2 ml-2 underline">Click here to See Full term and condition and Eligibity of loan</h1></Link>
             </div>
 
@@ -289,8 +272,7 @@ const Loan = () => {
                   type="checkbox"
                   checked={isChecked}
                   onChange={handleToggle}
-                  className="mr-2"
-                />
+                  className="mr-2" />
                 Are you agree with our terms & condition?
               </label>
               <div className="flex">
@@ -313,7 +295,7 @@ const Loan = () => {
           </div>
         </form>
       </div>
-    </div>
+    </section>
   );
 };
 

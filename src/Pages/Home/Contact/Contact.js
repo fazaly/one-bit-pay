@@ -16,7 +16,6 @@ const Contact = () => {
 
         emailjs.sendForm('service_w6svlhk', 'template_xzkrtc7', form.current, 'q_62p3f56iW_fG_dP')
             .then((result) => {
-                console.log(result.text);
                 e.target.reset();
                 toast.success('Message send Successfully.');
             }, (error) => {
@@ -39,22 +38,19 @@ const Contact = () => {
                         <form
                             ref={form}
                             onSubmit={sendEmail}
-                            className="flex flex-col gap-3 "
-                        >
+                            className="flex flex-col gap-3 ">
                             <input
                                 type="text"
                                 name="user_name"
                                 placeholder="Enter Your Name"
                                 className="block  outline-[#5966FF] rounded-md shadow-sm text-black py-3 px-5 bg-[#E7E8FF]"
-                                required
-                            />
+                                required />
                             <input
                                 type="email"
                                 name="user_email"
                                 placeholder="Enter Your Email"
                                 className="block  rounded-md shadow-sm text-black py-3 px-5 bg-[#E7E8FF] outline-[#5966FF]"
-                                required
-                            />
+                                required />
                             <textarea
                                 name="message"
                                 rows="5"

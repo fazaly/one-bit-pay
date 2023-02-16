@@ -120,13 +120,10 @@ const B2B = () => {
                                     </div>
                                     <div className="form-control rounded-full ">
                                         <button
-                                            // onClick={() => handleRecharge}
                                             type="submit"
                                             className="btn w-full btn-sm  rounded-sm mt-2 border-none
                                             text-lg hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF] transition-all hover:from-[#8759f1] text-white
-                                            "
-                                        >
-                                            {/* Transition Confirm */}
+                                            ">
                                             {isLoading ? <ButtonSpinner /> : "Transition Confirm"}
                                         </button>
                                     </div>

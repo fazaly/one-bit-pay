@@ -40,12 +40,11 @@ const ApplyForAgent = () => {
       status: 'pending'
     };
 
+    //Upload user image to imgBB database
     const image = userData.img;
-
     const formData = new FormData();
     formData.append('image', image);
 
-    //Upload user image to imgBB database
     fetch(`https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMG_BB_KEY}`, {
       method: "POST",
       body: formData
@@ -71,7 +70,7 @@ const ApplyForAgent = () => {
       })
   };
   return (
-    <div>
+    <section>
       <div className="px-5">
         <div className="mx-4 p-4">
           <div className="flex">
@@ -241,7 +240,7 @@ const ApplyForAgent = () => {
           </div>
         </Form>
       </div>
-    </div>
+    </section>
   );
 };
 
