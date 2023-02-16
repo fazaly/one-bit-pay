@@ -255,7 +255,7 @@ export const router = createBrowserRouter([
         path: "/dashboard/loanRequestDetails/:id",
         element: <LoanRequestDetails></LoanRequestDetails>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/loanRequestDetails/${params.id}`),
+          fetch(`https://one-bit-pay-server.vercel.app/loanRequestDetails/${params.id}`),
       }
     ],
   },
