@@ -65,7 +65,8 @@ const LoanRequestDetails = () => {
             </table>
            
             <div className='text-right mt-12'>
-                <button className='btn border-0 hover:bg-[#5966FF]'>Accept Loan Request</button>
+                <button className='btn bg-transparent text-black mr-6 hover:bg-red-500 hover:border-0'> Cancel Request</button>
+                <button className='btn bg-black border-0 hover:bg-[#5966FF]'>Accept Loan Request</button>
             </div>
             </div>
         </div>
