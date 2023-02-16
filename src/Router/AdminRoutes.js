@@ -16,7 +16,9 @@ const AdminRoutes = ({ children }) => {
     const location = useLocation();
 
     if (isLoading) {
-        return <Spinner></Spinner>
+        return <div className='flex justify-center items-center'>
+            <Spinner></Spinner>
+        </div>
     }
 
     if (email && userDetails?.role === 'admin') {

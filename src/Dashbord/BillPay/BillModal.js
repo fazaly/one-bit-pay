@@ -1,9 +1,11 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { useBillingMutation, usePayBillMutation } from '../../features/api/apiSlice';
 
-const BillModal = ({ company, setPayBill, payBill }) => {
-    const [PayBill, { isLoading, isSuccess, isError }] = usePayBillMutation()
+const BillModal = ({ company, setPayBill }) => {
+    const [postData, { isLoading, isSuccess, isError }] = usePayBillMutation();
+
     const handleBooking = (e) => {
         e.preventDefault();
 
@@ -19,15 +21,18 @@ const BillModal = ({ company, setPayBill, payBill }) => {
             customer_Id: email,
             billing_Amount: amount
         }
-
+        // console.log(billing);
         // pay bill action
 
-        PayBill(billing);
-        if (isSuccess) {
-            toast.success("Bill Pay Success")
-        }
-
+        postData(billing);
     }
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success("Bill Pay Success", {id: "bill"})
+            setPayBill(null)
+        }
+    },[isSuccess])
 
     return (
         <div>

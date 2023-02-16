@@ -149,6 +149,7 @@ export const userDetailsApi = createApi({
                 method: "PUT",
                 body: data
             }),
+            invalidatesTags: ["userDetails"]
         }),
         getLoanRequestList: builder.query({
             query: () => ({

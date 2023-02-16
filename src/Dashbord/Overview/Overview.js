@@ -38,9 +38,9 @@ const Overview = () => {
 
           <div className="col-span-4  grid grid-cols-1 px-4 ">
 
-            <div className=" p-4 rounded-2xl shadow-lg shadow-gray-400 hover:shadow-xl hover:shadow-gray-500 transition-all ">
+            <div className=" p-4 rounded-2xl shadow-lg shadow-gray-200 hover:shadow-lg hover:shadow-gray-300 transition-all ">
               <div className="">
-                <h4 className="text-xl ml-4 font-semibold ">Reports</h4>
+                <h4 className="text-xl text-center ml-4 font-semibold ">Reports</h4>
               </div>
               <Activities userDetails={userDetails}></Activities>
             </div>
