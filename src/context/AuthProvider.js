@@ -9,8 +9,6 @@ import {
   signOut,
 } from "firebase/auth";
 import { useQuery } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../features/api/courrentUserSlice";
 
 
 
@@ -21,7 +19,6 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch()
 
 
   const createUser = (email, password) => {
@@ -43,16 +40,7 @@ const AuthProvider = ({ children }) => {
     return sendPasswordResetEmail(auth, email);
   };
 
-  const { data: userDetails = {}, refetch } = useQuery({
-    queryKey: ["userDetails"],
-    queryFn: async () => {
-      if (user) {
-        const res = await fetch(` server.vercel.app/${user?.email}`);
-        const data = await res.json();
-        return data.data;
-      }
-    },
-  });
+  
 
 
   useEffect(() => {
@@ -61,20 +49,16 @@ const AuthProvider = ({ children }) => {
       //   email: currentUser.email,
       //   uid: currentUser.uid
       // }
-      dispatch(setCurrentUser(currentUser))
       setUser(currentUser);
       setLoading(false);
-      refetch();
     });
     return () => unsubscribe;
-  }, [user?.email, refetch]);
+  }, [user?.email,]);
 
   const authInfo = {
     user,
     setUser,
     loading,
-    userDetails,
-    refetch,
     setLoading,
     createUser,
     signIn,
