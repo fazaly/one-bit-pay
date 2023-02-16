@@ -26,7 +26,7 @@ const Footer = () => {
                 </div>
                 <div>
                     <span className="footer-title text-[#5966FF] opacity-100">Legal</span>
-                    <a className="link link-hover">Terms of use</a>
+                    <Link to="/terms" className="link link-hover">Terms of use</Link>
                     <Link to={'/cookie'} className='link link-hover'>Cookie Policy</Link>
                 </div>
                 {/* <div>

@@ -44,6 +44,7 @@ import LoanRequest from "../Pages/Admin/LoanRequestList";
 import LoanRequestList from "../Pages/Admin/LoanRequestList";
 import LoanRequestDetails from "../Pages/Admin/LoanRequestDetails";
 import ForbidenAdmin from "../Pages/ErrorPage/ForbidenAdmin";
+import TermsAndConditions from "../Pages/TermsAndConditions/TermsAndConditions";
 
 export const router = createBrowserRouter([
   {
@@ -93,6 +94,10 @@ export const router = createBrowserRouter([
       {
         path: "/adminForbidden",
         element: <ForbidenAdmin></ForbidenAdmin>
+      },
+      {
+        path:"/terms",
+        element:<TermsAndConditions></TermsAndConditions>
       }
     ],
   },
