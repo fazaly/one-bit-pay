@@ -61,16 +61,16 @@ const UpdateProfile = () => {
       className="">
       <div className="">
         <div className="mb-10">
-          <div className="bg-[#ECEFF6] grid grid-cols-1 md:grid-cols-2 justify-center items-center relative mt-20">
+          <div className="bg-[#ECEFF6] grid grid-cols-1 md:grid-cols-2 justify-center items-center relative mt-20  md:w-full mx-4 md:mx-0">
             <div className="p-4">
               <h4 className="text-gray-400 text-3xl">Update Your </h4>
               <span className="text-black text-3xl">Information</span>
             </div>
-            <img className="right-24 bottom-0 absolute" src={updateInfoImg} alt="" />
+            <img className="right-24 bottom-0 absolute hidden md:flex" src={updateInfoImg} alt="" />
           </div>
         </div>
-        <div className=" grid grid-cols-2 gap-14">
-          <div className="p-10 rounded-3xl shadow-2xl shadow-slate-500 hover:shadow-2xl hover:shadow-gray-500 transition-all">
+        <div className=" grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 mx-4">
+          <div className="p-10 rounded-2xl shadow-xl shadow-slate-400 hover:shadow-2xl hover:shadow-gray-400 transition-all">
             <div className="form-control w-full ">
               <label className="label">
                 <span className="label-text"> Your name</span>
@@ -131,8 +131,7 @@ const UpdateProfile = () => {
           </div>
 
           <div>
-
-            <div className="p-10 rounded-3xl shadow-2xl shadow-slate-500 hover:shadow-2xl hover:shadow-gray-500 transition-all mb-8">
+            <div className="p-10 rounded-2xl shadow-xl shadow-slate-400 hover:shadow-2xl hover:shadow-gray-400 transition-all mb-8">
               <div className="form-control w-full ">
                 <label className="label">
                   <span className="label-text"> Your address</span>
@@ -162,7 +161,7 @@ const UpdateProfile = () => {
                 <div className="divider mt-0 mb-0"></div>
               </div>
             </div>
-            <div className="form-control w-full p-10 rounded-3xl shadow-2xl shadow-slate-500 hover:shadow-2xl hover:shadow-gray-500 transition-all">
+            <div className="form-control w-full p-10 rounded-2xl shadow-xl shadow-slate-400 hover:shadow-2xl hover:shadow-gray-400 transition-all">
               <div>
                 <div className="">
                   Image
@@ -211,7 +210,7 @@ const UpdateProfile = () => {
           </div>
 
         </div>
-        <div className="flex justify-between items-center mt-5">
+        <div className="flex justify-between items-center mt-5 mx-6">
           <input type="reset" value="reset all" className="btn bg-transparent hover:bg-transparent hover:text-[#939cff] text-[#070733] border-none btn-xs" />
 
           <input type="submit" value="submit" className="btn bg-[#070733] rounded-lg border-none" />

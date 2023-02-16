@@ -156,12 +156,20 @@ export const userDetailsApi = createApi({
             }),
             providesTags: ["loanRequestList"],
         }),
+        withdraw: builder.mutation({
+            query: (withdrawInfo) => ({
+                url: `/withdraw`,
+                method: "PUT",
+                body: withdrawInfo
+            }),
+            invalidatesTags: ["userDetails", "DonationInistitute"],
 
+        }),
 
 
     })
 });
 
 
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation, useUpdateUserProfileMutation, usePostB2bMutation, useBillCategoriesQuery, useBillCategoryQuery, useGetDonationInistituteQuery, usePayBillMutation, useGetLoanRequestListQuery } = userDetailsApi
+export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation, useUpdateUserProfileMutation, usePostB2bMutation, useBillCategoriesQuery, useBillCategoryQuery, useGetDonationInistituteQuery, usePayBillMutation, useGetLoanRequestListQuery, useWithdrawMutation } = userDetailsApi
 
