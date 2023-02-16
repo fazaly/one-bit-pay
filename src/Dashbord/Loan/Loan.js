@@ -1,22 +1,43 @@
 import { format } from "date-fns";
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
+import { useApplyForAgentMutation, useApplyForLoanMutation } from "../../features/api/apiSlice";
 
 const Loan = () => {
-  const { userDetails } = useContext(AuthContext)
+  const email = useSelector((state) => state.auth.email);
   const { register, reset, formState: { errors }, handleSubmit } = useForm();
   const date = format(new Date(), "PP");
   const [isChecked, setIsChecked] = useState(false);
+  const [applyForLoan, { isLoading, isSuccess, isError }] = useApplyForLoanMutation();
+
+
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("You Successfully Send Loan Request", {
+        id: "loan",
+      });
+    }
+    if (!isSuccess && isError) {
+      toast.error("Failed to loan request! Please try again", {
+        id: "loan",
+      });
+    }
+  }, [isSuccess, isError]);
+
 
   const handleLoanReqSubmit = (data) => {
+
     const loanApplicantData = {
       name: `${data.firstName} ${data.lastName}`,
       address: data.address,
-      email: userDetails?.userEmail,
+      email,
       anoualIncome: data?.anoualIncome,
       birthDate: data.birthDate,
       desireAmount: data.desireAmount,
@@ -29,24 +50,25 @@ const Loan = () => {
       loanRequest: "pending",
       applyDate: date
     }
-    console.log(loanApplicantData)
-    if (userDetails.userEmail) {
-      fetch("http://localhost:5000/loanApplicantData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(loanApplicantData)
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.acknowledged) {
-            toast.success("loan request successfull")
-            reset()
-          }
-        })
 
-    }
+    applyForLoan(loanApplicantData);
+    // if (userDetails.userEmail) {
+    //   fetch("http://localhost:5000/loanApplicantData", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify(loanApplicantData)
+    //   })
+    //     .then(res => res.json())
+    //     .then(data => {
+    //       if (data.acknowledged) {
+    //         toast.success("loan request successfull")
+    //         reset()
+    //       }
+    //     })
+
+    // }
 
   };
 
