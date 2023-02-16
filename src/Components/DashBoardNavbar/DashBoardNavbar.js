@@ -1,6 +1,6 @@
 import { faFileSignature } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaBell, FaHome, FaUserEdit } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -21,6 +21,10 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
             dispatch(logoutUser());
         });
     }
+
+
+
+
     const handleNotification = () => {
         fetch(`https://one-bit-pay-server.vercel.app/notification/${email}`)
             .then((res) => res.json())
@@ -46,6 +50,7 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
                         <Link className='text-2xl text-[#070733] font-bold mr-9' to="/">
                             <FaHome></FaHome>
                         </Link>
+
                     </div>
                 </div>
                 <div className="flex w-3/12 justify-between">
