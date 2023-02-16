@@ -16,19 +16,17 @@ import {
   faCommentDollar,
   faUsers,
   faUsersGear,
-  faMoneyBillTransfer,
-  faMoneyBills,
   faDollar,
 } from "@fortawesome/free-solid-svg-icons";
-import useRole from "../Hooks/useRole";
-import { useGetTransactionHistoryQuery, useGetUserDetailsQuery, useGetUserLoggedinDetailsQuery } from "../features/api/apiSlice";
+
+import { useGetUserLoggedinDetailsQuery } from "../features/api/apiSlice";
 import { useSelector } from "react-redux";
 import logo from "../images/logo.svg"
 import sidebarImg from "../images/dasboard/18953931_6075540-removebg-preview.png"
 const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
   const [notifi, setNotifi] = useState(false);
-  const { user } = useContext(AuthContext);
+
 
 
   const email = useSelector(state => state.auth.email);
@@ -247,7 +245,7 @@ const DashbordLayout = () => {
             {
               userDetails?.role === 'user' && <Link
                 to="/dashboard/applyForAgent"
-                className="flex items-center btn btn-md "
+                className="flex items-center btn btn-sm "
               >
                 <FontAwesomeIcon
                   icon={faFileSignature}
