@@ -38,7 +38,7 @@ const MoneyTransferHistory = ({ email, type }) => {
                                 ).map((transaction, i) => {
                                     return <tr key={i}>
                                         {
-                                            transaction?.senderEmail === email ?
+                                            transaction?.senderEmail !== email ?
                                                 <>
                                                     <th><p><HiArrowSmDown className='bg-green-500 text-white rounded-full text-xl' /></p></th>
                                                     <td>{transaction?.senderEmail}</td>

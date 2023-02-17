@@ -37,7 +37,7 @@ const B2B = () => {
     const handleTransition = (e) => {
         e.preventDefault()
         const receiverEmail = e.target.email.value;
-        const transferAmount = parseInt(e.target.amount.value);
+        const transferAmount = e.target.amount.value;
 
         const transferInfo = {
             receiverEmail,
