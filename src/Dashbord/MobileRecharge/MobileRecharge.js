@@ -299,7 +299,7 @@ const MobileRecharge = () => {
         <div className="CARD-1">
           <div className="card lg:w-80 w-72 h-48 bg-white text-primary-content mx-auto shadow-lg">
             <div className="card-body">
-              <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
+              <h1 className="font-bold text-xl text-[#303640] opacity-50">
                 Main Balance
               </h1>
               <h1 className="font-bold text-3xl text-gray-900">
@@ -315,7 +315,7 @@ const MobileRecharge = () => {
                 onSubmit={handleRecharge}
                 className="card-body rounded-xl bg-white"
               >
-                <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
+                <h1 className="font-bold text-xl text-[#303640] opacity-50">
                   Mobile Recharge
                 </h1>
                 <div className="">
@@ -359,7 +359,7 @@ const MobileRecharge = () => {
                     <button
                       onClick={() => handleRecharge}
                       type="submit"
-                      className="mt-2 btn btn-primary btn-sm w-full  rounded-lg border-none hover:bg-[#5966FF]"
+                      className="mt-2 btn btn-[#303640] btn-sm w-full  rounded-lg border-none "
                     >
                       {isLoading ? <ButtonSpinner /> : "CONFIRM"}
                     </button>
@@ -372,7 +372,7 @@ const MobileRecharge = () => {
         <div className="CARD-3">
           <div className="card lg:w-80 w-72 h-48 bg-white text-primary-content mx-auto shadow-lg">
             <div className="card-body">
-              <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
+              <h1 className="font-bold text-xl text-[#303640] opacity-50">
                 Total Overview
               </h1>
               <h1 className="font-bold text-3xl text-gray-900">

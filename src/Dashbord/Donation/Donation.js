@@ -16,9 +16,6 @@ const Donation = () => {
 
     const institutes = data;
 
-    console.log(data)
-    console.log(institutes)
-
     if (isLoading) {
         return <p>Loading..</p>
     }

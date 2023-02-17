@@ -34,8 +34,9 @@ const Overview = () => {
               <div className="grid grid-cols-1  gap-3 text-white">
                 <Balance userDetails={userDetails}></Balance>
               </div>
-              <div className="text-black p-8 ">
-                <Link to="/dashboard/chargeCalculate">Calculate Charges</Link>
+              <div className="text-[#070733] rounded-2xl grid grid-cols-1  items-center pl-8 p-4  shadow-xl shadow-slate-200 h-48">
+                <p className="text-xl font-semibold">Calculate your charges</p>
+                <Link className="btn btn-xs" to="/dashboard/chargeCalculate">Click here</Link>
               </div>
 
             </div>
@@ -44,20 +45,12 @@ const Overview = () => {
           <div className="col-span-4  grid grid-cols-1 px-4 ">
 
             <div className=" p-4 rounded-2xl shadow-lg shadow-gray-200 hover:shadow-lg hover:shadow-gray-300 transition-all ">
-              <div className="">
+              <div className="mb-4">
                 <h4 className="text-xl text-center ml-4 font-semibold ">Reports</h4>
               </div>
               <Activities userDetails={userDetails}></Activities>
               <div>
-                <Link
-                  to="/dashboard/chargeCalculate"
-                  className="flex items-center "
-                >
-                  <SlCalculator
-                    className="text-[25px] mr-4"
-                  />
-                  <p className="text-lg font-semibold">Charge Calculator</p>
-                </Link>
+
               </div>
             </div>
 
