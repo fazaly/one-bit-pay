@@ -1,5 +1,7 @@
 import React from "react";
+import { SlCalculator } from "react-icons/sl";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import AgentOverview from "../../AgentDashboard/AgentOverview/AgentOverview";
 import SendMoneyHistory from "../../Components/TransactionHistory/SendMoneyHistory";
 import { useGetUserLoggedinDetailsQuery } from "../../features/api/apiSlice";
@@ -29,10 +31,13 @@ const Overview = () => {
             <OfferCard></OfferCard>
             <div className="grid sm:grid-cols-2 gap-6 my-6">
 
-              <div className="grid grid-cols-1 gap-3 text-white">
+              <div className="grid grid-cols-1  gap-3 text-white">
                 <Balance userDetails={userDetails}></Balance>
-                {/* <LoanAmount userDetails={userDetails}></LoanAmount> */}
               </div>
+              <div className="text-black p-8 ">
+                <Link to="/dashboard/chargeCalculate">Calculate Charges</Link>
+              </div>
+
             </div>
           </div>
 
@@ -43,14 +48,20 @@ const Overview = () => {
                 <h4 className="text-xl text-center ml-4 font-semibold ">Reports</h4>
               </div>
               <Activities userDetails={userDetails}></Activities>
-            </div>
-
-            <div>
-
+              <div>
+                <Link
+                  to="/dashboard/chargeCalculate"
+                  className="flex items-center "
+                >
+                  <SlCalculator
+                    className="text-[25px] mr-4"
+                  />
+                  <p className="text-lg font-semibold">Charge Calculator</p>
+                </Link>
+              </div>
             </div>
 
           </div>
-
 
 
         </div>
