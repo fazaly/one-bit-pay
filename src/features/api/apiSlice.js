@@ -165,11 +165,16 @@ export const userDetailsApi = createApi({
             invalidatesTags: ["userDetails", "DonationInistitute"],
 
         }),
+        getNotifications: builder.query({
+            query: (email) => ({
+                url:`/notification/${email}`,
+            })
+        })
 
 
     })
 });
 
 
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation, useUpdateUserProfileMutation, usePostB2bMutation, useBillCategoriesQuery, useBillCategoryQuery, useGetDonationInistituteQuery, usePayBillMutation, useGetLoanRequestListQuery, useWithdrawMutation } = userDetailsApi
+export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation, useUpdateUserProfileMutation, usePostB2bMutation, useBillCategoriesQuery, useBillCategoryQuery, useGetDonationInistituteQuery, usePayBillMutation, useGetLoanRequestListQuery, useWithdrawMutation , useGetNotificationsQuery} = userDetailsApi
 

@@ -13,6 +13,7 @@ import {
 } from "../../features/api/apiSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import balanceImage from "../../././images/10109-01.png";
 
 const SendMoney = () => {
   const { user } = useContext(AuthContext);
@@ -24,13 +25,12 @@ const SendMoney = () => {
   const email = useSelector((state) => state.auth.email);
   const { transactionsData } = useGetTransactionHistoryQuery(email);
   const transactions = transactionsData?.data;
-  let total = 0
+  let total = 0;
 
   transactions?.foreach((transaction) => {
     total += transaction.amount;
-    console.log(transaction)
-
-  })
+    console.log(transaction);
+  });
 
   const { data: userRole } = useGetUsersRoleQuery(`${receiver}`);
   console.log(userRole?.status);
@@ -76,84 +76,74 @@ const SendMoney = () => {
       toast.error("Send money not possible in agent account");
     } else if (userRole?.status === false) {
       toast.error("Enter Valid Email");
-    } else if (receiverEmail !== user?.email && userDetails?.balance > 10 && userDetails.role === "user") {
+    } else if (
+      receiverEmail !== user?.email &&
+      userDetails?.balance > 10 &&
+      userDetails.role === "user"
+    ) {
       sendMoney(sendMoneyInfo);
-      form.reset();
     }
   };
 
   const handleFocus = (e) => {
     setReceiver(e);
-    console.log(e)
-  }
+    console.log(e);
+  };
 
   return (
     <div>
-      <div className="flex gap-4 lg:flex-row flex-col justify-center items-center">
-        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
-          <div className="flex items-center justify-center h-screen flex-col">
-            <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
-              Current Balance
+      <div className="flex gap-4 lg:flex-row flex-col items-center p-4">
+
+        <div className="lg:w-7/12  p-6 relative bg-[#EEEFFF] rounded-lg h-[260px]">
+          <h1 className="text-4xl font-bold mb-4 ">Main Balance</h1>
+          <div className="">
+            <h1 className="text-xl mb-2 ">Today’s Balance</h1>
+            <h1 className="text-5xl font-medium ">
+              <span className="text-[#5966FF]">$</span> {userDetails?.balance}
+              .00
             </h1>
-            <h1 className="font-bold text-3xl text-slate-700">
-              ${userDetails?.balance}.00
-            </h1>
+            <div className="flex justify-between mt-6 z-10">
+              <img src={balanceImage} alt="" className="absolute right-0 bottom-0 w-80 -z-0"/>
+            </div>
           </div>
         </div>
 
-        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
-          <div className="flex items-center justify-center h-screen flex-col p-6">
-            <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
-              Send Money
-            </h1>
-            <form onSubmit={handleSendMoney} className="space-y-2">
-              <input
-                type="text"
-                name="receiverEmail"
-                required
-                onBlur={(e) => handleFocus(e.target.value)}
-                placeholder="receiver email"
-                className=" w-full border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
-              />
-              <input
-                type="text"
-                name="amount"
-                required
-                placeholder="amount"
-                className=" w-full border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF]  focus:border-b-[#5966FF]"
-              />
-              <p className="">
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-sm w-full  rounded-lg border-none hover:bg-[#5966FF]"
-                >
-                  {isLoading ? <ButtonSpinner /> : "SEND NOW"}
-                </button>
-              </p>
-            </form>
-          </div>
-        </div>
-
-        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
-          <div className="flex items-center justify-center h-screen flex-col">
-            <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
-              Today's Transaction
-            </h1>
-            <h1 className="font-bold text-xl text-slate-700">
-              You made <br />{" "}
-              <span className="text-3xl text-[#5966FF]">
-                {total}
-              </span>{" "}
-              <br /> transaction today
-            </h1>
-          </div>
+        <div className="lg:w-5/12 p-6  rounded-lg">
+          <h1 className="font-bold text-left text-2xl mb-4 text-[#181818]">
+            Transfer Money
+          </h1>
+          <form onSubmit={handleSendMoney} className="space-y-3">
+            <input
+              type="text"
+              name="receiverEmail"
+              required
+              onBlur={(e) => handleFocus(e.target.value)}
+              placeholder="RECEIVER EMAIL"
+              className="input input-bordered w-full border-[#181818]"
+            />
+            <input
+              type="text"
+              name="amount"
+              required
+              placeholder="AMOUNT"
+              className=" input input-bordered w-full border-[#181818]"
+            />
+            <p className="">
+              <button
+                type="submit"
+                className="btn btn-[#181818] w-full  rounded-lg border-none hover:bg-[#5966FF]"
+              >
+                {isLoading ? <ButtonSpinner /> : "SEND NOW"}
+              </button>
+            </p>
+          </form>
         </div>
       </div>
 
-      <div className="mt-4">
-        <div className="card bg-white text-primary-content shadow-lg">
+      <div className="mt-2">
+        <div className="card bg-white text-primary-content shadow-lg shadow-[#D9DCFF]">
           <div className="card-body">
-            <h1 className="font-bold text-xl text-[#5966FF] opacity-50 mb-4">
+            <h1 className="font-medium text-lg text-green-500  mb-4">
               History
             </h1>
             <SendMoneyHistory
