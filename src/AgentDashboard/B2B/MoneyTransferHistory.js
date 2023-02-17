@@ -9,7 +9,7 @@ const MoneyTransferHistory = ({ email, type }) => {
 
     return (
         <div className="overflow-x-auto mt-7 px-5 py-5 rounded-xl bg-slate-100">
-            <h1 className='text-[#00A337] text-xl font-bold px-10 py-2 text-end'>History</h1>
+            <h1 className='text-[#00A337] text-xl font-bold px-10 '>History</h1>
             <table className="table table-zebra w-full">
                 <thead className='text-slate-900 uppercase'>
                     <tr>
@@ -43,7 +43,7 @@ const MoneyTransferHistory = ({ email, type }) => {
                                                     <th><p><HiArrowSmDown className='bg-green-500 text-white rounded-full text-xl' /></p></th>
                                                     <td>{transaction?.senderEmail}</td>
                                                     <td>{transaction?.receiverEmail}</td>
-                                                    <td><span className='text-[#5966FF] text-lg'>$</span>{transaction?.amount}</td>
+                                                    <td>{transaction?.amount}</td>
                                                     <td>{transaction?.transactionId}</td>
                                                     <td>{transaction?.time}</td>
                                                 </>
@@ -55,7 +55,7 @@ const MoneyTransferHistory = ({ email, type }) => {
                                                         /></td>
                                                     <td>{transaction?.senderEmail}</td>
                                                     <td>{transaction?.receiverEmail}</td>
-                                                    <td><span className='text-[#5966FF] text-lg'>$</span>{transaction?.amount}</td>
+                                                    <td><span className='text-[#5966FF]'></span>{transaction?.amount}</td>
                                                     <td>{transaction?.transactionId}</td>
                                                     <td>{transaction?.time}</td>
                                                 </>
