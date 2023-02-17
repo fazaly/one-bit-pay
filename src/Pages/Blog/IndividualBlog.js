@@ -16,7 +16,10 @@ const IndividualBlog = () => {
     };
     return (
         <div>
-            <main className="mt-10 mx-5 lg:mx-20 md:mx-15">
+            <div className='h-16'>
+                
+            </div>
+            <main className=" mx-5 lg:mx-20 md:mx-15">
 
                 <div className="mb-4 md:mb-0 w-full mx-auto relative">
                     <div className="px-4 lg:px-0">

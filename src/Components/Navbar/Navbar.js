@@ -51,8 +51,8 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <Link to='/' className="">
-                    {/* <img src={logo} alt='' className='w-36 btn bg-transparent border-0' /> */}
-                    <h1 className="text-lg font-semibold text-[#5966FF] ml-8">OneBitPay</h1>
+                    <img src={logo} alt='' className='w-36 btn bg-transparent border-0' />
+                    {/* <h1 className="text-lg font-semibold text-[#5966FF] ml-8">OneBitPay</h1> */}
                 </Link>
             </div>
             <div className="navbar-end hidden lg:flex">
