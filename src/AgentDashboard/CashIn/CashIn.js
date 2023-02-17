@@ -10,6 +10,7 @@ import {
   useGetUsersRoleQuery,
   usePostCashInMutation,
 } from "../../features/api/apiSlice";
+import CashInHistory from "./CashInHistory";
 
 const CashIn = () => {
   const [focusEmail, setFocusEmail] = useState("");
@@ -59,29 +60,28 @@ const CashIn = () => {
       toast.error("Enter Valid Email");
     } else if (receiverEmail !== email && userDetails?.balance > 10) {
       postData(cashInInfo);
-      if (isSuccess) {
         form.reset();
-      }
+
     }
   };
 
   return (
     <div>
       <div className="flex gap-4 lg:flex-row flex-col">
-        <div className="card lg:w-80 w-96  bg-[#5966FF] text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all p-4">
-          <div className="card-body border-2 border-white rounded-lg">
-            <h1 className="font-bold text-xl text-[#fff] opacity-60 uppercase">
+        <div className="card lg:w-80 w-96  bg-[#181818] text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all p-4">
+          <div className="card-body rounded-lg">
+            <h1 className="font-bold text-xl text-[#fff] uppercase">
               Main Balance
             </h1>
             <h1 className="font-bold text-3xl text-white">
-              ${userDetails?.balance}.00
+              <span className="text-[#5966FF]">$</span> {userDetails?.balance}.00
             </h1>
           </div>
         </div>
 
         <div className="card lg:w-80 w-96 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
           <div className="card-body">
-            <h1 className={`font-bold text-xl text-[#5966FF]text-red-500`}>
+            <h1 className={`font-bold text-xl text-[#181818] `}>
               CASH IN
             </h1>
             <form onSubmit={handleCashIn} className="space-y-2 relative">
@@ -115,30 +115,22 @@ const CashIn = () => {
 
         <div className="card lg:w-80 w-96 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
           <div className="card-body">
-            <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
-              Today's Transaction
+            <h1 className="font-bold text-xl text-[#181818] ">
+              Today's Commission
             </h1>
-            <h1 className="font-bold text-xl text-slate-700">
+            <h1 className="font-bold text-md text-slate-700">
               You made <br />
               <span className="text-3xl text-[#5966FF]">
                 ${userDetails?.commission}
               </span>{" "}
-              <br /> commission
+   commission
             </h1>
           </div>
         </div>
       </div>
-
       <div className="mt-4">
-        <div className="card bg-white text-primary-content shadow-lg">
-          <div className="card-body">
-            <h1 className="font-bold text-xl text-[#5966FF] opacity-50 mb-4">
-              History
-            </h1>
-            {/* <SendMoneyHistory email={user?.email} loading={loading} type={"balanceTransfer"} /> */}
-          </div>
+          <CashInHistory/>
         </div>
-      </div>
     </div>
   );
 };
