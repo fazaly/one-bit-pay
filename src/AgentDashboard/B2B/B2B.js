@@ -64,7 +64,7 @@ const B2B = () => {
         }
         else if (receiverEmail !== email && userDetails?.balance > 100) {
             postB2bData(transferInfo)
-            // toast.success("Transition successfull")
+            // toast.success("Transition success")
             e.target.reset()
         }
 
@@ -75,14 +75,14 @@ const B2B = () => {
             <div className="flex lg:flex-row flex-col items-center lg:gap-12">
                 <div className=" lg:w-6/12 bg-white rounded-xl p-8">
                     <div className="">
-                        <h1 className="text-3xl mb-4 font-bold">
-                            CASH IN
+                        <h1 className="text-3xl mb-3 font-bold">
+                            Transfer
                         </h1>
                         <form onSubmit={handleTransition} className="space-y-4  w-full relative">
 
                             <input
                                 type="text"
-                                name="receiverEmail"
+                                name="email"
                                 required
                                 placeholder="RECEIVER EMAIL"
                                 className="input-border border-[#181818] text-md input w-full"
@@ -114,13 +114,12 @@ const B2B = () => {
                         <h1 className="font-bold text-3xl text-[#FFFFFF] uppercase">
                             Main Balance
                         </h1>
-                        <h1 className="text-lg mt-4">Today's Balance</h1>
+                        <h1 className="text-lg mt-4">Your Balance</h1>
                         <h1 className=" text-3xl font-semibold text-white">
                             <span className="text-[#5966FF]">$ </span>{userDetails?.balance}.00
                         </h1>
                     </div>
                 </div>
-
             </div>
             <MoneyTransferHistory
                 email={email}
