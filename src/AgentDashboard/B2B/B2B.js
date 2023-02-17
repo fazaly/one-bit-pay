@@ -37,7 +37,7 @@ const B2B = () => {
     const handleTransition = (e) => {
         e.preventDefault()
         const receiverEmail = e.target.email.value;
-        const transferAmount = parseInt(e.target.amount.value);
+        const transferAmount = e.target.amount.value;
 
         const transferInfo = {
             receiverEmail,
@@ -76,13 +76,13 @@ const B2B = () => {
                 <div className=" lg:w-6/12 bg-white rounded-xl p-8">
                     <div className="">
                         <h1 className="text-3xl mb-4 font-bold">
-                            CASH IN
+                            B2B Transfer
                         </h1>
                         <form onSubmit={handleTransition} className="space-y-4  w-full relative">
 
                             <input
-                                type="text"
-                                name="receiverEmail"
+                                type="email"
+                                name="email"
                                 required
                                 placeholder="RECEIVER EMAIL"
                                 className="input-border border-[#181818] text-md input w-full"
