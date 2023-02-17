@@ -210,10 +210,10 @@ const UpdateProfile = () => {
           </div>
 
         </div>
-        <div className="flex justify-between items-center mt-5 mx-6">
-          <input type="reset" value="reset all" className="btn bg-transparent hover:bg-transparent hover:text-[#939cff] text-[#070733] border-none btn-xs" />
+        <div className="flex justify-end items-center mt-5 mr-20">
+          <input type="reset" value="reset all" className="btn  bg-red-500 border-none " />
 
-          <input type="submit" value="submit" className="btn bg-[#070733] rounded-lg border-none" />
+          <input type="submit" value="submit" className="btn bg-[#070733] rounded-lg border-none px-3 ml-3" />
 
         </div>
       </div>
