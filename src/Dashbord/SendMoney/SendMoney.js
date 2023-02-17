@@ -1,12 +1,10 @@
 import React, { useContext, useState } from "react";
 import SendMoneyHistory from "../../Components/TransactionHistory/SendMoneyHistory";
-import { AuthContext } from "../../context/AuthProvider";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import { toast } from "react-hot-toast";
 import dateTime from "date-time";
 import {
   useGetTransactionHistoryQuery,
-  useGetUserDetailsQuery,
   useGetUserLoggedinDetailsQuery,
   useGetUsersRoleQuery,
   useSendMoneyMutation,
@@ -16,25 +14,22 @@ import { useDispatch, useSelector } from "react-redux";
 import balanceImage from "../../././images/10109-01.png";
 
 const SendMoney = () => {
-  const { user } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
+  const email = useSelector((state) => state.auth.email);
   const [sendMoney, { isLoading, isSuccess, isError }] = useSendMoneyMutation();
   const [receiver, setReceiver] = useState("");
-  const dispatch = useDispatch();
 
-  const email = useSelector((state) => state.auth.email);
   const { transactionsData } = useGetTransactionHistoryQuery(email);
   const transactions = transactionsData?.data;
   let total = 0;
 
   transactions?.foreach((transaction) => {
     total += transaction.amount;
-    console.log(transaction);
-  });
 
+  })
+  // get login user role
   const { data: userRole } = useGetUsersRoleQuery(`${receiver}`);
-  console.log(userRole?.status);
 
+  // get login user all details
   const { data } = useGetUserLoggedinDetailsQuery(email);
   const userDetails = data?.data;
 
@@ -56,7 +51,7 @@ const SendMoney = () => {
     const form = event.target;
     const receiverEmail = form.receiverEmail.value;
     const amount = form.amount.value;
-    const senderEmail = user?.email;
+    const senderEmail = email;
     const time = dateTime({ showTimeZone: true });
     const sendMoneyInfo = {
       senderEmail,
@@ -66,7 +61,7 @@ const SendMoney = () => {
       type: "balanceTransfer",
     };
 
-    if (receiverEmail === user?.email) {
+    if (receiverEmail === email) {
       toast.error("Send money not possible own account");
     } else if (userDetails?.balance <= 10) {
       toast.error("insufficient balance");
@@ -76,19 +71,14 @@ const SendMoney = () => {
       toast.error("Send money not possible in agent account");
     } else if (userRole?.status === false) {
       toast.error("Enter Valid Email");
-    } else if (
-      receiverEmail !== user?.email &&
-      userDetails?.balance > 10 &&
-      userDetails.role === "user"
-    ) {
+    } else if (receiverEmail !== email && userDetails?.balance > 10 && userDetails.role === "user") {
       sendMoney(sendMoneyInfo);
     }
   };
 
   const handleFocus = (e) => {
     setReceiver(e);
-    console.log(e);
-  };
+  }
 
   return (
     <div>
@@ -148,7 +138,7 @@ const SendMoney = () => {
             </h1>
             <SendMoneyHistory
               email={email}
-              loading={loading}
+              loading={isLoading}
               type={"balanceTransfer"}
             />
           </div>

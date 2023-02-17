@@ -58,8 +58,6 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
                         <label tabIndex={0} className="btn btn-ghost btn-circle">
                             <div className="indicator">
                                 <FaBell className='text-2xl text-[#5966FF] '></FaBell>
-                                {/* <div className=" badge badge-xs indicator-item badge-secondary">2</div> */}
-
                             </div>
                         </label>
                         <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-72 bg-base-100 shadow">

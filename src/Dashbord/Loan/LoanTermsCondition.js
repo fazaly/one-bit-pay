@@ -5,7 +5,9 @@ import { BsArrowLeftShort } from 'react-icons/bs';
 const LoanTermsCondition = () => {
     return (
         <div>
-            <div className='mb-10  text-slate-600 px-16 py-8 w-full'>
+            <div
+                id="user"
+                className='mb-10  text-slate-600 px-16 py-8 w-full'>
                 <h3 className="text-3xl font-bold">Loan</h3>
                 <h2 className='mt-2'>Getting a small, quick loan is now easier than ever! The BitPay Bank is introducing instant Digital Loan for OneBitPay users without requiring any paperwork.</h2>
                 <h2 className='text-2xl font-medium mt-5'>Why should you get the BitPay Bank loan through OneBitPay?</h2>

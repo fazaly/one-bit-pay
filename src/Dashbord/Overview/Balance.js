@@ -1,13 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import cardBg from "../../images/dasboard/cardBg.jpg"
 const Balance = ({ userDetails }) => {
 
     const idNumber = userDetails?._id
 
     return (
-        <div className='bg-black tex-white rounded-2xl grid grid-cols-1  items-center pl-8 p-4  shadow-2xl shadow-slate-500 h-48' style={{ backgroundImage: `url(${cardBg})`, backgroundRepeat: 'no-repeat', backgroundSize: "cover" }} >
+        <div className='text-[#070733]  rounded-2xl grid grid-cols-1  items-center pl-8 p-4  shadow-xl shadow-slate-200 h-48'>
             <div>
-                <p className='text-xs '>Balance</p>
+                <p className='text-xs '>Total Balance</p>
                 <p className='text-2xl lg:text-3xl font-bold lg:tracking-widest'>${userDetails?.balance}.00</p>
             </div>
             <div>
@@ -20,6 +21,10 @@ const Balance = ({ userDetails }) => {
                         <span>{idNumber?.slice(12, 16)}</span>
                     </div>
                 }
+            </div>
+            <div className='flex justify-between'>
+                <Link to="/dashboard/loanRequest" className='btn btn-sm'>Add Found</Link>
+                <Link to="/dashboard/withdraw" className='btn btn-sm btn-ghost btn-active '>Withdraw</Link>
             </div>
 
         </div>

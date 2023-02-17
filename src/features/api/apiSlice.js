@@ -149,6 +149,7 @@ export const userDetailsApi = createApi({
                 method: "PUT",
                 body: data
             }),
+            invalidatesTags: ["userDetails"]
         }),
         getLoanRequestList: builder.query({
             query: () => ({
@@ -162,8 +163,30 @@ export const userDetailsApi = createApi({
                 method: "PUT",
                 body: withdrawInfo
             }),
-            invalidatesTags: ["userDetails", "DonationInistitute"],
-
+            invalidatesTags: ["userDetails",],
+        }),
+        deleteLoanRequest: builder.mutation({
+            query: (id) => ({
+                url: `/loanRequestList/${id}`,
+                method: "DELETE"
+            }),
+            invalidatesTags: ["loanRequestList"],
+        }),
+        applyForLoan: builder.mutation({
+            query: (loanApplicantData) => ({
+                url: `/loanApplicantData`,
+                method: "POST",
+                body: loanApplicantData
+            }),
+            invalidatesTags: ["loanRequestList"],
+        }),
+        approveLoan: builder.mutation({
+            query: (loanInfo) => ({
+                url: `/approveLoanRequest`,
+                method: "PUT",
+                body: loanInfo
+            }),
+            invalidatesTags: ["loanRequestList"],
         }),
         getNotifications: builder.query({
             query: (email) => ({
@@ -176,5 +199,5 @@ export const userDetailsApi = createApi({
 });
 
 
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation, useUpdateUserProfileMutation, usePostB2bMutation, useBillCategoriesQuery, useBillCategoryQuery, useGetDonationInistituteQuery, usePayBillMutation, useGetLoanRequestListQuery, useWithdrawMutation , useGetNotificationsQuery} = userDetailsApi
+export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation, useUpdateUserProfileMutation, usePostB2bMutation, useBillCategoriesQuery, useBillCategoryQuery, useGetDonationInistituteQuery, usePayBillMutation, useGetLoanRequestListQuery, useWithdrawMutation, useDeleteLoanRequestMutation, useApproveLoanMutation, useApplyForLoanMutation } = userDetailsApi
 

@@ -43,6 +43,8 @@ import LoanTermsCondition from "../Dashbord/Loan/LoanTermsCondition";
 import LoanRequest from "../Pages/Admin/LoanRequestList";
 import LoanRequestList from "../Pages/Admin/LoanRequestList";
 import LoanRequestDetails from "../Pages/Admin/LoanRequestDetails";
+import ForbidenAdmin from "../Pages/ErrorPage/ForbidenAdmin";
+import TermsAndConditions from "../Pages/TermsAndConditions/TermsAndConditions";
 
 export const router = createBrowserRouter([
   {
@@ -88,6 +90,14 @@ export const router = createBrowserRouter([
       {
         path: "/pay_bill_gide",
         element: <PayBillGuide />
+      },
+      {
+        path: "/adminForbidden",
+        element: <ForbidenAdmin></ForbidenAdmin>
+      },
+      {
+        path:"/terms",
+        element:<TermsAndConditions></TermsAndConditions>
       }
     ],
   },
@@ -229,19 +239,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/adminOverview",
-        element: <Admin></Admin>
+        element: <AdminRoutes><Admin></Admin></AdminRoutes>
       },
       {
         path: "/dashboard/users",
-        element: <AllUsers></AllUsers>
+        element: <AdminRoutes><AllUsers></AllUsers></AdminRoutes>
       },
       {
         path: "/dashboard/agents",
-        element: <AllAgents></AllAgents>
+        element: <AdminRoutes><AllAgents></AllAgents></AdminRoutes>
       },
       {
         path: "/dashboard/agentRequest",
-        element: <AgentRequest></AgentRequest>
+        element: <AdminRoutes><AgentRequest></AgentRequest></AdminRoutes>
       },
       {
         path: "/dashboard/chargeCalculate",
@@ -249,13 +259,13 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/loanRequestList",
-        element: <LoanRequestList></LoanRequestList>
+        element: <AdminRoutes><LoanRequestList></LoanRequestList></AdminRoutes>
       },
       {
         path: "/dashboard/loanRequestDetails/:id",
-        element: <LoanRequestDetails></LoanRequestDetails>,
+        element: <AdminRoutes><LoanRequestDetails></LoanRequestDetails></AdminRoutes>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/loanRequestDetails/${params.id}`),
+          fetch(`https://one-bit-pay-server.vercel.app/loanRequestDetails/${params.id}`),
       }
     ],
   },
