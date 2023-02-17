@@ -21,7 +21,7 @@ const CashInHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {history.slice(0, 3)?.map((item, i) => (
+            {history?.slice(0, 3).map((item, i) => (
               <tr key={i}>
                 <th>{i + 1}</th>
                 <td>
