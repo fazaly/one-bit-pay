@@ -188,6 +188,11 @@ export const userDetailsApi = createApi({
             }),
             invalidatesTags: ["loanRequestList"],
         }),
+        getNotifications: builder.query({
+            query: (email) => ({
+                url:`/notification/${email}`,
+            })
+        })
 
 
     })
