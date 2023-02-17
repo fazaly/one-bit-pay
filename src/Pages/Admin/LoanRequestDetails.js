@@ -13,7 +13,8 @@ const LoanRequestDetails = () => {
 
     const loanInfo = {
         receiverEmail: email,
-        amount: desireAmount
+        amount: desireAmount,
+        id: _id
     }
 
     const [approveLoan, { isLoading, isSuccess, isError }] = useApproveLoanMutation();

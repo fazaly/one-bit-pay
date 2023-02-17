@@ -23,7 +23,7 @@ const DonationCard = ({ institute }) => {
                 <div className="card-actions flex justify-end">
                     <Link to={`/dashboard/donationDetails/${_id}`} className="btn btn-outline btn-info btn-xs">Details</Link>
                     <button onClick={handleModal}>
-                        <label htmlFor="my-modal-3" className="btn btn-outline btn-primary btn-xs">
+                        <label htmlFor="my-modal-3" className="btn btn-outline btn-[#303640] btn-xs">
                             Donate
                         </label>
                     </button>

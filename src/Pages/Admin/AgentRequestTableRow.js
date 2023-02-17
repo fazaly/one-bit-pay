@@ -4,8 +4,6 @@ import { useMakeAgentMutation } from '../../features/api/apiSlice';
 const AgentRequestTableRow = ({ agentRequest }) => {
 
     const [makeAgent] = useMakeAgentMutation();
-    console.log(makeAgent);
-    console.log(agentRequest?.email);
 
     return (
         <tr className="text-gray-700">
