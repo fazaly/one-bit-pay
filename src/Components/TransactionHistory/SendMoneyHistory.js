@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiArrowSmDown, HiArrowSmUp } from "react-icons/hi";
-import { AuthContext } from '../../context/AuthProvider';
 import ReactTimeAgo from 'react-time-ago';
 import { useGetTransactionHistoryQuery } from '../../features/api/apiSlice';
 import { useSelector } from 'react-redux';

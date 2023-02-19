@@ -16,7 +16,6 @@ import OfferCard from "./OfferCard";
 
 
 const Overview = () => {
-  // const { user, userDetails } = useContext(AuthContext);
   const email = useSelector((state) => state.auth.email);
   const { data } = useGetUserLoggedinDetailsQuery(email);
   const userDetails = data?.data;

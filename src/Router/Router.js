@@ -45,6 +45,7 @@ import LoanRequestDetails from "../Pages/Admin/LoanRequestDetails";
 import ForbidenAdmin from "../Pages/ErrorPage/ForbidenAdmin";
 import TermsAndConditions from "../Pages/TermsAndConditions/TermsAndConditions";
 import History from "../AgentDashboard/History/History";
+import News from "../Pages/News/News";
 
 export const router = createBrowserRouter([
   {
@@ -98,6 +99,10 @@ export const router = createBrowserRouter([
       {
         path:"/terms",
         element:<TermsAndConditions></TermsAndConditions>
+      },
+      {
+        path: "/news",
+        element: <News/>
       }
     ],
   },

@@ -1,12 +1,10 @@
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { useContext } from 'react';
 import { toast } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import Typewriter from 'typewriter-effect';
 import ButtonSpinner from '../../Components/ButtonSpinner/ButtonSpinner';
 import SendMoneyHistory from '../../Components/TransactionHistory/SendMoneyHistory';
-import { AuthContext } from '../../context/AuthProvider';
 import { useGetTransactionHistoryQuery, useGetUserLoggedinDetailsQuery, useWithdrawMutation } from '../../features/api/apiSlice';
 import WithdrawHistory from './WithdrawHistory';
 

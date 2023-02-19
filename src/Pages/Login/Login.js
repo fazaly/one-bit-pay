@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
-import { AuthContext } from "../../context/AuthProvider";
-import { loginUser } from "../../features/api/authSlice";
+import { auth, loginUser } from "../../features/api/authSlice";
 import background from "../../././images/LoginImage7.png";
 import "./Login.css";
 import loginImage from "../../././images/Login/Login (3).gif";
 import { HiOutlineHome } from "react-icons/hi";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const email = useSelector((state) => state.auth.email);
+  const {email, isLoading, isSuccess, isError, error} = useSelector((state) => state.auth);
  
   const {
     register,
@@ -22,22 +22,20 @@ const Login = () => {
   } = useForm();
 
   const [userEmail, setUserEmail] = useState("");
-  const { passwordReset } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (email) {
-      setLoading(false);
+    if (!isLoading && isSuccess) {
       toast.success("Login Success!", {id:"APHA"});
       navigate('/');
+    }else if(isError){
+      toast.error(error, {id:"APHA"});
     }
-  },[email])
+  },[email, isLoading, isSuccess, isError, error, navigate])
 
   const handleSignIn = (data) => {
     const email = data.email;
     const password = data.password;
-    setLoading(true);
     dispatch(loginUser({ email, password }));
   };
 
@@ -47,12 +45,12 @@ const Login = () => {
   };
 
   const handlePasswordReset = () => {
-    passwordReset(userEmail)
+    sendPasswordResetEmail(auth, userEmail)
       .then(() => {
         toast.success("Password Reset Email sent. Please Check Your Email");
       })
       .catch((error) => {
-        console.log("error:", error);
+        console.log("error:", error, {id:"ALPHA"});
       });
   };
 
@@ -149,7 +147,7 @@ const Login = () => {
                   type="submit"
                   className="btn bg-[#181818] border-none text-lg hover:bg-[#5966FF]"
                 >
-                  {loading ? <ButtonSpinner /> : "SIGN IN"}
+                  {isLoading ? <ButtonSpinner /> : "SIGN IN"}
                 </button>
               </div>
               <p className="text-sm text-center">

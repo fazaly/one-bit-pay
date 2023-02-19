@@ -1,10 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { AuthContext } from "../context/AuthProvider";
 
 const useAgent = (email) => {
-  const { user } = useContext(AuthContext);
   const [isAgent, setIsAgent] = useState(false);
   const [agentLoading, setAgentLoading] = useState(false);
   console.log(isAgent);

@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../context/AuthProvider'
+import React from 'react';
 import useAdmin from '../Hooks/useAdmin';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -11,7 +10,6 @@ const AdminRoutes = ({ children }) => {
     const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email);
     const userDetails = data?.data
 
-    // const { user, loading } = useContext(AuthContext);
     // const [isAdmin, isAdminLoading] = useAdmin(user?.userEmail);
     const location = useLocation();
 
