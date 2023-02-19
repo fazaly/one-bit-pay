@@ -22,6 +22,7 @@ const Navbar = () => {
 
     const menuItems = <>
         <li className='font-semibold mr-5'><Link to='/'>Home</Link></li>
+        <li className='font-semibold mr-5'><Link to='/news'>News</Link></li>
         <li className='font-semibold mr-5'><Link to='/about'>About</Link></li>
         <li><Link to='/blog' className='font-semibold mr-5'>Blog</Link></li>
         {
@@ -40,7 +41,7 @@ const Navbar = () => {
     </>
 
     return (
-        <div id='navbar' className="navbar bg-[#181818] text-[#fff] fixed z-20">
+        <div id='navbar' className="navbar bg-[#181818] max-w-[1440px] text-[#fff] fixed z-10">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">

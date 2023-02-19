@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiChevronDoubleRight, HiChevronDoubleLeft } from "react-icons/hi";
 import { Link, NavLink, Outlet } from "react-router-dom";
-import { AuthContext } from "../context/AuthProvider";
 import DashBoardNavbar from "../Components/DashBoardNavbar/DashBoardNavbar";
 import "./DashboardLayout.css";
 import { HiViewGridAdd, HiCurrencyDollar } from "react-icons/hi";

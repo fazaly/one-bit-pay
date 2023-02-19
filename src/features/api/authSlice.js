@@ -4,7 +4,7 @@ import app from "../../firebase/firebase.config"
 
 const initialState = {
     email: "",
-    isLoading: true,
+    isLoading: false,
     isSuccess: false,
     isError: false,
     error: "", 

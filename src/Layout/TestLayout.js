@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiChevronDoubleRight, HiChevronDoubleLeft } from "react-icons/hi";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
@@ -39,7 +39,6 @@ import sidebarImg from "../images/dasboard/18953931_6075540-removebg-preview.png
 const TestLayout = () => {
   const [open, setOpen] = useState(false);
   const [notifi, setNotifi] = useState(false);
-  const { user } = useContext(AuthContext);
 
   const email = useSelector((state) => state.auth.email);
   const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email);
