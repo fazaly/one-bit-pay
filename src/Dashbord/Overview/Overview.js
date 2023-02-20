@@ -1,5 +1,7 @@
 import React from "react";
+import { SlCalculator } from "react-icons/sl";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import AgentOverview from "../../AgentDashboard/AgentOverview/AgentOverview";
 import SendMoneyHistory from "../../Components/TransactionHistory/SendMoneyHistory";
 import { useGetUserLoggedinDetailsQuery } from "../../features/api/apiSlice";
@@ -14,7 +16,6 @@ import OfferCard from "./OfferCard";
 
 
 const Overview = () => {
-  // const { user, userDetails } = useContext(AuthContext);
   const email = useSelector((state) => state.auth.email);
   const { data } = useGetUserLoggedinDetailsQuery(email);
   const userDetails = data?.data;
@@ -29,28 +30,30 @@ const Overview = () => {
             <OfferCard></OfferCard>
             <div className="grid sm:grid-cols-2 gap-6 my-6">
 
-              <div className="grid grid-cols-1 gap-3 text-white">
+              <div className="grid grid-cols-1  gap-3 text-white">
                 <Balance userDetails={userDetails}></Balance>
-                {/* <LoanAmount userDetails={userDetails}></LoanAmount> */}
               </div>
+              <div className="text-[#070733] rounded-2xl grid grid-cols-1  items-center pl-8 p-4  shadow-xl shadow-slate-200 h-48">
+                <p className="text-xl font-semibold">Calculate your charges</p>
+                <Link className="btn btn-xs" to="/dashboard/chargeCalculate">Click here</Link>
+              </div>
+
             </div>
           </div>
 
           <div className="col-span-4  grid grid-cols-1 px-4 ">
 
             <div className=" p-4 rounded-2xl shadow-lg shadow-gray-200 hover:shadow-lg hover:shadow-gray-300 transition-all ">
-              <div className="">
+              <div className="mb-4">
                 <h4 className="text-xl text-center ml-4 font-semibold ">Reports</h4>
               </div>
               <Activities userDetails={userDetails}></Activities>
-            </div>
+              <div>
 
-            <div>
-
+              </div>
             </div>
 
           </div>
-
 
 
         </div>

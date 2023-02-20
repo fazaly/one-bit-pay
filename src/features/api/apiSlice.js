@@ -3,8 +3,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userDetailsApi = createApi({
     reducerPath: "userDetailsApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: `https://one-bit-pay-server.vercel.app`,
-        // baseUrl: `http://localhost:5000`
+        // baseUrl: `https://one-bit-pay-server.vercel.app`,
+        baseUrl: `http://localhost:5000`
     }),
     tagTypes: ["users", "userDetails"],
     endpoints: (builder) => ({
@@ -188,11 +188,27 @@ export const userDetailsApi = createApi({
             }),
             invalidatesTags: ["loanRequestList"],
         }),
-
-
+        getNotifications: builder.query({
+            query: (email) => ({
+                url:`/notification/${email}`,
+            })
+        }),
+        agentHistory: builder.query({
+            query: (email) => ({
+                url: `/agent/history/${email}`
+            }),
+        }),
+        earnFromNews: builder.mutation({
+            query: (data) => ({
+                url: "/news/earn",
+                method: "PUT",
+                body: data
+            }),
+            invalidatesTags: ["userDetails"]
+        })
     })
 });
 
 
-export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation, useUpdateUserProfileMutation, usePostB2bMutation, useBillCategoriesQuery, useBillCategoryQuery, useGetDonationInistituteQuery, usePayBillMutation, useGetLoanRequestListQuery, useWithdrawMutation, useDeleteLoanRequestMutation, useApproveLoanMutation, useApplyForLoanMutation } = userDetailsApi
+export const { useGetUserDetailsQuery, useAddUserMutation, useMakeAdminMutation, useGetUserLoggedinDetailsQuery, useSendMoneyMutation, useGetTransactionHistoryQuery, useGetRechargeHistoryQuery, usePostRechargeDataMutation, useGetUsersRoleQuery, usePostCashInMutation, useApplyForAgentMutation, useDeletUserMutation, useGetAgentRequestQuery, useMakeAgentMutation, useUpdateUserProfileMutation, usePostB2bMutation, useBillCategoriesQuery, useBillCategoryQuery, useGetDonationInistituteQuery, usePayBillMutation, useGetLoanRequestListQuery, useWithdrawMutation, useDeleteLoanRequestMutation, useApproveLoanMutation, useApplyForLoanMutation, useAgentHistoryQuery, useEarnFromNewsMutation } = userDetailsApi
 

@@ -1,5 +1,4 @@
 import React from "react";
-import { useContext } from "react";
 import { useSelector } from "react-redux";
 import {
   Radar,
@@ -8,7 +7,6 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis
 } from "recharts";
-import { AuthContext } from "../../../context/AuthProvider";
 import { useGetUserLoggedinDetailsQuery } from "../../../features/api/apiSlice";
 
 

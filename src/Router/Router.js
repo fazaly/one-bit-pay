@@ -25,7 +25,6 @@ import AgentRoutes from "./AgentRoutes";
 import B2B from "../AgentDashboard/B2B/B2B";
 import AgentOverview from "../AgentDashboard/AgentOverview/AgentOverview";
 import BillPayAgent from "../AgentDashboard/BillPayAgent/BillPayAgent";
-import AgentMobileRecharge from "../AgentDashboard/AgentMobileRecharge/AgentMobileRecharge";
 import Admin from "../Pages/Admin/Overview/Admin";
 import AllUsers from "../Pages/Admin/AllUsers";
 import AdminRoutes from "./AdminRoutes";
@@ -45,6 +44,8 @@ import LoanRequestList from "../Pages/Admin/LoanRequestList";
 import LoanRequestDetails from "../Pages/Admin/LoanRequestDetails";
 import ForbidenAdmin from "../Pages/ErrorPage/ForbidenAdmin";
 import TermsAndConditions from "../Pages/TermsAndConditions/TermsAndConditions";
+import History from "../AgentDashboard/History/History";
+import News from "../Pages/News/News";
 
 export const router = createBrowserRouter([
   {
@@ -98,6 +99,10 @@ export const router = createBrowserRouter([
       {
         path:"/terms",
         element:<TermsAndConditions></TermsAndConditions>
+      },
+      {
+        path: "/news",
+        element: <News/>
       }
     ],
   },
@@ -218,21 +223,11 @@ export const router = createBrowserRouter([
         )
       },
       {
-        path: "/dashboard/rechargeagent",
-        element: (
-          <PrivateRoutes>
-            <AgentRoutes>
-              <AgentMobileRecharge />
-            </AgentRoutes>
-          </PrivateRoutes>
-        )
-      },
-      {
         path: "/dashboard/transactions",
         element: (
           <PrivateRoutes>
             <AgentRoutes>
-              <LoadingGif />
+              <History/>
             </AgentRoutes>
           </PrivateRoutes>
         )
