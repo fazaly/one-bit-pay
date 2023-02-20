@@ -83,21 +83,22 @@ const SendMoney = () => {
   return (
     <div>
       <div className="flex gap-4 lg:flex-row flex-col justify-center items-center">
-        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
-          <div className="flex items-center justify-center h-screen flex-col">
-            <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
-              Current Balance
+        <div className="card lg:w-full w-72 h-72 bg-black text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all p-10">
+          <div className="flex h-screen flex-col">
+            <h1 className="font-semibold text-3xl text-white pb-6">
+              Main Balance
             </h1>
-            <h1 className="font-bold text-3xl text-slate-700">
-              ${userDetails?.balance}.00
+            <h3>Today's Balance</h3>
+            <h1 className="font-bold text-3xl text-white">
+              <span className="text-[#5966FF]">$</span>{userDetails?.balance}.00
             </h1>
           </div>
         </div>
 
-        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
-          <div className="flex items-center justify-center h-screen flex-col p-6">
-            <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
-              Send Money
+        <div className="card lg:w-full w-72 h-72 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
+          <div className="flex h-screen flex-col p-6">
+            <h1 className="font-semibold text-3xl text-black pb-6">
+              Transfer Money
             </h1>
             <form onSubmit={handleSendMoney} className="space-y-2">
               <input
@@ -105,29 +106,29 @@ const SendMoney = () => {
                 name="receiverEmail"
                 required
                 onBlur={(e) => handleFocus(e.target.value)}
-                placeholder="receiver email"
-                className=" w-full border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
+                placeholder="Receiver Email"
+                className=" w-full p-2 rounded-lg border-2 border-black outline-none text-slate-700 focus:border-[#5966FF]"
               />
               <input
                 type="text"
                 name="amount"
                 required
-                placeholder="amount"
-                className=" w-full border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF]  focus:border-b-[#5966FF]"
+                placeholder="Amount"
+                className=" w-full p-2 rounded-lg border-2 border-black outline-none text-slate-700 focus:border-[#5966FF]"
               />
-              <p className="">
+              <p className="text-right">
                 <button
                   type="submit"
-                  className="btn btn-primary btn-sm w-full  rounded-lg border-none hover:bg-[#5966FF]"
+                  className="btn bg-black border-0 btn-sm  rounded-lg border-none hover:bg-[#5966FF]"
                 >
-                  {isLoading ? <ButtonSpinner /> : "SEND NOW"}
+                  {isLoading ? <ButtonSpinner /> : "TRANSFER"}
                 </button>
               </p>
             </form>
           </div>
         </div>
 
-        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
+        {/* <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-gray-500 transition-all">
           <div className="flex items-center justify-center h-screen flex-col">
             <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
               Today's Transaction
@@ -140,13 +141,13 @@ const SendMoney = () => {
               <br /> transaction today
             </h1>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="mt-4">
         <div className="card bg-white text-primary-content shadow-lg">
           <div className="card-body">
-            <h1 className="font-bold text-xl text-[#5966FF] opacity-50 mb-4">
+            <h1 className="font-bold text-right text-xl text-black mb-4">
               History
             </h1>
             <SendMoneyHistory
