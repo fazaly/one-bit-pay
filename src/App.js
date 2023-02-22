@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, setUser } from "./features/api/authSlice";
 import KommunicateChat from "./Components/KommunicateChat/chat";
+import Cookie from "./Components/Cookie/Cookie";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +25,7 @@ function App() {
       <RouterProvider router={router} />
       <KommunicateChat/>
       <Toaster />
+      <Cookie></Cookie>
     </div>
   );
 }
