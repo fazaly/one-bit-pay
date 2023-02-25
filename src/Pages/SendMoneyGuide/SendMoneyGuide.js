@@ -11,7 +11,7 @@ const SendMoneyGuide = () => {
                 <div className='flex lg:flex-row flex-col justify-center gap-4 items-center bg-white'> 
                     <img src={image} alt=""/>
                     <div>
-                        <h1 className='lg:text-3xl text-2xl font-semibold text-[#181818]'>Start Transfering Money <br/> With Your Friends, Family and <br/> Other Members With 0% fee.
+                        <h1 className='lg:text-3xl text-2xl font-semibold text-[#18181]8]'>Start Transfering Money <br/> With Your Friends, Family and <br/> Other Members With 0% fee.
                         </h1>
                         <Link to={email ? "/dashboard/sendMoney" : "/login"} className='btn mt-4 bg-[#5966FF] border-none'>START NOW</Link>
                     </div>
