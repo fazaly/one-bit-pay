@@ -5,15 +5,15 @@ import { useSelector } from "react-redux";
 import { useGetUserLoggedinDetailsQuery, useUpdateUserProfileMutation } from "../../features/api/apiSlice";
 import './UpdateProfile.css';
 import updateInfoImg from "../../images/dasboard/overview.png"
+import ButtonSpinner from "../ButtonSpinner/ButtonSpinner";
 
 const UpdateProfile = () => {
   const email = useSelector((state) => state.auth.email);
   const { data } = useGetUserLoggedinDetailsQuery(email)
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const imageHostKey = process.env.REACT_APP_imgHostKey
   const [postUpdateData, { isLoading, isSuccess, isError, error }] = useUpdateUserProfileMutation(email)
   const userDetails = data?.data
-  console.log(userDetails, email)
 
   useEffect(() => {
 
@@ -30,29 +30,42 @@ const UpdateProfile = () => {
   const handleUpdate = (data) => {
     const image = data.image[0]
     const formData = new FormData();
+    if (!data.image[0]) {
+      const userData = {
+        name: data.name,
+        address: data.address,
+        nidNumber: data.nidNumber,
+        phnNumber: data.phoneNumber,
+        birthDate: data.birthDay,
+        userEmail: email
+      }
+      return postUpdateData(userData)
+    }
 
-    formData.append('image', image);
-    const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
-    fetch(url, {
-      method: 'POST',
-      body: formData
-    })
-      .then(res => res.json())
-      .then(imgdata => {
-        if (imgdata.success) {
-          const userData = {
-            name: data.name,
-            address: data.address,
-            imageUrl: imgdata.data.url,
-            nidNumber: data.nidNumber,
-            phnNumber: data.phoneNumber,
-            birthDate: data.birthDay,
-            userEmail: email
-          }
-          // console.log(userData)
-          postUpdateData(userData)
-        }
+    if (data.image[0]) {
+      formData.append('image', image);
+      const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+      fetch(url, {
+        method: 'POST',
+        body: formData
       })
+        .then(res => res.json())
+        .then(imgdata => {
+          if (imgdata.success) {
+            const userData = {
+              name: data.name,
+              address: data.address,
+              imageUrl: imgdata.data.url,
+              nidNumber: data.nidNumber,
+              phnNumber: data.phoneNumber,
+              birthDate: data.birthDay,
+              userEmail: email
+            }
+            return postUpdateData(userData)
+          }
+        })
+    }
+
   }
 
   return (
@@ -78,12 +91,10 @@ const UpdateProfile = () => {
               <input
                 defaultValue={userDetails?.name}
                 type="text"
-                placeholder="Type here"
                 name="name"
                 className="input  w-full "
-                {...register('name', { required: 'Name is required' })}
+                {...register('name')}
               />
-              {errors.name && <p className="text-sm text-red-600 ml-6 mt-1">{errors.name?.message}</p>}
               <div className="divider mt-0 mb-0"></div>
             </div>
             <div className="form-control w-full ">
@@ -91,9 +102,9 @@ const UpdateProfile = () => {
                 <span className="label-text"> Your email</span>
               </label>
               <input
-                disabled
                 defaultValue={userDetails?.userEmail}
                 type="email"
+                name="email"
                 placeholder="Type here"
                 className="input  w-full "
                 {...register('email')}
@@ -105,13 +116,13 @@ const UpdateProfile = () => {
                 <span className="label-text"> Your nid number</span>
               </label>
               <input
+                defaultValue={userDetails?.nidNumber && userDetails?.nidNumber}
                 type="number"
-                placeholder="Type here"
+                placeholder="Enter NID number"
                 className="input  w-full "
                 name="nidNumber"
-                {...register('nidNumber', { required: 'nidNumber is required' })}
+                {...register('nidNumber')}
               />
-              {errors.nidNumber && <p className="text-sm text-red-600 ml-6 mt-1">{errors.nidNumber?.message}</p>}
               <div className="divider mt-0 mb-0"></div>
             </div>
             <div className="form-control w-full ">
@@ -119,13 +130,15 @@ const UpdateProfile = () => {
                 <span className="label-text"> Your date of birth</span>
               </label>
               <input
+                defaultValue={userDetails?.birthDate
+                  && userDetails?.birthDate
+                }
                 type="date"
-                placeholder="Type here"
+                placeholder="Enter birth date"
                 className="input  w-full"
                 name="birthDay"
-                {...register('birthDay', { required: 'birthDay is required' })}
+                {...register('birthDay')}
               />
-              {errors.birthDay && <p className="text-sm text-red-600 ml-6 mt-1">{errors.birthDay?.message}</p>}
               <div className="divider mt-0 mb-0"></div>
             </div>
           </div>
@@ -137,13 +150,13 @@ const UpdateProfile = () => {
                   <span className="label-text"> Your address</span>
                 </label>
                 <input
+                  defaultValue={userDetails?.address && userDetails?.address}
                   type="text"
-                  placeholder="Type here"
+                  placeholder="Enter your address"
                   className="input  w-full "
                   name="address"
-                  {...register('address', { required: 'address is required' })}
+                  {...register('address')}
                 />
-                {errors.address && <p className="text-sm text-red-600 ml-6 mt-1">{errors.address?.message}</p>}
                 <div className="divider mt-0 mb-0"></div>
               </div>
               <div className="form-control w-full ">
@@ -151,13 +164,13 @@ const UpdateProfile = () => {
                   <span className="label-text"> Your phone number</span>
                 </label>
                 <input
+                  defaultValue={userDetails?.phnNumber && userDetails?.phnNumber}
                   type="number"
-                  placeholder="Type here"
+                  placeholder="Enter your number"
                   className="input  w-full "
                   name="phoneNumber"
-                  {...register('phoneNumber', { required: 'phone Number is required' })}
+                  {...register('phoneNumber')}
                 />
-                {errors.phoneNumber && <p className="text-sm text-red-600 ml-6 mt-1">{errors.phoneNumber?.message}</p>}
                 <div className="divider mt-0 mb-0"></div>
               </div>
             </div>
@@ -193,9 +206,8 @@ const UpdateProfile = () => {
                           name="image"
                           type="file"
                           className="sr-only"
-                          {...register('image', { required: 'image is required' })}
+                          {...register('image')}
                         />
-                        {errors.image && <p className="text-sm text-red-600 ml-6 mt-1">{errors.image?.message}</p>}
                       </label>
                       <p className="">or drag and drop</p>
                     </div>
@@ -211,10 +223,15 @@ const UpdateProfile = () => {
 
         </div>
         <div className="flex justify-end items-center mt-5 mr-20">
-          <input type="reset" value="reset all" className="btn  bg-red-500 border-none " />
+          <input />
 
-          <input type="submit" value="submit" className="btn bg-[#070733] rounded-lg border-none px-3 ml-3" />
-
+          {/* <input type="submit" value="submit" /> */}
+          <button type="reset" className="btn  bg-red-500 border-none ">reset all</button>
+          <button type="submit" className="btn bg-[#070733] rounded-lg border-none px-3 ml-3">
+            {
+              isLoading ? <ButtonSpinner /> : " SUBMIT"
+            }
+          </button>
         </div>
       </div>
     </form>
