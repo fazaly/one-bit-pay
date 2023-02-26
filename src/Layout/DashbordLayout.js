@@ -53,7 +53,7 @@ const DashbordLayout = () => {
               userDetail={userDetails}
             ></DashBoardNavbar>
           </div>
-          <div className="">
+          <div className="bg-white">
             <Outlet />
           </div>
         </div>

@@ -13,7 +13,7 @@ const DonationCard = ({ institute }) => {
 
 
     return (
-        <div className="card   card-side bg-base-100 shadow-xl">
+        <div className="card   card-side  shadow-xl">
             <div className='flex justify-center w-1/2'>
                 <figure><img src={img} alt="" /></figure>
             </div>
