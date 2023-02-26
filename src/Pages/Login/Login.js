@@ -1,48 +1,44 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
-import { AuthContext } from "../../context/AuthProvider";
-import signin from "../../images/LoginPage.svg";
+import { auth, loginUser } from "../../features/api/authSlice";
+import background from "../../././images/LoginImage7.png";
+import "./Login.css";
+import loginImage from "../../././images/Login/Login (3).gif";
+import { HiOutlineHome } from "react-icons/hi";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const {email, isLoading, isSuccess, isError, error} = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+ 
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  const [userEmail, setUserEmail] = useState("");
-  const { signIn, passwordReset, user, setUser } = useContext(AuthContext);
-  const [signinError, setSigninError] = useState("");
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [loading, setLoading] = useState(false);
 
-  const from = location.state?.from?.pathname || "/";
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    if (!isLoading && isSuccess) {
+      toast.success("Login Success!", {id:"APHA"});
+      navigate(from, { replace: true });
+    }else if(isError){
+      toast.error(error, {id:"APHA"});
+    }
+  },[email, isLoading, isSuccess, isError, error, navigate, from])
 
   const handleSignIn = (data) => {
     const email = data.email;
     const password = data.password;
-
-    setSigninError("");
-    setLoading(true);
-    signIn(email, password)
-      .then((result) => {
-        const user = result.user;
-        setUser(user);
-        console.log(user);
-        setLoading(false);
-        navigate('/dashboard');
-        toast.success("SignUp Success ✔");
-      })
-      .catch((err) => {
-        console.error(err.message);
-        setSigninError(err.message);
-        setLoading(false);
-        toast.error(err.message);
-      });
-    // navigate(from, { replace: true });
+    dispatch(loginUser({ email, password }));
   };
 
   const handleEmailBlur = (event) => {
@@ -51,30 +47,55 @@ const Login = () => {
   };
 
   const handlePasswordReset = () => {
-    passwordReset(userEmail)
+    sendPasswordResetEmail(auth, userEmail)
       .then(() => {
         toast.success("Password Reset Email sent. Please Check Your Email");
       })
       .catch((error) => {
-        console.log("error:", error);
+        console.log("error:", error, {id:"ALPHA"});
       });
   };
 
+  const loginStyle = {
+    backgroundImage: `url(${background})`,
+    backgroundImageRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
+
   return (
-    <div className="hero min-h-screen relative">
-      <div className="hero-content to">
-        <div className="text-center hidden lg:block">
-          <img src={signin} alt="" className="w-[500px]" />
-          <h1 className="text-3xl font-semibold text-[#5966FF]">
-            To Access All Features <br /> Please{" "}
-            <span className="text-5xl font-bold">SIGN IN</span>
-          </h1>
+    <div className="w-full h-screen">
+      <div className="flex lg:flex-grow md:flex-row flex-col justify-center">
+        <div
+          style={loginStyle}
+          className="lg:w-6/12 h-screen lg:static md:static hidden bg-[#181818] lg:flex justify-center items-center"
+        >
+          <div
+            id="image-container"
+            className="w-96 h-4/6 rounded-xl flex flex-col justify-center items-center"
+          >
+            <img src={loginImage} alt="" className="w-72" />
+            <div className="relative">
+              <h1 className="text-white font-semibold text-xl">
+                To Access All Features <br /> Please
+              </h1>
+              <span className="text-3xl text-white font-bold absolute right-9 top-7">
+                SIGN IN
+              </span>
+            </div>
+          </div>
         </div>
-        <div className="bg-[#5966FF] lg:min-w-[500px] min-w-[380px] min-h-screen flex justify-center items-center">
-          <div className="card flex-shrink-0  shadow-2xl ">
+        <div className="lg:w-6/12 md:w-full  h-screen bg-[#FFF] flex justify-center items-center relative">
+          <Link to={'/'} className="absolute top-8 right-0">
+            <div className="w-32 h-10 bg-[#181818] rounded-tl-full rounded-bl-full flex justify-center items-center hover:bg-[#5966FF] transition-all cursor-pointer">
+              <HiOutlineHome className="text-white text-2xl mb-1 mr-2" />
+              <h1 className="text-white text-lg">HOME</h1>
+            </div>
+          </Link>
+          <div className="w-96 h-4/6 p-6 flex justify-center items-center">
             <form
               onSubmit={handleSubmit(handleSignIn)}
-              className="card-body space-y-2 rounded-xl bg-white"
+              className="space-y-4 rounded-xl"
             >
               <h4 className="text-black font-bold text-center text-2xl mb-2">
                 SIGN IN
@@ -88,7 +109,7 @@ const Login = () => {
                   type="text"
                   name="email"
                   placeholder="Email"
-                  className="input input-bordered border-black"
+                  className="input input-bordered border-[#181818] focus:border-[#5966FF]"
                 />
                 {errors.email && (
                   <p className="text-red-500" role="alert">
@@ -106,7 +127,7 @@ const Login = () => {
                   type="password"
                   name="password"
                   placeholder="Password"
-                  className="input input-bordered border-black"
+                  className="input input-bordered border-[#181818] focus:border-[#5966FF]"
                 />
                 {errors.password && (
                   <p className="text-red-500" role="alert">
@@ -116,7 +137,7 @@ const Login = () => {
                 <label className="label">
                   <button
                     onClick={handlePasswordReset}
-                    className="label-text-alt link link-hover"
+                    className="label-text-alt link link-hover mb-0 text-sm"
                   >
                     Forgot password?
                   </button>
@@ -124,14 +145,14 @@ const Login = () => {
               </div>
 
               <div className="form-control">
-                <button type="submit" className="btn bg-black">
-                  {
-                    loading ? <ButtonSpinner/> : "SIGN IN"
-                  }
+                <button
+                  type="submit"
+                  className="btn bg-[#181818] border-none text-lg hover:bg-[#5966FF]"
+                >
+                  {isLoading ? <ButtonSpinner /> : "SIGN IN"}
                 </button>
-                {signinError && <p className="text-red-500">{signinError}</p>}
               </div>
-              <p className="text-xs text-center">
+              <p className="text-sm text-center">
                 New to OneBitPay?
                 <Link className="text-[#5966FF] font-semibold" to="/signUp">
                   &nbsp;SIGN UP
@@ -140,20 +161,6 @@ const Login = () => {
             </form>
           </div>
         </div>
-      </div>
-      <div className="tabs rotate-90 absolute top-1/2 left-0">
-        <Link
-          to={"/login"}
-          className="tab tab-bordered  font-semibold tab-active"
-        >
-          SIGN IN
-        </Link>
-        <Link
-          to={"/signUp"}
-          className="tab tab-bordered font-semibold"
-        >
-          SIGN UP
-        </Link>
       </div>
     </div>
   );

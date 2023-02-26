@@ -1,90 +1,74 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
+import { SlCalculator } from "react-icons/sl";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import AgentOverview from "../../AgentDashboard/AgentOverview/AgentOverview";
 import SendMoneyHistory from "../../Components/TransactionHistory/SendMoneyHistory";
-import { AuthContext } from "../../context/AuthProvider";
+import { useGetUserLoggedinDetailsQuery } from "../../features/api/apiSlice";
+import Admin from "../../Pages/Admin/Overview/Admin";
+import Activities from "./Activities";
+import Balance from "./Balance";
 import Chart2 from "./Chart/Chart2";
+import LoanAmount from "./LoanAmount";
+import OfferCard from "./OfferCard";
 // import ChartView from "./Chart/Chart";
 
 
 
 const Overview = () => {
-  const { user, userDetails} = useContext(AuthContext);
-  // console.log(userDetails);
-  return (
-    <div>
-      <div>
-        <div className="w-full grid lg:grid-cols-3 gap-4">
-          <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 col-span-2">
-            {/* CARD 1 */}
-            <div className="">
-              <div className="card lg:w-80 w-96 bg-[#5966FF] text-primary-content mx-auto shadow-lg">
-                <div className="card-body">
-                  <h1 className="font-bold text-xl text-white opacity-60">
-                    Main Balance
-                  </h1>
-                  <h1 className="font-bold text-3xl text-white">
-                    ${userDetails.balance}.00
-                  </h1>
-                </div>
-              </div>
-            </div>
-            {/* CARD 2 */}
-            <div>
-              <div className="card lg:w-80 w-96 bg-white text-primary-content mx-auto shadow-lg">
-                <div className="card-body border-2 rounded-lg border-[#5966FF]">
-                  <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
-                    Loan Balance
-                  </h1>
-                  <h1 className="font-bold text-3xl text-gray-900">
-                    $24,67.00
-                  </h1>
-                </div>
-              </div>
-            </div>
-            {/* card 3  */}
-            <div>
-              <div className="card lg:w-80 w-96 bg-white text-primary-content mx-auto shadow-lg">
-                <div className="card-body border-2 rounded-lg border-[#5966FF]">
-                  <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
-                    Total Overview
-                  </h1>
-                  <div className="text-slate-700">
-                    <h1 className="font-semibold">Total Received</h1>
-                    <h1 className="font-semibold">Total Send</h1>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* card 4  */}
-            <div>
-              <div className="card lg:w-80 w-96 bg-white text-primary-content mx-auto shadow-lg">
-                <div className="card-body border-2 rounded-lg border-[#5966FF]">
-                  <h1 className="font-bold text-xl text-[#5966FF] opacity-50">
-                    Total Overview
-                  </h1>
-                  <div className="text-slate-700">
-                    <h1 className="font-semibold">Total Received</h1>
-                    <h1 className="font-semibold">Total Send</h1>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="">
-            <div className="py-4 rounded-lg lg:w-80 h-80 shadow-lg bg-white">
-            <Chart2/>
-            </div>
-          </div>
-        </div>
+  const email = useSelector((state) => state.auth.email);
+  const { data } = useGetUserLoggedinDetailsQuery(email);
+  const userDetails = data?.data;
 
-        <div className="mt-4">
-          <div className="card bg-white text-primary-content shadow-lg">
-            <div className="card-body">
-              <SendMoneyHistory email={user.email}/>
+  return (
+
+    <>
+      {
+        userDetails?.role === 'user' && <div className="grid grid-cols-1 md:grid-cols-11 pl-4 gap-2 mt-6 ">
+
+          <div className="md:col-span-7 p-3 ">
+            <OfferCard></OfferCard>
+            <div className="grid sm:grid-cols-2 gap-6 my-6">
+
+              <div className="grid grid-cols-1  gap-3 text-white">
+                <Balance userDetails={userDetails}></Balance>
+              </div>
+              <div className="text-[#070733] rounded-2xl grid grid-cols-1  items-center pl-8 p-4  shadow-xl shadow-slate-200 h-48">
+                <p className="text-xl font-semibold">Calculate your charges</p>
+                <Link className="btn btn-xs" to="/dashboard/chargeCalculate">Click here</Link>
+              </div>
+
             </div>
           </div>
+
+          <div className="col-span-4  grid grid-cols-1 px-4 ">
+
+            <div className=" p-4 rounded-2xl shadow-lg shadow-gray-200 hover:shadow-lg hover:shadow-gray-300 transition-all ">
+              <div className="mb-4">
+                <h4 className="text-xl text-center ml-4 font-semibold ">Reports</h4>
+              </div>
+              <Activities userDetails={userDetails}></Activities>
+              <div>
+
+              </div>
+            </div>
+
+          </div>
+
+
         </div>
-      </div>
-    </div>
+      }
+
+
+      {
+        userDetails?.role === 'admin' && <Admin></Admin>
+      }
+      {
+        userDetails?.role === 'agent' && <AgentOverview></AgentOverview>
+      }
+
+    </>
+
   );
 };
 

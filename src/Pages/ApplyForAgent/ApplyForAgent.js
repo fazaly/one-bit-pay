@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { useContext } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 import { Form } from "react-router-dom";
-import Loader2 from "../../Components/Loader/Loader2";
-import { AuthContext } from "../../context/AuthProvider";
+import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
+import { useApplyForAgentMutation } from "../../features/api/apiSlice";
 import "./ApplyForAgent.css";
 
 const ApplyForAgent = () => {
-  const { user, userDetails } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
+  const email = useSelector((state) => state.auth.email);
+  const [postData, { isLoading, isSuccess, isError, error }] = useApplyForAgentMutation();
 
   const {
     register,
@@ -18,27 +18,33 @@ const ApplyForAgent = () => {
     formState: { errors },
   } = useForm();
 
+  useEffect(() => {
+    if (!isLoading && isSuccess) {
+      toast.success("Apply Success", { id: "postData" });
+      reset();
+    } else if (isError) {
+      toast.error(error, { id: "postData" });
+    }
+  }, [error, isError, isLoading, isSuccess, reset])
+
   const handleupdateInfo = (data) => {
-    console.log(data);
 
     const userData = {
       fname: data.first_name,
       lname: data.last_name,
-      email: user?.email,
+      email: email,
       img: data.image[0],
       nid: data.nidNumber,
       tin: data.tinNumber,
       number: data.number,
+      status: 'pending'
     };
-    console.log(userData);
 
+    //Upload user image to imgBB database
     const image = userData.img;
-
     const formData = new FormData();
     formData.append('image', image);
 
-    //Upload user image to imgBB database
-    setLoading(true);
     fetch(`https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMG_BB_KEY}`, {
       method: "POST",
       body: formData
@@ -46,92 +52,32 @@ const ApplyForAgent = () => {
       .then(res => res.json())
       .then(data => {
         const userinfo = {
-          img: data.data.display_url,
-          name: `${userData.fname} ${userData.lname}`,
-          email: userData.email,
-          nid: userData.nid,
-          tin: userData.tin,
-          number: userData.number
+          img: data.data?.display_url,
+          name: `${userData?.fname} ${userData.lname}`,
+          email: userData?.email,
+          nid: userData?.nid,
+          tin: userData?.tin,
+          number: userData?.number,
+          status: "pending",
         }
 
         //Insert user data in databas
-        fetch(` https://one-bit-pay-server.vercel.app/agents/request`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(userinfo)
-        })
-          .then(res => res.json())
-          .then(data => {
-            console.log(data);
-            setLoading(false);
-            toast.success('Request Inserted');
-            reset();
-          })
-          .catch(err => {
-            setLoading(false);
-            toast.error(err.message);
-          })
+        postData(userinfo);
       })
       .catch(err => {
         console.log(err);
-        setLoading(false);
         toast.error(err.message);
       })
   };
   return (
-    <div>
-      <div className="p-5">
+    <section>
+      <div className="px-5">
         <div className="mx-4 p-4">
-          {/* <div className="flex items-center">
-                        <div className="flex items-center text-[#00AAFF] relative">
-                            <div className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 border-[#5966FF]">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-bookmark ">
-                                    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                                </svg>
-                            </div>
-                            <div className="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-[#00AAFF]">Personal</div>
-                        </div>
-                        <div className="flex-auto border-t-2 transition duration-500 ease-in-out border-[#5966FF]"></div>
-                        <div className="flex items-center text-white relative">
-                            <div className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 bg-[#5966FF] border-[#5966FF]">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-user-plus ">
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="8.5" cy="7" r="4"></circle>
-                                    <line x1="20" y1="8" x2="20" y2="14"></line>
-                                    <line x1="23" y1="11" x2="17" y2="11"></line>
-                                </svg>
-                            </div>
-                            <div className="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-[#00AAFF]">Account</div>
-                        </div>
-                        <div className="flex-auto border-t-2 transition duration-500 ease-in-out border-[#5966FF]"></div>
-                        <div className="flex items-center text-white relative">
-                            <div className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 bg-[#5966FF] border-[#5966FF]">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-mail ">
-                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                    <polyline points="22,6 12,13 2,6"></polyline>
-                                </svg>
-                            </div>
-                            <div className="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-[#00AAFF]">Business</div>
-                        </div>
-                        <div className="flex-auto border-t-2 transition duration-500 ease-in-out border-[#5966FF]"></div>
-                        <div className="flex items-center text-white relative">
-                            <div className="rounded-full transition duration-500 ease-in-out h-12 w-12 py-3 border-2 bg-[#5966FF] border-[#5966FF]">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-database ">
-                                    <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-                                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-                                </svg>
-                            </div>
-                            <div className="absolute top-0 -ml-10 text-center mt-16 w-32 text-xs font-medium uppercase text-[#00AAFF]">Confirm</div>
-                        </div>
-                    </div> */}
           <div className="flex">
             <span className="min-w-2 min-h-4 mr-2 bg-[#5966FF] text-[#5966FF]">
               |
             </span>{" "}
-            <h1 className="text-2xl font-bold uppercase">
+            <h1 className="lg:text-2xl text-xl font-bold ">
               Please Provide Your All Informations
             </h1>
           </div>
@@ -139,106 +85,108 @@ const ApplyForAgent = () => {
         <Form
           id="user"
           onSubmit={handleSubmit(handleupdateInfo)}
-          className="mt-8 p-4"
+          className="mt-2 px-12 py-2"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3">
             <div className="w-full flex-1 mx-2 svelte-1l8159u">
-              <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">
+              <div className="text-black h-6 mt-1  leading-8 font-semibold">
                 First Name
               </div>
-              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+              <div>
                 <input
                   type="text"
                   name="first_name"
-                  placeholder="first name"
-                  {...register("first_name", { required: true })}
-                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                  placeholder="Your first name"
+                  {...register("first_name", { required: "First name is required" })}
+                  className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                 />{" "}
               </div>
+              {errors.first_name?.type === 'required' && <p className="text-red-700 text-sm">{errors.first_name.message}</p>}
             </div>
             <div className="w-full mx-2 flex-1 svelte-1l8159u">
-              <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">
+              <div className="text-black h-6 mt-1 leading-8 font-semibold">
                 Last Name
               </div>
-              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+              <div >
                 <input
                   type="text"
                   name="last_name"
-                  placeholder="last name"
-                  {...register("last_name", { required: true })}
-                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                  placeholder="Your last name"
+                  {...register("last_name", { required: "Last name is required" })}
+                  className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                 />{" "}
               </div>
+              {errors.last_name?.type === 'required' && <p className="text-red-700 text-sm">{errors.last_name.message}</p>}
             </div>
             <div className="w-full mx-2 flex-1 svelte-1l8159u">
-              <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">
+              <div className="text-black h-6 mt-1 leading-8 font-semibold">
                 Business Location
               </div>
-              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+              <div >
                 <input
                   name="businessLocation"
                   type="text"
-                  placeholder="enter place name"
-                  {...register("businessLocation", { required: true })}
-                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                  placeholder="Enter place name"
+                  {...register("businessLocation", { required: "Business location is required" })}
+                  className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                 />{" "}
               </div>
+              {errors.businessLocation?.type === 'required' && <p className="text-red-700 text-sm">{errors.businessLocation.message}</p>}
             </div>
             <div className="w-full mx-2 flex-1 svelte-1l8159u">
-              <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">
+              <div className="text-black h-6 mt-1 leading-8 font-semibold">
                 NID Number
               </div>
-              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+              <div >
                 <input
                   type="number"
                   name="nidNumber"
-                  placeholder="enter nid number"
-                  {...register("nidNumber", { required: true })}
-                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                  placeholder="Enter nid number"
+                  {...register("nidNumber", { required: "NID number is required" })}
+                  className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                 />{" "}
               </div>
+              {errors.nidNumber?.type === 'required' && <p className="text-red-700 text-sm">{errors.nidNumber.message}</p>}
             </div>
             <div className="w-full mx-2 flex-1 svelte-1l8159u">
-              <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">
+              <div className="text-black h-6 mt-1 leading-8 font-semibold">
                 TIN ID
               </div>
-              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+              <div >
                 <input
                   type="number"
                   name="tinNumber"
-                  placeholder="enter tin number"
-                  {...register("tinNumber", { required: true })}
-                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                  placeholder="Enter tin number"
+                  {...register("tinNumber", { required: "TIN ID is required" })}
+                  className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                 />{" "}
               </div>
+              {errors.tinNumber?.type === 'required' && <p className="text-red-700 text-sm">{errors.tinNumber.message}</p>}
             </div>
             <div className="w-full mx-2 flex-1 svelte-1l8159u">
-              <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">
+              <div className="text-black h-6 mt-1 leading-8 font-semibold">
                 Phone Number
               </div>
-              <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
+              <div >
                 <input
                   type="number"
                   name="number"
                   placeholder="018XXXXXXXX"
-                  {...register("number", { required: true })}
-                  className="p-1 px-2 appearance-none outline-none w-full text-gray-800"
+                  {...register("number", { required: "Phone number is required" })}
+                  className="p-1 px-2 bg-white border mt-2 rounded-md appearance-none hover:border-[#5966FF] outline-[#5966FF] w-full text-gray-800"
                 />{" "}
               </div>
+              {errors.number?.type === 'required' && <p className="text-red-700 text-sm">{errors.number.message}</p>}
             </div>
-            {/* <div className="w-full mx-2 flex-1 svelte-1l8159u">
-                            <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">Image</div>
-                            <div className="bg-white my-2 p-1 flex border border-gray-200 rounded svelte-1l8159u">
-                                <input type='file' name='image' placeholder="Enter NID Number" className="p-1 px-2 appearance-none outline-none w-full text-gray-800 sr-only" /> </div>
-                        </div> */}
+
             <div>
-              <div className="font-bold h-6 mt-3 text-[#00AAFF] text-md leading-8 uppercase">
+              <div className="text-black h-6 my-1 ml-2  font-semibold">
                 Image
               </div>
-              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+              <div className="mt-1 flex justify-center px-6 pt-2 pb-2 border-2 border-gray-300 border-dashed rounded-md">
                 <div className="space-y-1 text-center">
                   <svg
-                    className="mx-auto h-12 w-12 text-[#00AAFF]"
+                    className="mx-auto h-8 w-16 "
                     stroke="currentColor"
                     fill="none"
                     viewBox="0 0 48 48"
@@ -261,7 +209,7 @@ const ApplyForAgent = () => {
                         id="file-upload"
                         name="image"
                         type="file"
-                        {...register("image", { required: true })}
+                        {...register("image", { required: "Image is required" })}
                         className="sr-only"
                       />
                     </label>
@@ -269,35 +217,30 @@ const ApplyForAgent = () => {
                   <p className="text-xs text-gray-700">
                     PNG, JPG, GIF up to 10MB
                   </p>
+                  {errors.image?.type === 'required' && <p className="text-red-700 text-sm">{errors.image.message}</p>}
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex p-2 mt-4">
-            {/* <button className="text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
-        hover:bg-gray-200  
-        bg-gray-100 
-        text-gray-700 
-        border duration-200 ease-in-out 
-        border-gray-600 transition">Previous</button> */}
-            <div className="flex-auto flex flex-row-reverse">
-              <button
-                type="submit"
-                className="text-base  ml-3  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF]  hover:from-[#8759f1] text-white duration-200 ease-in-out transition"
-              >
-                {loading ? <Loader2 /> : "CONFIRM"}
-              </button>
+          <div className="flex p-2 mt-2">
+            <div className="flex-auto flex justify-end">
               <button
                 type="reset"
-                className="text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF]  hover:from-[#8759f1] text-white duration-200 ease-in-out transition"
+                className="btn bg-red-500 ml-2 border-none"
               >
                 Reset
+              </button>
+              <button
+                type="submit"
+                className="btn bg-black hover:bg-[#5966FF] border-none ml-3"
+              >
+                {isLoading ? <ButtonSpinner /> : "CONFIRM"}
               </button>
             </div>
           </div>
         </Form>
       </div>
-    </div>
+    </section>
   );
 };
 

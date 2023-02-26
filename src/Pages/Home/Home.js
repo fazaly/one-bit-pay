@@ -1,15 +1,22 @@
 import React from 'react';
+import BillPaySection from './BillPaySection/BillPaySection';
 import Contact from './Contact/Contact';
-import FinancialSolutions from './FinancialSolutions/FinancialSolutions';
-import HeroSlider from './HeroSlider/HeroSlider';
-import ImageGallery from './ImageGallery/ImageGallery';
+import Features from './Features/Features';
+import Hero from './Hero/Hero';
+import SendMoneySec from './sendMoneySection/SendMoneySec';
+import Testimonials from './Testimonials/Testimonials';
+import WithdrawSection from './WithdrawSection/WithdrawSection';
 
 const Home = () => {
+
     return (
         <div>
-            <HeroSlider></HeroSlider>
-            <FinancialSolutions></FinancialSolutions>
-            <ImageGallery></ImageGallery>
+            <Hero />
+            <SendMoneySec />
+            <WithdrawSection />
+            <Features />
+            <BillPaySection />
+            <Testimonials></Testimonials>
             <Contact></Contact>
         </div>
     );

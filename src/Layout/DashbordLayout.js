@@ -1,13 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HiChevronDoubleRight, HiChevronDoubleLeft } from "react-icons/hi";
 import { Link, NavLink, Outlet } from "react-router-dom";
-import userImage2 from "../images/userImage2.png";
-import { AuthContext } from "../context/AuthProvider";
 import DashBoardNavbar from "../Components/DashBoardNavbar/DashBoardNavbar";
 import "./DashboardLayout.css";
 import { HiViewGridAdd, HiCurrencyDollar } from "react-icons/hi";
-import { FaUserEdit, FaMobile, FaHandshake, FaDonate } from "react-icons/fa";
+import { FaUserEdit, FaMobile, FaHandshake, FaDonate, FaArrowLeft } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SlCalculator } from "react-icons/sl";
 import {
   faSackDollar,
   faFileSignature,
@@ -16,22 +15,23 @@ import {
   faCommentDollar,
   faUsers,
   faUsersGear,
-  faMoneyBillTransfer,
-  faMoneyBills,
   faDollar,
 } from "@fortawesome/free-solid-svg-icons";
-import useAgent from "../Hooks/useAgent";
-import useUser from "../Hooks/useUser";
-import useAdmin from "../Hooks/useAdmin";
-import useRole from "../Hooks/useRole";
 
+import { useGetUserLoggedinDetailsQuery } from "../features/api/apiSlice";
+import { useSelector } from "react-redux";
+import logo from "../images/logo.svg"
+import sidebarImg from "../images/dasboard/18953931_6075540-removebg-preview.png"
 const DashbordLayout = () => {
   const [open, setOpen] = useState(false);
   const [notifi, setNotifi] = useState(false);
-  // const [userDetails, setUserDetails] = useState([]);
-  const { user, userDetails } = useContext(AuthContext);
-  const [userRole] = useRole(user?.email);
-  console.log('userRole', userRole)
+
+
+
+  const email = useSelector(state => state.auth.email);
+  const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email);
+  const userDetails = data?.data
+
 
   useEffect(() => {
     if (userDetails?.notification) {
@@ -39,18 +39,8 @@ const DashbordLayout = () => {
     }
   }, [])
 
-  // useEffect(() => {
-  //   fetch(` https://one-bit-pay-server.vercel.app/user/${user?.email}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       if (data.status) {
-  //         setUserDetails(data.data);
-  //         if (data.data.notification) {
-  //           setNotifi(data.data.notification);
-  //         }
-  //       }
-  //     });
-  // }, [user?.email]);
+
+
   return (
     <div>
       <div className="drawer drawer-mobile">
@@ -60,85 +50,57 @@ const DashbordLayout = () => {
             <DashBoardNavbar
               notifi={notifi}
               setNotifi={setNotifi}
-              userDetails={userDetails}
+              userDetail={userDetails}
             ></DashBoardNavbar>
           </div>
-          <Outlet />
+          <div className="bg-white">
+            <Outlet />
+          </div>
         </div>
-        <div className="drawer-side">
+        <div className="drawer-side shadow-2xl ml-4">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 bg-[#5966FF] text-base-content relative ">
+          <ul className="menu p-4 w-72 bg-white text-black relative ">
             <label
               onClick={() => setOpen(!open)}
               htmlFor="my-drawer-2"
-              className="bg-[#5966FF] text-white p-2 w-8 absolute -right-7 rounded-tr-full rounded-br-full duration-300"
+              className=" p-2 w-8 absolute -right-7 rounded-tr-full rounded-br-full duration-300 mt-16"
             >
               {open ? (
-                <HiChevronDoubleRight className="text-lg" />
+                <HiChevronDoubleLeft className="text-lg " />
               ) : (
-                <HiChevronDoubleLeft className="text-lg" />
+                <HiChevronDoubleRight className="text-lg " />
+
               )}
             </label>
             {/* <!-- Sidebar content here --> */}
-            <div className="flex justify-center items-center border-2 rounded-md p-2">
-              <div className="mr-2">
-                {userDetails?.userPhoto ? (
-                  <>
-                    <NavLink to="/dashboard/editProfile">
-                      <img
-                        src={userDetails?.userPhoto}
-                        alt=""
-                        className="w-20 rounded-full"
-                      />
-                    </NavLink>
-                  </>
-                ) : (
-                  <>
-                    <NavLink to="/dashboard/editProfile">
-                      <img
-                        src={userImage2}
-                        alt=""
-                        className="w-20 rounded-full"
-                      />
-                    </NavLink>
-                  </>
-                )}
-              </div>
-              <div>
-                <h1 className="font-bold text-white text-lg">{userDetails.name}</h1>
-                <h1 className="text-sm text-white">{userDetails.userEmail}</h1>
-              </div>
+            <div className="w-52 flex flex-col justify-center items-center  rounded-md p-2 ml-3 ">
+              <Link to='/' className="">
+                <img src={logo} alt='' className='w-46 btn  border-0' />
+              </Link>
+
             </div>
-            <div className="text-white p-4">
+            <div className=" p-4">
               {
-                userRole === 'user' && <div>
+                userDetails?.role === 'user' && <div className="grid grid-cols-1 gap-5">
                   <NavLink
                     to="/dashboard/overview"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex justify-items-start "
                   >
-                    <HiViewGridAdd className="text-[30px] mr-4" />
-                    <p className="text-lg font-semibold">Dashboard</p>
-                  </NavLink>
-
-                  <NavLink
-                    to="/dashboard/editProfile"
-                    className="flex items-center mb-6 mt-4"
-                  >
-                    <FaUserEdit className="text-[30px] mr-4" />
-                    <p className="text-lg font-semibold">Update Profile</p>
+                    <HiViewGridAdd className="text-[25px] mr-4" />
+                    <p className="text-lg font-semibold">OverView</p>
                   </NavLink>
 
                   <NavLink
                     to="/dashboard/sendMoney"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex items-center "
                   >
-                    <HiCurrencyDollar className="text-[30px] mr-4" />
+                    <HiCurrencyDollar className="text-[25px] mr-4" />
                     <p className="text-lg font-semibold">Send Money</p>
                   </NavLink>
 
                   <NavLink
                     to="/dashboard/withdraw"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex items-center "
                   >
                     <FontAwesomeIcon
                       icon={faWallet}
@@ -149,60 +111,60 @@ const DashbordLayout = () => {
 
                   <NavLink
                     to="/dashboard/mobileRecharge"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex items-center"
                   >
-                    <FaMobile className="text-[25px] mr-4" />
+                    <FaMobile className="text-[23px] mr-4" />
                     <p className="text-lg font-semibold">Mobile Recharge</p>
                   </NavLink>
 
                   <NavLink
                     to="/dashboard/billPay"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex items-center "
                   >
                     <FontAwesomeIcon
                       icon={faCreditCard}
-                      className="text-[25px] mr-4"
+                      className="text-[23px] mr-4"
                     />
                     <p className="text-lg font-semibold">Bill Pay</p>
                   </NavLink>
 
                   <NavLink
                     to="/dashboard/loanRequest"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex items-center "
                   >
                     <FontAwesomeIcon
                       icon={faSackDollar}
-                      className="text-[25px] mr-4"
+                      className="text-[23px] mr-4"
                     />
                     <p className="text-lg font-semibold">Loan Request</p>
                   </NavLink>
                   <NavLink
                     to="/dashboard/donation"
-                    className="flex items-center mb-6 mt-4"
+                    className="flex items-center "
                   >
                     <FontAwesomeIcon
                       icon={faDollar}
-                      className="text-[25px] mr-4"
+                      className="text-[23px] mr-4"
                     />
                     <p className="text-lg font-semibold">Donation</p>
                   </NavLink>
-
-                  <NavLink
-                    to="/dashboard/applyForAgent"
-                    className="flex items-center mb-6 mt-4"
+                  {/* <NavLink
+                    to="/dashboard/chargeCalculate"
+                    className="flex items-center "
                   >
-                    <FontAwesomeIcon
-                      icon={faFileSignature}
+                    <SlCalculator
                       className="text-[25px] mr-4"
                     />
-                    <p className="text-lg font-semibold">Become An Agent</p>
-                  </NavLink>
+                    <p className="text-lg font-semibold">Charge Calculator</p>
+                  </NavLink> */}
+
+
                 </div>
               }
 
               {/* agent routes------------------------------------------  */}
               {
-                userRole === 'agent' && <div>
+                userDetails?.role === 'agent' && <div>
                   <NavLink to="/dashboard/overview" className="flex items-center mb-6 mt-4">
                     <HiViewGridAdd className="text-[30px] mr-4" />
                     <p className="text-lg font-semibold">Dashbord</p>
@@ -221,30 +183,32 @@ const DashbordLayout = () => {
                     <p className="text-lg font-semibold">Cash In</p>
                   </NavLink>
 
-                  <NavLink to="/dashboard/billpayagent" className="flex items-center mb-6 mt-4">
+                  <NavLink to="/dashboard/transactions" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
-                      icon={faCreditCard}
-                      className="text-[25px] mr-4"
+                      icon={faCommentDollar}
+                      className="text-[30px] mr-4"
                     />
-                    <p className="text-lg font-semibold">Bill Pay</p>
-                  </NavLink>
-
-                  <NavLink to="/dashboard/rechargeagent" className="flex items-center mb-6 mt-4">
-                    <FaMobile className="text-[25px] mr-4" />
-                    <p className="text-lg font-semibold">Mobile Recharge</p>
+                    <p className="text-lg font-semibold">Transaction's</p>
                   </NavLink>
                 </div>
               }
 
               {/* //Admin routes ------------------------------------------*/}
               {
-                userRole === 'admin' && <div>
+                userDetails?.role === 'admin' && <div>
                   <NavLink to="/dashboard/adminOverview" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
                       icon={faFileSignature}
                       className="text-[25px] mr-4"
                     />
                     <p className="text-lg font-semibold">OverView</p>
+                  </NavLink>
+                  <NavLink to="/dashboard/loanRequestList" className="flex items-center mb-6 mt-4">
+                    <FontAwesomeIcon
+                      icon={faFileSignature}
+                      className="text-[25px] mr-4"
+                    />
+                    <p className="text-lg font-semibold">Loan Requests</p>
                   </NavLink>
                   <NavLink to="/dashboard/agentRequest" className="flex items-center mb-6 mt-4">
                     <FontAwesomeIcon
@@ -272,7 +236,26 @@ const DashbordLayout = () => {
                 </div>
               }
             </div>
+
+            <div className="flex justify-center  p-4 mb-3  rounded-xl">
+              <img className="w-24" src={sidebarImg} alt="" />
+            </div>
+
+            {
+              userDetails?.role === 'user' && <Link
+                to="/dashboard/applyForAgent"
+                className="flex items-center btn btn-sm "
+              >
+                <FontAwesomeIcon
+                  icon={faFileSignature}
+                  className="text-[23px] mr-4"
+                />
+                <p className="text-lg font-semibold">Become An Agent</p>
+              </Link>
+            }
+
           </ul>
+
         </div>
       </div>
     </div>

@@ -1,18 +1,17 @@
 import React from 'react';
-import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
-import Spinner from '../Components/Spinner/Spinner';
-import { AuthContext } from '../context/AuthProvider';
+import LoadingGif from '../Components/LoadingGif/LoadingGif';
 
 const PrivateRoutes = ({children}) => {
-    const {user,  userDetails, loading} = useContext(AuthContext);
+    const {email, isOnStateCng} = useSelector((state) => state.auth)
     const location = useLocation();
 
-    if(loading){
-        return <Spinner/>;
+    if(isOnStateCng){
+        return <LoadingGif/>;
     }
 
-    if(user){
+    if(email){
         return children ;
     }
 

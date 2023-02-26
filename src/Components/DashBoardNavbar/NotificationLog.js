@@ -1,21 +1,31 @@
 import React from 'react';
-import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthProvider';
+import { FaArrowDown, FaArrowUp } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+
 
 const NotificationLog = ({ transactionsData }) => {
-    const { user } = useContext(AuthContext)
+    const email = useSelector(state => state.auth.email);
 
     return (
         <div className=' '>
-            {user?.email === transactionsData?.senderEmail ?
-                <div className='bg-red-100 p-4 rounded-2xl'>
-                    You Send ${transactionsData?.amount}
-                    <br /> To <span className=''>{transactionsData.receiverEmail}</span>
+            {email === transactionsData?.senderEmail ?
+                <div className='bg-[#ECEFF6] text-black p-4 rounded-2xl flex justify-between'>
+                    <div className='flex items-center gap-2 '>
+                        <span className='text-red-500' ><FaArrowUp></FaArrowUp>
+                        </span>
+                        <span>You sent</span>
+                        ${transactionsData?.amount}
+                    </div>
+                    {/* <span>{transactionsData?.receiverEmail}</span> */}
                 </div>
                 :
-                <div className='bg-green-100 p-4 rounded-2xl'>
-                    You Received ${transactionsData?.amount}
-                    <br /> from <span>{transactionsData.senderEmail}</span>
+                <div className='bg-[#ECEFF6] text-black p-4 rounded-2xl flex justify-between'>
+                    <div className='flex items-center gap-2'>
+                        <span className='text-green-500'><FaArrowDown></FaArrowDown></span>
+                        <span>You received</span>
+                        ${transactionsData?.amount}
+                    </div>
+                    {/* <span className='text-white'>{transactionsData?.senderEmail}</span> */}
                 </div>
 
             }
