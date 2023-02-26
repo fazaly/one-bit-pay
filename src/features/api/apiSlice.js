@@ -1,10 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
 export const userDetailsApi = createApi({
     reducerPath: "userDetailsApi",
     baseQuery: fetchBaseQuery({
-        baseUrl: `https://one-bit-pay-server.vercel.app`,
-        // baseUrl: `http://localhost:5000`
+        // baseUrl: `https://one-bit-pay-server.vercel.app`,
+        baseUrl: `http://localhost:5000`
     }),
     tagTypes: ["users", "userDetails"],
     endpoints: (builder) => ({
@@ -22,13 +21,19 @@ export const userDetailsApi = createApi({
         }),
         getUserLoggedinDetails: builder.query({
             query: (email) => ({
-                url: `/user/${email}`
+                url: `/user/${email}`,
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
             }),
             providesTags: ["userDetails"],
         }),
         getTransactionHistory: builder.query({
             query: (email) => ({
-                url: `/transactionSend/${email}`
+                url: `/transactionSend/${email}`,
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
             }),
             providesTags: ["userDetails"],
         }),
@@ -43,6 +48,9 @@ export const userDetailsApi = createApi({
         makeAdmin: builder.mutation({
             query: (id) => ({
                 url: `/users/admin/${id}`,
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
                 method: "PATCH"
             }),
             invalidatesTags: ["users"],
@@ -51,6 +59,9 @@ export const userDetailsApi = createApi({
             query: (sendMoneyInfo) => ({
                 url: `/sendMoney`,
                 method: "PUT",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
                 body: sendMoneyInfo
             }),
             invalidatesTags: ["userDetails", "DonationInistitute"],
@@ -58,7 +69,10 @@ export const userDetailsApi = createApi({
         }),
         getRechargeHistory: builder.query({
             query: (email) => ({
-                url: `/recharge/${email}`
+                url: `/recharge/${email}`,
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
             }),
             providesTags: ["users"],
         }),
@@ -66,6 +80,9 @@ export const userDetailsApi = createApi({
             query: (data) => ({
                 url: "/mobile/recharge",
                 method: "POST",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
                 body: data,
             }),
             invalidatesTags: ["users", "userDetails"]
@@ -79,6 +96,9 @@ export const userDetailsApi = createApi({
             query: (data) => ({
                 url: `/agent/cashin`,
                 method: "PUT",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
                 body: data,
             }),
             invalidatesTags: ["userDetails"]
@@ -87,6 +107,9 @@ export const userDetailsApi = createApi({
             query: (data) => ({
                 url: `/agents/request`,
                 method: "POST",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
                 body: data,
             })
         }),
@@ -94,6 +117,9 @@ export const userDetailsApi = createApi({
             query: (userData) => ({
                 url: `/userUpdate`,
                 method: "PUT",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
                 body: userData,
             }),
             invalidatesTags: ["userDetails"]
@@ -102,6 +128,9 @@ export const userDetailsApi = createApi({
             query: (data) => ({
                 url: `/agent/b2b`,
                 method: "POST",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
                 body: data,
             }),
             invalidatesTags: ["Users", "userDetails"],
@@ -109,20 +138,29 @@ export const userDetailsApi = createApi({
         deletUser: builder.mutation({
             query: (id) => ({
                 url: `/users/${id}`,
-                method: "DELETE"
+                method: "DELETE",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
             }),
             invalidatesTags: ["users"],
         }),
         getAgentRequest: builder.query({
             query: () => ({
-                url: "/agents/request"
+                url: "/agents/request",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
             }),
             providesTags: ["agentRequest"]
         }),
         makeAgent: builder.mutation({
             query: (id) => ({
                 url: `/users/agent/${id}`,
-                method: "PATCH"
+                method: "PATCH",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
             }),
             invalidatesTags: ["agentRequest"],
         }),
@@ -147,13 +185,19 @@ export const userDetailsApi = createApi({
             query: (data) => ({
                 url: "/billing",
                 method: "PUT",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
                 body: data
             }),
             invalidatesTags: ["userDetails"]
         }),
         getLoanRequestList: builder.query({
             query: () => ({
-                url: "/loanRequestList"
+                url: "/loanRequestList",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
             }),
             providesTags: ["loanRequestList"],
         }),
@@ -161,6 +205,9 @@ export const userDetailsApi = createApi({
             query: (withdrawInfo) => ({
                 url: `/withdraw`,
                 method: "PUT",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
                 body: withdrawInfo
             }),
             invalidatesTags: ["userDetails",],
@@ -168,7 +215,10 @@ export const userDetailsApi = createApi({
         deleteLoanRequest: builder.mutation({
             query: (id) => ({
                 url: `/loanRequestList/${id}`,
-                method: "DELETE"
+                method: "DELETE",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
             }),
             invalidatesTags: ["loanRequestList"],
         }),
@@ -176,6 +226,9 @@ export const userDetailsApi = createApi({
             query: (loanApplicantData) => ({
                 url: `/loanApplicantData`,
                 method: "POST",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
                 body: loanApplicantData
             }),
             invalidatesTags: ["loanRequestList"],
@@ -184,6 +237,9 @@ export const userDetailsApi = createApi({
             query: (loanInfo) => ({
                 url: `/approveLoanRequest`,
                 method: "PUT",
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
                 body: loanInfo
             }),
             invalidatesTags: ["loanRequestList"],
@@ -195,7 +251,10 @@ export const userDetailsApi = createApi({
         }),
         agentHistory: builder.query({
             query: (email) => ({
-                url: `/agent/history/${email}`
+                url: `/agent/history/${email}`,
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userAccessToken')}`
+                },
             }),
         }),
         earnFromNews: builder.mutation({

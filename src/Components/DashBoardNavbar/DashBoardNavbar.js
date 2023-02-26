@@ -83,7 +83,7 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
 
                             </div>
                         </label>
-                        <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-72">
+                        <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-72 bg-white">
                             <li>
                                 <Link to="/dashboard/editProfile"
                                     className="flex  justify-items-start "

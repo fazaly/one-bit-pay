@@ -10,6 +10,7 @@ import "./Login.css";
 import loginImage from "../../././images/Login/Login (3).gif";
 import { HiOutlineHome } from "react-icons/hi";
 import { sendPasswordResetEmail } from "firebase/auth";
+import useVerifyUser from "../../Hooks/useVerifyUser";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const Login = () => {
   const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
+    const [token] = useVerifyUser();
  
   const {
     register,
@@ -27,13 +29,13 @@ const Login = () => {
   const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
-    if (!isLoading && isSuccess) {
+    if (!isLoading && isSuccess && token) {
       toast.success("Login Success!", {id:"APHA"});
       navigate(from, { replace: true });
     }else if(isError){
       toast.error(error, {id:"APHA"});
     }
-  },[email, isLoading, isSuccess, isError, error, navigate, from])
+  },[email, isLoading, isSuccess, isError, error, navigate, from, token])
 
   const handleSignIn = (data) => {
     const email = data.email;

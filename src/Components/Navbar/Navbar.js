@@ -16,7 +16,7 @@ const Navbar = () => {
     const handleLogOut = () => {
         signOut(auth).then(() => {
             dispatch(logoutUser(""));
-
+            localStorage.removeItem("userAccessToken");
         });
     }
 
