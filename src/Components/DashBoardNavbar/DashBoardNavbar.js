@@ -60,7 +60,7 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
                                 <FaBell className='text-2xl text-[#5966FF] '></FaBell>
                             </div>
                         </label>
-                        <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-72 bg-base-100 shadow">
+                        <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-72 shadow">
                             <div className="card-body">
                                 {
                                     transactions?.slice(0, 6).map((transactionsData) => <NotificationLog transactionsData={transactionsData}></NotificationLog>)
@@ -83,7 +83,7 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
 
                             </div>
                         </label>
-                        <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-72">
+                        <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-72">
                             <li>
                                 <Link to="/dashboard/editProfile"
                                     className="flex  justify-items-start "

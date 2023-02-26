@@ -2,14 +2,12 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import LoadingGif from '../Components/LoadingGif/LoadingGif';
-import Spinner from '../Components/Spinner/Spinner';
 
 const PrivateRoutes = ({children}) => {
-    const email = useSelector((state) => state.auth.email)
-    const isLoading = useSelector((state) => state.auth.isLoading)
+    const {email, isOnStateCng} = useSelector((state) => state.auth)
     const location = useLocation();
 
-    if(isLoading){
+    if(isOnStateCng){
         return <LoadingGif/>;
     }
 
