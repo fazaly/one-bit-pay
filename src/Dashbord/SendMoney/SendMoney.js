@@ -104,19 +104,19 @@ const SendMoney = () => {
               required
               onBlur={(e) => handleFocus(e.target.value)}
               placeholder="RECEIVER EMAIL"
-              className="input input-bordered w-full border-[#181818]"
+              className="input input-bordered bg-white w-full border-[#181818]"
             />
             <input
               type="text"
               name="amount"
               required
               placeholder="AMOUNT"
-              className=" input input-bordered w-full border-[#181818]"
+              className=" input input-bordered bg-white w-full border-[#181818]"
             />
             <p className="">
               <button
                 type="submit"
-                className="btn btn-[#181818] w-full  rounded-lg border-none hover:bg-[#5966FF]"
+                className="btn bg-[#181818] text-white w-full  rounded-lg border-none hover:bg-[#5966FF]"
               >
                 {isLoading ? <ButtonSpinner /> : "SEND NOW"}
               </button>

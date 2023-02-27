@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
 import { auth, loginUser } from "../../features/api/authSlice";
 import background from "../../././images/LoginImage7.png";
@@ -10,10 +10,15 @@ import "./Login.css";
 import loginImage from "../../././images/Login/Login (3).gif";
 import { HiOutlineHome } from "react-icons/hi";
 import { sendPasswordResetEmail } from "firebase/auth";
+import useVerifyUser from "../../Hooks/useVerifyUser";
 
 const Login = () => {
   const dispatch = useDispatch();
   const {email, isLoading, isSuccess, isError, error} = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+    const [token] = useVerifyUser();
  
   const {
     register,
@@ -22,16 +27,15 @@ const Login = () => {
   } = useForm();
 
   const [userEmail, setUserEmail] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoading && isSuccess) {
+    if (!isLoading && isSuccess && token) {
       toast.success("Login Success!", {id:"APHA"});
-      navigate('/');
+      navigate(from, { replace: true });
     }else if(isError){
       toast.error(error, {id:"APHA"});
     }
-  },[email, isLoading, isSuccess, isError, error, navigate])
+  },[email, isLoading, isSuccess, isError, error, navigate, from, token])
 
   const handleSignIn = (data) => {
     const email = data.email;
