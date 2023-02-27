@@ -6,7 +6,7 @@ const useVerifyUser = () => {
   const [token, setToken] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:5000/jwt/${email}`)
+    fetch(`https://one-bit-pay-server.vercel.app/jwt/${email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.accessToken) {

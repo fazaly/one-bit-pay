@@ -59,7 +59,7 @@ const CashIn = () => {
       toast.error("Enter Valid Email");
     } else if (receiverEmail !== email && userDetails?.balance > 10) {
       postData(cashInInfo);
-        form.reset();
+      form.reset();
 
     }
   };
@@ -122,14 +122,14 @@ const CashIn = () => {
               <span className="text-3xl text-[#5966FF]">
                 ${userDetails?.commission}
               </span>{" "}
-   commission
+              commission
             </h1>
           </div>
         </div>
       </div>
       <div className="mt-4">
-          <CashInHistory/>
-        </div>
+        <CashInHistory />
+      </div>
     </div>
   );
 };
