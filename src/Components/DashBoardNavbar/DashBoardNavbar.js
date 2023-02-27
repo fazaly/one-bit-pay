@@ -12,10 +12,15 @@ import userImage from "../../images/userImage2.png"
 
 
 const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
+    // get current user email
     const email = useSelector((state) => state.auth.email);
+
+    // get transaction history of logged in user
     const { data } = useGetTransactionHistoryQuery(email);
     const transactions = data?.data;
     const dispatch = useDispatch();
+
+
     const handleLogOut = () => {
         signOut(auth).then(() => {
             dispatch(logoutUser());
@@ -57,7 +62,7 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost btn-circle">
                             <div className="indicator">
-                                <FaBell className='text-2xl text-[#5966FF] '></FaBell>
+                                <FaBell onClick={handleNotification} className='text-2xl text-[#5966FF] '></FaBell>
                             </div>
                         </label>
                         <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-72 bg-base-100 shadow">
