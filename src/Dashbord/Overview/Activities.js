@@ -3,7 +3,7 @@ import React from 'react';
 const Activities = ({ userDetails }) => {
     return (
 
-        <div className='grid grid-cols-1 gap-2'>
+        <div className='grid gap-2'>
             <div className='flex justify-between items-center p-2 rounded-xl shadow-lg shadow-slate-100  hover:shadow-gray-300 transition-all cursor-pointer  '>
                 <div>
                     <h3 className='text-md font-semibold
