@@ -35,7 +35,7 @@ const Overview = () => {
               </div>
               <div className="text-[#070733] rounded-2xl grid grid-cols-1  items-center pl-8 p-4  shadow-xl shadow-slate-200 h-48">
                 <p className="text-xl font-semibold">Calculate your charges</p>
-                <Link className="btn btn-xs" to="/dashboard/chargeCalculate">Click here</Link>
+                <Link className="btn bg-[#181818]" to="/dashboard/chargeCalculate">Click here</Link>
               </div>
 
             </div>
@@ -43,7 +43,7 @@ const Overview = () => {
 
           <div className="col-span-4  grid grid-cols-1 px-4 ">
 
-            <div className=" p-4 rounded-2xl shadow-lg shadow-gray-200 hover:shadow-lg hover:shadow-gray-300 transition-all ">
+            <div className=" p-4 rounded-2xl shadow-lg shadow-gray-200 transition-all ">
               <div className="mb-4">
                 <h4 className="text-xl text-center ml-4 font-semibold ">Reports</h4>
               </div>
