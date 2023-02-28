@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userDetailsApi = createApi({
     reducerPath: "userDetailsApi",
     baseQuery: fetchBaseQuery({
-        // baseUrl: `https://one-bit-pay-server.vercel.app`,
-        baseUrl: `http://localhost:5000`
+        baseUrl: `https://one-bit-pay-server.vercel.app`,
+        // baseUrl: `http://localhost:5000`
     }),
     tagTypes: ["users", "userDetails"],
     endpoints: (builder) => ({
@@ -246,7 +246,7 @@ export const userDetailsApi = createApi({
         }),
         getNotifications: builder.query({
             query: (email) => ({
-                url:`/notification/${email}`,
+                url: `/notification/${email}`,
             })
         }),
         agentHistory: builder.query({

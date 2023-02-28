@@ -15,17 +15,12 @@ import balanceImage from "../../././images/10109-01.png";
 
 const SendMoney = () => {
   const email = useSelector((state) => state.auth.email);
+
   const [sendMoney, { isLoading, isSuccess, isError }] = useSendMoneyMutation();
+
   const [receiver, setReceiver] = useState("");
 
-  const { transactionsData } = useGetTransactionHistoryQuery(email);
-  const transactions = transactionsData?.data;
-  let total = 0;
 
-  transactions?.foreach((transaction) => {
-    total += transaction.amount;
-
-  })
   // get login user role
   const { data: userRole } = useGetUsersRoleQuery(`${receiver}`);
 
@@ -40,7 +35,7 @@ const SendMoney = () => {
       });
     }
     if (!isSuccess && isError) {
-      toast.success("Failed to sending money! Please try again", {
+      toast.error("Failed to sending money! Please try again", {
         id: "sendMoney",
       });
     }
@@ -93,7 +88,7 @@ const SendMoney = () => {
               .00
             </h1>
             <div className="flex justify-between mt-6 z-10">
-              <img src={balanceImage} alt="" className="absolute right-0 bottom-0 w-80 -z-0"/>
+              <img src={balanceImage} alt="" className="absolute right-0 bottom-0 w-80 -z-0" />
             </div>
           </div>
         </div>

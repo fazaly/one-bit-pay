@@ -12,6 +12,7 @@ const Donation = () => {
     const [loading, setLoading] = useState(false);
     // const [institutes, setInstitutes] = useState([]);
 
+    // get insititute data
     const { data, isLoading, isSuccess, isError } = useGetDonationInistituteQuery();
 
     const institutes = data;

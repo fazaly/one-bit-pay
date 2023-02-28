@@ -16,9 +16,22 @@ const Withdraw = () => {
   const email = useSelector((state) => state.auth.email);
   const { data } = useGetUserLoggedinDetailsQuery(email);
   const userDetails = data?.data;
-  const { transactionsData } = useGetTransactionHistoryQuery(email);
+  const { data: transactions } = useGetTransactionHistoryQuery(email);
+  const [withdraw, { isLoading, isSuccess, isError }] = useWithdrawMutation()
 
-  const [withdraw, { isLoading, isSuccess, isError }] = useWithdrawMutation();
+  const withdrawTransaction = transactions?.data.filter((transaction) => {
+    return transaction?.senderEmail === email
+  })
+
+  const calculateTotalTransaction = (data, type) => {
+    const collection = data?.filter((newTransaction) => {
+      return newTransaction?.type === type;
+    })
+    const total = collection?.reduce((previousValue, current) => previousValue + current?.amount, 0);
+    return total
+  }
+
+
 
   useEffect(() => {
     if (isSuccess) {
@@ -49,7 +62,9 @@ const Withdraw = () => {
     };
 
     withdraw(WithdrawInfo);
-  };
+    form.reset();
+
+  }
 
   return (
     <div className="pt-10">
@@ -110,8 +125,10 @@ const Withdraw = () => {
             </h1>
             <h1 className="font-bold text-xl text-slate-700">
               You made <br />{" "}
-              <span className="text-3xl text-[#5966FF]">$10000</span> <br />{" "}
-              transaction today
+              <span className="text-3xl text-[#5966FF]">
+                ${calculateTotalTransaction(withdrawTransaction, "withdraw")}
+              </span>{" "}
+              <br /> transaction All Time
             </h1>
           </div>
         </div>

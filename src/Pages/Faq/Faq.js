@@ -6,7 +6,7 @@ const Faq = () => {
     const [faqs, setFaqs] = useState([])
 
     useEffect(() => {
-        fetch('http://localhost:5000/faq')
+        fetch('https://one-bit-pay-server.vercel.app/faq')
             .then(res => res.json())
             .then(data => {
                 setFaqs(data)
