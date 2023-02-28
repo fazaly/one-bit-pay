@@ -5,11 +5,11 @@ import { useSelector } from 'react-redux';
 import SendMoneyHistory from '../../Components/TransactionHistory/SendMoneyHistory';
 import { useGetDonationInistituteQuery } from '../../features/api/apiSlice';
 import DonationCard from './DonationCard';
-import DonationModal from './DonationModal';
+import LoadingGif from '../../Components/LoadingGif/LoadingGif';
 
 const Donation = () => {
     const email = useSelector((state) => state.auth.email);
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
     // const [institutes, setInstitutes] = useState([]);
 
     // get insititute data
@@ -18,7 +18,7 @@ const Donation = () => {
     const institutes = data;
 
     if (isLoading) {
-        return <p>Loading..</p>
+        return <LoadingGif></LoadingGif>
     }
     if (isError) {
         return <p>Something Went Wrong ! Please Check .. </p>
