@@ -5,7 +5,7 @@ import { useSendMoneyMutation } from '../../features/api/apiSlice';
 import { useSelector } from 'react-redux';
 
 const DonationModal = ({ institute, modal, setModal }) => {
-    const [sendMoney, { isLoading, isSuccess, isError }] = useSendMoneyMutation();
+    const [sendMoney] = useSendMoneyMutation();
 
     const email = useSelector((state) => state.auth.email);
 
@@ -24,11 +24,9 @@ const DonationModal = ({ institute, modal, setModal }) => {
             type: "donation"
         };
         sendMoney(sendMoneyInfo);
+        setModal(!modal);
+        toast.success("Thank You So Much For Donation")
 
-        if (isSuccess) {
-            setModal(!modal);
-            toast.success("Thank You So Much For Donation")
-        }
     }
 
 
