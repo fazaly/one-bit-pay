@@ -41,16 +41,14 @@ const Overview = () => {
             </div>
           </div>
 
-          <div className="col-span-4  grid grid-cols-1 px-4 ">
+          <div className="col-span-4   px-4 ">
 
             <div className=" p-4 rounded-2xl shadow-lg shadow-gray-200 transition-all ">
               <div className="mb-4">
                 <h4 className="text-xl text-center ml-4 font-semibold ">Reports</h4>
               </div>
               <Activities userDetails={userDetails}></Activities>
-              <div>
 
-              </div>
             </div>
 
           </div>
