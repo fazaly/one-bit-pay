@@ -9,12 +9,13 @@ import background from "../../././images/LoginImage7.png";
 import signupImage from "../.././images/Login/Authentication.gif";
 import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../../features/api/authSlice";
+import useVerifyUser from "../../Hooks/useVerifyUser";
 
 const Signup = () => {
   const dispatch = useDispatch();
   const email = useSelector((state) => state.auth.email);
   const [createdUser, setCreatedUser] = useState({});
-  
+
   const [signupError, setSignupError] = useState("");
   const navigate = useNavigate();
   const [saveUser, { isLoading, isError, isSuccess }] = useAddUserMutation();
@@ -26,7 +27,7 @@ const Signup = () => {
       toast.success("Sign Up Success");
       navigate("/");
     }
-  },[email])
+  }, [email])
 
   useEffect(() => {
     if (isLoading) {
@@ -71,16 +72,22 @@ const Signup = () => {
       date
     };
     setLoading(true);
-    dispatch(createUser({email, password}));
+    dispatch(createUser({ email, password }));
     setCreatedUser(userData);
-  };
 
+
+  };
   const registerStyle = {
     backgroundImage: `url(${background})`,
     backgroundImageRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
   };
+
+
+
+
+
 
   return (
     <div className="w-full h-screen">
@@ -112,7 +119,7 @@ const Signup = () => {
             </div>
           </Link>
           <div className="w-96 h-4/6 p-6 flex justify-center items-center">
-          <form
+            <form
               onSubmit={handleSubmit(handleSignUp)}
               className="card-body space-y-2 rounded-[14px] bg-white"
             >

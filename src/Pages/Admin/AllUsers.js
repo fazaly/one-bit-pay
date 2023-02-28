@@ -44,7 +44,7 @@ const AllUsers = () => {
                                         <p className="text-[#070733] font-medium text-lg">{user.name}</p>
                                         <small className='text-gray-500'>{user.userEmail}</small>
                                     </div>
-                                </td>
+                                </td >
                                 <td><small>{user.date}</small></td>
                                 <td>
                                     <p className='font-semibold'>{user.role}</p>
@@ -71,13 +71,13 @@ const AllUsers = () => {
 
                                 </td>
 
-                            </tr>
+                            </tr >
                         )
                     }
 
-                </tbody>
-            </table>
-        </div>
+                </tbody >
+            </table >
+        </div >
     );
 };
 

@@ -21,9 +21,17 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
     const dispatch = useDispatch();
 
 
+    // const handleLogOut = () => {
+    //     signOut(auth).then(() => {
+    //         dispatch(logoutUser());
+    //         localStorage.removeItem("userAccessToken");
+    //     });
+    // }
+
     const handleLogOut = () => {
         signOut(auth).then(() => {
-            dispatch(logoutUser());
+            dispatch(logoutUser(""));
+            localStorage.removeItem("userAccessToken");
         });
     }
 
@@ -77,13 +85,13 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
                     </div>
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                            <div className="w-10 rounded-full">
+                            <div className="w-20 rounded-full">
 
                                 {
                                     userDetail?.imageUrl ?
                                         <img src={userDetail?.imageUrl} alt="" />
                                         :
-                                        <img src={userImage} alt="" />
+                                        <img className="w-20 rounded-full" src={userImage} alt="" />
                                 }
 
                             </div>

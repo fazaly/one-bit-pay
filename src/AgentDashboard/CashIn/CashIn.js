@@ -73,7 +73,7 @@ const CashIn = () => {
               Main Balance
             </h1>
             <h1 className="font-bold text-3xl text-white">
-              <span className="text-[#5966FF]">$</span> {userDetails?.balance}.00
+              <span className="text-[#5966FF]">$ {userDetails?.balance}.00</span>
             </h1>
           </div>
         </div>
@@ -120,7 +120,7 @@ const CashIn = () => {
             <h1 className="font-bold text-md text-slate-700">
               You made <br />
               <span className="text-3xl text-[#5966FF]">
-                ${userDetails?.commission}
+                $ 24
               </span>{" "}
               commission
             </h1>

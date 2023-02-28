@@ -6,7 +6,7 @@ import DonationModal from './DonationModal';
 const DonationCard = ({ institute }) => {
     const [modal, setModal] = useState(false);
     const { Name, img, details, _id } = institute;
-
+    console.log(institute)
     const handleModal = () => {
         setModal(true)
     }
