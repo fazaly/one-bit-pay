@@ -32,6 +32,8 @@ const DashbordLayout = () => {
   const { data, isLoading, isSuccess } = useGetUserLoggedinDetailsQuery(email);
   const userDetails = data?.data
 
+  console.log(email)
+  console.log(userDetails)
 
   useEffect(() => {
     if (userDetails?.notification) {
@@ -148,16 +150,6 @@ const DashbordLayout = () => {
                     />
                     <p className="text-lg font-semibold">Donation</p>
                   </NavLink>
-                  {/* <NavLink
-                    to="/dashboard/chargeCalculate"
-                    className="flex items-center "
-                  >
-                    <SlCalculator
-                      className="text-[25px] mr-4"
-                    />
-                    <p className="text-lg font-semibold">Charge Calculator</p>
-                  </NavLink> */}
-
 
                 </div>
               }

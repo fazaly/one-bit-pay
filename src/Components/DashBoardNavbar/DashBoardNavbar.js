@@ -21,9 +21,17 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
     const dispatch = useDispatch();
 
 
+    // const handleLogOut = () => {
+    //     signOut(auth).then(() => {
+    //         dispatch(logoutUser());
+    //         localStorage.removeItem("userAccessToken");
+    //     });
+    // }
+
     const handleLogOut = () => {
         signOut(auth).then(() => {
-            dispatch(logoutUser());
+            dispatch(logoutUser(""));
+            localStorage.removeItem("userAccessToken");
         });
     }
 

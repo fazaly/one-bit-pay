@@ -32,15 +32,6 @@ const AllUsers = () => {
                         users?.map((user, i) =>
                             <tr key={user._id}>
                                 <td className='flex items-center'>
-<<<<<<< HEAD
-    {/* <img className='w-20 h-20 rounded-full mr-6' src={userImg} alt="" /> */ }
-    {
-        user?.imageUrl ?
-            <img src={user?.imageUrl} alt="" />
-            :
-            <img src={userImage} alt="" />
-    }
-=======
                                     <div className='w-20 rounded-full'>
                                         {
                                             user?.imageUrl ?
@@ -49,11 +40,10 @@ const AllUsers = () => {
                                                 <img className='w-14 h-14 rounded-full mr-6' src={userImage} alt="" />
                                         }
                                     </div>
->>>>>>> d734c20875ac4d1b300345bd5148d735cf08476f
-    <div>
-        <p className="text-[#070733] font-medium text-lg">{user.name}</p>
-        <small className='text-gray-500'>{user.userEmail}</small>
-    </div>
+                                    <div>
+                                        <p className="text-[#070733] font-medium text-lg">{user.name}</p>
+                                        <small className='text-gray-500'>{user.userEmail}</small>
+                                    </div>
                                 </td >
                                 <td><small>{user.date}</small></td>
                                 <td>

@@ -18,7 +18,7 @@ const AgentOverview = () => {
                 <div className='bg-[#303640] p-6 rounded-lg h-52 lg:w-96 '>
                     <h1 className='text-5xl font-bold mb-8'>OverView</h1>
                     <p>Total Balance</p>
-                    <h2 className='text-2xl font-semibold'><span className='text-[#5966FF]'>$</span>{userDetails?.balance}</h2>
+                    <h2 className='text-2xl font-semibold'><span className='text-[#5966FF]'>$ {userDetails?.balance}</span></h2>
                 </div>
                 <div className='lg:w-96'>
                     <h4 className='text-xl text-end font-semibold text-[#5966FF] mb-3'>Notifications</h4>

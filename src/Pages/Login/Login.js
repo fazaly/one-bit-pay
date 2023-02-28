@@ -14,12 +14,12 @@ import useVerifyUser from "../../Hooks/useVerifyUser";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const {email, isLoading, isSuccess, isError, error} = useSelector((state) => state.auth);
+  const { email, isLoading, isSuccess, isError, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || '/';
-    const [token] = useVerifyUser();
- 
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
+  const [token] = useVerifyUser();
+
   const {
     register,
     formState: { errors },
@@ -30,12 +30,12 @@ const Login = () => {
 
   useEffect(() => {
     if (!isLoading && isSuccess && token) {
-      toast.success("Login Success!", {id:"APHA"});
+      toast.success("Login Success!", { id: "APHA" });
       navigate(from, { replace: true });
-    }else if(isError){
-      toast.error(error, {id:"APHA"});
+    } else if (isError) {
+      toast.error(error, { id: "APHA" });
     }
-  },[email, isLoading, isSuccess, isError, error, navigate, from, token])
+  }, [email, isLoading, isSuccess, isError, error, navigate, from, token])
 
   const handleSignIn = (data) => {
     const email = data.email;
@@ -54,7 +54,7 @@ const Login = () => {
         toast.success("Password Reset Email sent. Please Check Your Email");
       })
       .catch((error) => {
-        console.log("error:", error, {id:"ALPHA"});
+        console.log("error:", error, { id: "ALPHA" });
       });
   };
 
@@ -64,6 +64,11 @@ const Login = () => {
     backgroundSize: "cover",
     backgroundPosition: "center",
   };
+
+
+
+
+
 
   return (
     <div className="w-full h-screen">

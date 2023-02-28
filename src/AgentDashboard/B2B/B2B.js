@@ -116,7 +116,7 @@ const B2B = () => {
                         </h1>
                         <h1 className="text-lg mt-4">Your Balance</h1>
                         <h1 className=" text-3xl font-semibold text-white">
-                            <span className="text-[#5966FF]">$ </span>{userDetails?.balance}.00
+                            <span className="text-[#5966FF]">$ {userDetails?.balance}.00</span>
                         </h1>
                     </div>
                 </div>
