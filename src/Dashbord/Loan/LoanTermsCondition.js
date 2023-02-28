@@ -5,7 +5,9 @@ import { BsArrowLeftShort } from 'react-icons/bs';
 const LoanTermsCondition = () => {
     return (
         <div>
-            <div className='mb-10 bg-white text-slate-600 px-8 py-8 w-full rounded-xl'>
+            <div
+                id="user"
+                className='mb-10  text-slate-600 px-16 py-8 w-full'>
                 <h3 className="text-3xl font-bold">Loan</h3>
                 <h2 className='mt-2'>Getting a small, quick loan is now easier than ever! The BitPay Bank is introducing instant Digital Loan for OneBitPay users without requiring any paperwork.</h2>
                 <h2 className='text-2xl font-medium mt-5'>Why should you get the BitPay Bank loan through OneBitPay?</h2>
@@ -28,8 +30,7 @@ const LoanTermsCondition = () => {
                 <h2 className='text-2xl font-semibold mt-10 mb-2'>Loan Eligibility Criteria </h2>
                 <p>The City Bank will be offering the digital loan service to a selected group of OneBitPay users in line with Bangladesh Bank regulations. You can find out whether you are eligible or not through the “Loan” option of your OneBitPay. The interest rate, processing fee, loan limit, repayment terms, loan eligibility, and credit policy are determined by the City Bank in accordance with the regulations of Bangladesh Bank.</p>
 
-                <Link to="/dashboard/loanRequest"><button className='btn btn-outline btn-xs mt-10 btn-info'><BsArrowLeftShort className='text-xl' />  Back to loan request</button></Link>
-
+                <p className='mt-10'> <Link to="/dashboard/loanRequest"><BsArrowLeftShort className='text-3xl text-blue-600' /></Link></p>
             </div>
         </div>
     );

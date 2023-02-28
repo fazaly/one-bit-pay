@@ -25,15 +25,27 @@ import AgentRoutes from "./AgentRoutes";
 import B2B from "../AgentDashboard/B2B/B2B";
 import AgentOverview from "../AgentDashboard/AgentOverview/AgentOverview";
 import BillPayAgent from "../AgentDashboard/BillPayAgent/BillPayAgent";
-import AgentMobileRecharge from "../AgentDashboard/AgentMobileRecharge/AgentMobileRecharge";
 import Admin from "../Pages/Admin/Overview/Admin";
 import AllUsers from "../Pages/Admin/AllUsers";
 import AdminRoutes from "./AdminRoutes";
 import AllAgents from "../Pages/Admin/AllAgents";
+import ApplyForLoan from "../Dashbord/ApplyForLoan/ApplyForLoan";
+import AboutUs from "../Pages/AboutUs/AboutUs";
 import AgentRequest from "../Pages/Admin/AgentRequest";
 import ChargeCalculator from "../Dashbord/ChargeCalculator/ChargeCalculator";
 import LoadingGif from "../Components/LoadingGif/LoadingGif";
-
+import CookiePolicy from "../Pages/CookiePolicy/CookiePolicy";
+import SendMoneyGuide from "../Pages/SendMoneyGuide/SendMoneyGuide";
+import WithdrawGuide from "../Pages/WithdrawGuide/WithdrawGuide";
+import PayBillGuide from "../Pages/PayBillGuide/PayBillGuide";
+import LoanTermsCondition from "../Dashbord/Loan/LoanTermsCondition";
+import LoanRequest from "../Pages/Admin/LoanRequestList";
+import LoanRequestList from "../Pages/Admin/LoanRequestList";
+import LoanRequestDetails from "../Pages/Admin/LoanRequestDetails";
+import ForbidenAdmin from "../Pages/ErrorPage/ForbidenAdmin";
+import TermsAndConditions from "../Pages/TermsAndConditions/TermsAndConditions";
+import History from "../AgentDashboard/History/History";
+import News from "../Pages/News/News";
 
 export const router = createBrowserRouter([
   {
@@ -49,14 +61,7 @@ export const router = createBrowserRouter([
         path: "/home",
         element: <Home></Home>,
       },
-      {
-        path: "/login",
-        element: <Login></Login>,
-      },
-      {
-        path: "/signUp",
-        element: <Signup></Signup>,
-      },
+      // ====================
       {
         path: "/blog",
         element: <Blog></Blog>,
@@ -65,9 +70,49 @@ export const router = createBrowserRouter([
         path: "/blogpost/:id",
         element: <IndividualBlog></IndividualBlog>,
         loader: ({ params }) =>
-          fetch(`https://one-bit-pay-server.vercel.app/${params.id}`),
+          fetch(`https://one-bit-pay-server.vercel.app/blogs/${params.id}`),
       },
+      {
+        path: '/about',
+        element: <AboutUs></AboutUs>
+      },
+      {
+        path: "/cookie",
+        element: <CookiePolicy />
+      },
+      {
+        path: "/send_money_Ggide",
+        element: <SendMoneyGuide />
+      },
+      {
+        path: "/withdraw_gide",
+        element: <WithdrawGuide />
+      },
+      {
+        path: "/pay_bill_gide",
+        element: <PayBillGuide />
+      },
+      {
+        path: "/adminForbidden",
+        element: <ForbidenAdmin></ForbidenAdmin>
+      },
+      {
+        path:"/terms",
+        element:<TermsAndConditions></TermsAndConditions>
+      },
+      {
+        path: "/news",
+        element: <News/>
+      }
     ],
+  },
+  {
+    path: "/login",
+    element: <Login></Login>,
+  },
+  {
+    path: "/signUp",
+    element: <Signup></Signup>,
   },
   {
     path: "/dashboard",
@@ -105,6 +150,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/loanRequest",
         element: <Loan></Loan>,
+      },
+      {
+        path: "/dashboard/loantermscondition",
+        element: <LoanTermsCondition></LoanTermsCondition>,
       },
 
       {
@@ -174,45 +223,45 @@ export const router = createBrowserRouter([
         )
       },
       {
-        path: "/dashboard/rechargeagent",
-        element: (
-          <PrivateRoutes>
-            <AgentRoutes>
-              <AgentMobileRecharge />
-            </AgentRoutes>
-          </PrivateRoutes>
-        )
-      },
-      {
         path: "/dashboard/transactions",
         element: (
           <PrivateRoutes>
             <AgentRoutes>
-              <LoadingGif />
+              <History/>
             </AgentRoutes>
           </PrivateRoutes>
         )
       },
       {
         path: "/dashboard/adminOverview",
-        element: <Admin></Admin>
+        element: <AdminRoutes><Admin></Admin></AdminRoutes>
       },
       {
         path: "/dashboard/users",
-        element: <AllUsers></AllUsers>
+        element: <AdminRoutes><AllUsers></AllUsers></AdminRoutes>
       },
       {
         path: "/dashboard/agents",
-        element: <AllAgents></AllAgents>
+        element: <AdminRoutes><AllAgents></AllAgents></AdminRoutes>
       },
       {
         path: "/dashboard/agentRequest",
-        element: <AgentRequest></AgentRequest>
+        element: <AdminRoutes><AgentRequest></AgentRequest></AdminRoutes>
       },
       {
         path: "/dashboard/chargeCalculate",
         element: <ChargeCalculator></ChargeCalculator>
       },
+      {
+        path: "/dashboard/loanRequestList",
+        element: <AdminRoutes><LoanRequestList></LoanRequestList></AdminRoutes>
+      },
+      {
+        path: "/dashboard/loanRequestDetails/:id",
+        element: <AdminRoutes><LoanRequestDetails></LoanRequestDetails></AdminRoutes>,
+        loader: ({ params }) =>
+          fetch(`https://one-bit-pay-server.vercel.app/loanRequestDetails/${params.id}`),
+      }
     ],
   },
 ]);

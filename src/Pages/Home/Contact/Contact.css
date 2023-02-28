@@ -1,0 +1,4 @@
+#contact-container {
+    background-color: #181818;
+    clip-path: polygon(0 0, 100% 0%, 100% 61%, 0 85%);
+}

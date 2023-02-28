@@ -4,7 +4,8 @@ import app from "../../firebase/firebase.config"
 
 const initialState = {
     email: "",
-    isLoading: true,
+    isLoading: false,
+    isOnStateCng: true,
     isSuccess: false,
     isError: false,
     error: "", 
@@ -26,12 +27,15 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        logoutUser: (state) => {
-            state.email = "";
+        logoutUser: (state, action) => {
+            state.email = action.payload;
         },
         setUser: (state, action) => {
             state.email = action.payload;
             state.isLoading = false;
+        },
+        isOnStateCng: (state) => {
+            state.isOnStateCng = false;
         }
     },
     extraReducers: (builder) =>  {
@@ -73,5 +77,5 @@ const authSlice = createSlice({
     }
 })
 
-export const {logoutUser, setUser} = authSlice.actions;
+export const {logoutUser, setUser, isOnStateCng} = authSlice.actions;
 export default authSlice.reducer;

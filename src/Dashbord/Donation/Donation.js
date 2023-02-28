@@ -1,26 +1,24 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import SendMoneyHistory from '../../Components/TransactionHistory/SendMoneyHistory';
-import { AuthContext } from '../../context/AuthProvider';
 import { useGetDonationInistituteQuery } from '../../features/api/apiSlice';
 import DonationCard from './DonationCard';
-import DonationModal from './DonationModal';
+import LoadingGif from '../../Components/LoadingGif/LoadingGif';
 
 const Donation = () => {
-    const { user } = useContext(AuthContext);
-    const [loading, setLoading] = useState(false);
+    const email = useSelector((state) => state.auth.email);
+    const [loading] = useState(false);
     // const [institutes, setInstitutes] = useState([]);
 
+    // get insititute data
     const { data, isLoading, isSuccess, isError } = useGetDonationInistituteQuery();
 
     const institutes = data;
 
-    console.log(data)
-    console.log(institutes)
-
     if (isLoading) {
-        return <p>Loading..</p>
+        return <LoadingGif></LoadingGif>
     }
     if (isError) {
         return <p>Something Went Wrong ! Please Check .. </p>
@@ -37,7 +35,7 @@ const Donation = () => {
             </div>
             <div className='mt-8 '>
                 <h2 className='my-4 text-2xl text-center font-semibold'>All Donation History</h2>
-                <SendMoneyHistory email={user?.email} loading={loading} type={"donation"}></SendMoneyHistory>
+                <SendMoneyHistory email={email} loading={loading} type={"donation"}></SendMoneyHistory>
             </div>
             {/* <DonationModal></DonationModal> */}
         </div>

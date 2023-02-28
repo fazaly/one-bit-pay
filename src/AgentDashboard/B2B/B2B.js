@@ -37,7 +37,7 @@ const B2B = () => {
     const handleTransition = (e) => {
         e.preventDefault()
         const receiverEmail = e.target.email.value;
-        const transferAmount = parseInt(e.target.amount.value);
+        const transferAmount = e.target.amount.value;
 
         const transferInfo = {
             receiverEmail,
@@ -64,7 +64,7 @@ const B2B = () => {
         }
         else if (receiverEmail !== email && userDetails?.balance > 100) {
             postB2bData(transferInfo)
-            // toast.success("Transition successfull")
+            // toast.success("Transition success")
             e.target.reset()
         }
 
@@ -72,78 +72,52 @@ const B2B = () => {
 
     return (
         <div>
-            <div className="flex flex-col lg:flex-row gap-4">
-                <div className="CARD-1">
-                    <div className="card lg:w-80 w-96 h-48 bg-white text-primary-content mx-auto shadow-lg">
-                        <div className="card-body">
-                            <h1 className="font-bold text-xl text-[#5966FF] opacity-90">
-                                Your Balance
-                            </h1>
-                            <h1 className="font-bold text-3xl text-gray-600">
-                                ${userDetails?.balance}.00
-                            </h1>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div className="card lg:w-80 w-96 h-48 bg-white text-primary-content mx-auto shadow-xl">
-                        <div className="CARD-2 hover:shadow-slate-300 hover:shadow-lg">
-                            <form
-                                onSubmit={handleTransition}
-                                className="card-body rounded-xl bg-white hover:shadow-slate-300 hover:shadow-lg"
-                            >
-                                <h1 className="font-bold text-xl text-[#5966FF] opacity-90">
-                                    Transfer money
-                                </h1>
-                                <div className="">
-                                    <div className="">
-                                        <div className="form-control mb-2 flex flex-row gap-2">
-                                            <input
-                                                required
-                                                type="email"
-                                                name="email"
-                                                placeholder="reciver email"
-                                                className="w-44 border-0 border-b border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
-                                                onBlur={(e) => setFocusEmail(e.target.value)}
-                                            />
-                                        </div>
+            <div className="flex lg:flex-row flex-col items-center lg:gap-12">
+                <div className=" lg:w-6/12 bg-white rounded-xl p-8">
+                    <div className="">
+                        <h1 className="text-3xl mb-3 font-bold">
+                            Transfer
+                        </h1>
+                        <form onSubmit={handleTransition} className="space-y-4  w-full relative">
 
-                                        <div className="form-control">
-                                            <input
-                                                required
-                                                type="text"
-                                                name="amount"
-                                                placeholder="Amount"
-                                                className="border-0 border-b border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className="form-control rounded-full ">
-                                        <button
-                                            // onClick={() => handleRecharge}
-                                            type="submit"
-                                            className="btn w-full btn-sm  rounded-sm mt-2 border-none
-                                            text-lg hover:text-gray-100 bg-gradient-to-r from-[#00AAFF] to-[#8759f1] hover:to-[#00AAFF] transition-all hover:from-[#8759f1] text-white
-                                            "
-                                        >
-                                            {/* Transition Confirm */}
-                                            {isLoading ? <ButtonSpinner /> : "Transition Confirm"}
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                            <input
+                                type="text"
+                                name="email"
+                                required
+                                placeholder="RECEIVER EMAIL"
+                                className="input-border border-[#181818] text-md input w-full"
+                                data-tip="hello"
+                                onBlur={(e) => setFocusEmail(e.target.value)}
+                            />
+                            <input
+                                type="number"
+                                name="amount"
+                                required
+                                placeholder="AMOUNT"
+                                className="input-border input border-[#181818] text-md w-full"
+                                data-tip="hello"
+                            />
+                            <button
+                                type="submit"
+                                className="btn mt-4  w-full bg-[#181818] rounded-md"
+                            >
+                                {
+                                    isLoading ? <ButtonSpinner /> : "SEND"
+                                }
+                            </button>
+                        </form>
                     </div>
                 </div>
-                <div className="CARD-3">
-                    <div className="card lg:w-80 w-96 h-48 bg-white text-primary-content mx-auto shadow-lg">
-                        <div className="card-body">
-                            <h1 className="font-bold text-xl text-[#5966FF] opacity-90">
-                                Todays Transaction
-                            </h1>
-                            <h1 className='text-gray-600 text-xl mt-2 font-bold'>You sent: <strong>${todaysTransitionAmount}.00</strong></h1>
-                            <h1 className='text-gray-600 text-xl font-bold'>You received: <strong> ${todaysTransitionReceivedAmount}.00</strong></h1>
-                        </div>
+
+                <div className=" lg:w-6/12 bg-[#181818] text-primary-content p-12 rounded-xl">
+                    <div className=" rounded-lg">
+                        <h1 className="font-bold text-3xl text-[#FFFFFF] uppercase">
+                            Main Balance
+                        </h1>
+                        <h1 className="text-lg mt-4">Your Balance</h1>
+                        <h1 className=" text-3xl font-semibold text-white">
+                            <span className="text-[#5966FF]">$ </span>{userDetails?.balance}.00
+                        </h1>
                     </div>
                 </div>
             </div>

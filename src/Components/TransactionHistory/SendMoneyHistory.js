@@ -1,9 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import { HiArrowSmDown, HiArrowSmUp } from "react-icons/hi";
-import { AuthContext } from '../../context/AuthProvider';
-import ReactTimeAgo from 'react-time-ago';
 import { useGetTransactionHistoryQuery } from '../../features/api/apiSlice';
-import { useSelector } from 'react-redux';
 
 const SendMoneyHistory = ({ email, type }) => {
     const { data, isError } = useGetTransactionHistoryQuery(email)
@@ -13,20 +10,19 @@ const SendMoneyHistory = ({ email, type }) => {
     return (
         <div>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto bg-white"> 
                 <table className="table table-zebra w-full">
 
-                    <thead className='text-slate-700'>
+                    <thead className='text-[#181818]'>
                         <tr>
                             <th></th>
                             <th>EMAIL</th>
                             <th>Status</th>
                             <th>AMOUNT</th>
                             <th>TRANSACTION ID</th>
-                            <th>DATE & TIME</th>
                         </tr>
                     </thead>
-                    <tbody className='text-slate-700'>
+                    <tbody className='text-slate-700 bg-white'>
                         {
                             transactions?.length === 0 ? <>
                                 <h1 className='text-2xl font-bold text-center mt-4 mb-4'>No Transactions</h1>
@@ -63,10 +59,10 @@ const SendMoneyHistory = ({ email, type }) => {
                                             </td>
                                             <td>{transaction?.amount}</td>
                                             <td >{transaction?.transactionId}</td>
-                                            <td >
-                                                {/* <ReactTimeAgo date={Date.parse(transaction.time)}
-                                                    locale="en" timeStyle="round-minute" /> */}
-                                            </td>
+                                            {/* <td >
+                                                <ReactTimeAgo date={Date.parse(transaction.time)}
+                                                    locale="en" timeStyle="round-minute" />
+                                            </td> */}
                                         </tr>
                                     })
                                 }

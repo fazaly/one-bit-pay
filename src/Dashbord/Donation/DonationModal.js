@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthProvider';
+import React from 'react';
 import { format } from "date-fns";
 import { toast } from "react-hot-toast";
 import { useSendMoneyMutation } from '../../features/api/apiSlice';
 import { useSelector } from 'react-redux';
 
 const DonationModal = ({ institute, modal, setModal }) => {
-    const [sendMoney, { isLoading, isSuccess, isError }] = useSendMoneyMutation();
+    const [sendMoney] = useSendMoneyMutation();
 
     const email = useSelector((state) => state.auth.email);
 
@@ -26,13 +24,10 @@ const DonationModal = ({ institute, modal, setModal }) => {
             type: "donation"
         };
         sendMoney(sendMoneyInfo);
+        setModal(!modal);
+        toast.success("Thank You So Much For Donation")
 
-        if (isSuccess) {
-            setModal(!modal);
-            toast.success("Thank You So Much For Donation")
-        }
     }
-
 
 
     return (
@@ -41,7 +36,7 @@ const DonationModal = ({ institute, modal, setModal }) => {
             <input type="checkbox" id="my-modal-3" className="modal-toggle" />
             <div className="modal">
                 <div className="modal-box relative">
-                    <label htmlFor="my-modal-3" className="btn bg-[#5966FF] hover:bg-red-600 btn-sm btn-circle absolute right-2 top-2">✕</label>
+                    <label htmlFor="my-modal-3" className="btn bg-[#303640] hover:bg-red-600 btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 className="text-lg font-bold">{institute.Name}</h3>
 
                     <form onSubmit={handleDonate} className="space-y-2 my-10">
@@ -56,7 +51,7 @@ const DonationModal = ({ institute, modal, setModal }) => {
                         <p className="">
                             <button
                                 type="submit"
-                                className="btn  bg-[#5966FF] btn-xs rounded-sm border-none hover:bg-green-300 rounded-lg"
+                                className="btn  bg-[#303640] btn-xs rounded-sm border-none hover:bg-green-300 rounded-xl"
                             >
                                 Buy Happiness
                             </button>

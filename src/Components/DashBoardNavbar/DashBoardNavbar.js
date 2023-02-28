@@ -1,6 +1,6 @@
 import { faFileSignature } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaBell, FaHome, FaUserEdit } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -12,15 +12,24 @@ import userImage from "../../images/userImage2.png"
 
 
 const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
+    // get current user email
     const email = useSelector((state) => state.auth.email);
+
+    // get transaction history of logged in user
     const { data } = useGetTransactionHistoryQuery(email);
     const transactions = data?.data;
     const dispatch = useDispatch();
+
+
     const handleLogOut = () => {
         signOut(auth).then(() => {
             dispatch(logoutUser());
         });
     }
+
+
+
+
     const handleNotification = () => {
         fetch(`https://one-bit-pay-server.vercel.app/notification/${email}`)
             .then((res) => res.json())
@@ -35,29 +44,28 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
 
     return (
         <div>
-            <div className="navbar justify-between  ">
+            <div className="navbar justify-between px-4  ">
                 <div className="flex w-9/12">
-                    <div className="navbar grid grid-cols-1 ml-3">
+                    <div className="navbar hidden lg:grid lg:grid-cols-1 ml-3">
 
-                        <h2 className='text-3xl font-bold'>Hello, <span>{userDetail?.name}</span></h2>
+                        <h2 className='text-2xl font-bold mr-1'>Hi, <span>{userDetail?.name}</span></h2>
                         <p className='text-gray-300'>Welcome Back!</p>
                     </div>
                     <div className='flex'>
-                        <Link className='text-2xl text-[#070733] font-bold  mr-9' to="/">
+                        <Link className='text-2xl text-[#070733] font-bold mr-9' to="/">
                             <FaHome></FaHome>
                         </Link>
+
                     </div>
                 </div>
                 <div className="flex w-3/12 justify-between">
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost btn-circle">
                             <div className="indicator">
-                                <FaBell className='text-2xl text-[#50B8FF] '></FaBell>
-                                {/* <div className=" badge badge-xs indicator-item badge-secondary">2</div> */}
-
+                                <FaBell onClick={handleNotification} className='text-2xl text-[#5966FF] '></FaBell>
                             </div>
                         </label>
-                        <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-72 bg-base-100 shadow">
+                        <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-72 shadow">
                             <div className="card-body">
                                 {
                                     transactions?.slice(0, 6).map((transactionsData) => <NotificationLog transactionsData={transactionsData}></NotificationLog>)
@@ -80,7 +88,7 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
 
                             </div>
                         </label>
-                        <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-72">
+                        <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-72 bg-white">
                             <li>
                                 <Link to="/dashboard/editProfile"
                                     className="flex  justify-items-start "

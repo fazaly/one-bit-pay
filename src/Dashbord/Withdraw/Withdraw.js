@@ -1,41 +1,78 @@
 import { format } from 'date-fns';
-import React, { useState } from 'react';
-import { useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 import Typewriter from 'typewriter-effect';
 import ButtonSpinner from '../../Components/ButtonSpinner/ButtonSpinner';
-import { AuthContext } from '../../context/AuthProvider';
+import SendMoneyHistory from '../../Components/TransactionHistory/SendMoneyHistory';
+import { useGetTransactionHistoryQuery, useGetUserLoggedinDetailsQuery, useWithdrawMutation } from '../../features/api/apiSlice';
 import WithdrawHistory from './WithdrawHistory';
 
 const Withdraw = () => {
-  const { user, userDetails } = useContext(AuthContext)
-  const [loading, setLoading] = useState(false);
+  const email = useSelector((state) => state.auth.email);
+  const { data } = useGetUserLoggedinDetailsQuery(email);
+  const userDetails = data?.data;
+  const { data: transactions } = useGetTransactionHistoryQuery(email);
+  const [withdraw, { isLoading, isSuccess, isError }] = useWithdrawMutation()
+
+  const withdrawTransaction = transactions?.data.filter((transaction) => {
+    return transaction?.senderEmail === email
+  })
+
+  const calculateTotalTransaction = (data, type) => {
+    const collection = data?.filter((newTransaction) => {
+      return newTransaction?.type === type;
+    })
+    const total = collection?.reduce((previousValue, current) => previousValue + current?.amount, 0);
+    return total
+  }
+
+
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("You Successfully withdraw Money", {
+        id: "withdraw",
+      });
+    }
+    if (!isSuccess && isError) {
+      toast.error("Failed to withdraw! Please try again", {
+        id: "withdraw",
+      });
+    }
+  }, [isSuccess, isError]);
+
+
+
   const handleWithdraw = (event) => {
     event.preventDefault();
     const form = event.target;
-    const receiverEmail = form.receiverEmail.value;
+    const agentEmail = form.receiverEmail.value;
     const amount = form.amount.value;
-    const senderEmail = user?.email;
+    const senderEmail = email;
     const time = format(new Date(), "PP");
     const WithdrawInfo = {
       senderEmail,
-      receiverEmail,
+      agentEmail,
       amount: parseInt(amount),
       time,
       type: "Withdraw"
     };
-    console.log(WithdrawInfo);
-    toast.success('Successfully You have Withdraw')
+
+    withdraw(WithdrawInfo);
+    form.reset();
+
   }
+
   return (
     <div className='pt-10'>
-      <div className="flex gap-4 lg:flex-row flex-col">
-        <div className="card lg:w-80 w-96 h-60 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-500">
+      <div className="flex gap-4 lg:flex-row flex-col justify-center items-center">
+        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-500">
           <div className="flex items-center justify-center h-screen flex-col">
-            <h1 className="font-bold text-xl text-[#5966FF] opacity-75">
+            <h1 className="font-bold text-xl text-[#303640] opacity-75">
               Current Balance
             </h1>
-            <h1 className="font-bold text-3xl text-slate-700">
+            <h1 className="font-bold text-3xl text-[#5966FF]">
               <Typewriter
                 options={{
                   strings: [`$${userDetails?.balance}`],
@@ -47,9 +84,9 @@ const Withdraw = () => {
           </div>
         </div>
 
-        <div className="card lg:w-80 w-96 h-60 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-500">
+        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-500">
           <div className="flex items-center justify-center h-screen flex-col px-6">
-            <h1 className="font-bold text-xl text-[#5966FF] opacity-75">
+            <h1 className="font-bold text-xl text-[#303640] opacity-75">
               Withdraw Amount
             </h1>
             <form onSubmit={handleWithdraw} className="space-y-4">
@@ -57,7 +94,7 @@ const Withdraw = () => {
                 type="text"
                 name="receiverEmail"
                 required
-                placeholder="receiverEmail"
+                placeholder="agentEmail"
                 className=" w-full border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
               />
               <input
@@ -70,26 +107,26 @@ const Withdraw = () => {
               <p className="">
                 <button
                   type="submit"
-                  className="btn btn-primary w-full  rounded-lg border-none hover:bg-[#5966FF]"
+                  className="btn btn-[#303640] btn-sm w-full  rounded-lg border-none hover:bg-[#5966FF]"
                 >
-                  {loading ? <ButtonSpinner /> : "Withdraw Now"}
+                  {isLoading ? <ButtonSpinner /> : "Withdraw Now"}
                 </button>
               </p>
             </form>
           </div>
         </div>
 
-        <div className="card lg:w-80 w-96 h-60 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-500">
+        <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-500">
           <div className="flex items-center justify-center h-screen flex-col">
-            <h1 className="font-bold text-xl text-[#5966FF] opacity-75">
+            <h1 className="font-bold text-xl text-[#303640] opacity-75">
               Today's Transaction
             </h1>
             <h1 className="font-bold text-xl text-slate-700">
               You made <br />{" "}
               <span className="text-3xl text-[#5966FF]">
-                $10000
+                ${calculateTotalTransaction(withdrawTransaction, "withdraw")}
               </span>{" "}
-              <br /> transaction today
+              <br /> transaction All Time
             </h1>
           </div>
         </div>
@@ -100,7 +137,10 @@ const Withdraw = () => {
             <h1 className="font-bold text-xl text-[#5966FF] opacity-100 p-6">
               History
             </h1>
-            <WithdrawHistory></WithdrawHistory>
+            <SendMoneyHistory
+              email={email}
+              type={"withdraw"}
+            />
           </div>
         </div>
       </div>

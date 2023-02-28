@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Hero.css";
-import heroImage from "../../.././images/homeImage/1.png";
+import heroImage from "../../.././images/homeImage/11.png";
 import mobile from "../../.././images/homeImage/new.png";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -18,20 +18,20 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative flex justify-center items-center w-full h-screen">
+    <div className="relative flex justify-center items-center w-full h-screen mb-10">
       <div
         id="hero-cantainer"
         className="relative w-full h-screen mx-auto"
         style={myStyle}
       ></div>
       <div id="second-hero" className="absolute top-0">
-        <div className="flex lg:flex-row flex-col justify-around items-center w-full h-scree">
-          <div className="lg:mt-10 mt-8 overflow-hidden">
-            <h1 className="lg:text-6xl text-4xl font-medium mt-14 text-[#fff] lg:leading-none leading-9">
+        <div className="flex lg:flex-row flex-col justify-around items-center w-full h-screen">
+          <div className="lg:mt-10 mt-8 overflow-hidden p-4">
+            <h1 className="lg:text-6xl md:text-5xl text-3xl font-medium lg:mt-0 md:mt-16 mt-14  text-[#fff] lg:leading-none leading-9 shadow-md">
               Fastest Money
               <br /> Transfer Without <br /> Any Frustrations
             </h1>
-            <p className="text-lg font-medium mt-4 text-white">
+            <p className="text-lg font-medium mt-2 text-white text-ellipsis">
               The best way to pay money with OneBitPay <br /> Payment
               system with high security
             </p>
@@ -55,12 +55,7 @@ const Hero = () => {
             <img
               src={mobile}
               alt=""
-              className="lg:w-96 w-80 lg:mt-28 mt-2"
-            />
-            <img
-              src={ball}
-              alt=""
-              className="w-32 animate-spin ease-in-out transition-transform duration-75 absolute right-6 bottom-0"
+              className="lg:w-80 md:w-[450px] w-80 lg:mt-28 mt-2"
             />
           </div>
         </div>
