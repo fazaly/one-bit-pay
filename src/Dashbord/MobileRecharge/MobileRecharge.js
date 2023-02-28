@@ -289,6 +289,9 @@ const MobileRecharge = () => {
       toast.error("insufficient balance");
     } else if (balance >= 5 && balance <= 1000) {
       postData(rechargeInfo);
+      setTimeout(() => {
+        form.reset();
+      }, 3000);
     }
   };
 
