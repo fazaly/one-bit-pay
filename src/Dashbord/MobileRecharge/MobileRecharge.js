@@ -289,32 +289,33 @@ const MobileRecharge = () => {
       toast.error("insufficient balance");
     } else if (balance >= 5 && balance <= 1000) {
       postData(rechargeInfo);
+      setTimeout(() => {
+        form.reset();
+      }, 3000);
     }
   };
 
   return (
-    <div>
-      <div className="flex flex-col lg:flex-row gap-4">
-        <div className="CARD-1">
-          <div className="card lg:w-80 w-72 h-48 bg-white text-primary-content mx-auto shadow-lg">
-            <div className="card-body">
-              <h1 className="font-bold text-xl text-[#303640] opacity-50">
-                Main Balance
-              </h1>
-              <h1 className="font-bold text-3xl text-gray-900">
-                ${userDetails?.balance}.00
-              </h1>
-            </div>
+    <div className="p-6">
+      <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-6">
+        <div className="bg-[#181818] p-8 rounded-lg">
+          <h1 className="text-3xl font-bold text-white mb-4">Your Balance</h1>
+          <div>
+            <h1 className="text-5xl font-semibold text-white">
+              <span className="text-[#5966FF]">$</span>
+              {userDetails?.balance}.00
+            </h1>
           </div>
         </div>
+
         <div>
-          <div className="card lg:w-80 w-72 h-48 bg-white text-primary-content mx-auto shadow-xl">
+          <div className="bg-white text-primary-content">
             <div className="CARD-2">
               <form
                 onSubmit={handleRecharge}
-                className="card-body rounded-xl bg-white"
+                className="card-body rounded-xl bg-white space-y-4"
               >
-                <h1 className="font-bold text-xl text-[#303640] opacity-50">
+                <h1 className="font-bold text-xl text-[#181818]">
                   Mobile Recharge
                 </h1>
                 <div className="">
@@ -324,7 +325,7 @@ const MobileRecharge = () => {
                         required
                         type="select"
                         name="select"
-                        className="w-16 border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
+                        className="input input-bordered w-24 border-[#181818] text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
                         defaultValue={"+880"}
                       >
                         {cCodes.map((code, i) => (
@@ -340,7 +341,7 @@ const MobileRecharge = () => {
                         type="text"
                         name="phone_number"
                         placeholder="Mobile Number"
-                        className="w-44 border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
+                        className="input w-full input-bordered border-[#181818] text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
                       />
                     </div>
 
@@ -350,7 +351,7 @@ const MobileRecharge = () => {
                         type="text"
                         name="amount"
                         placeholder="Amount"
-                        className="border-0 border-b-2 border-slate-700 outline-none text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
+                        className="input input-bordered border-[#181818] text-slate-700 focus:text-[#5966FF] focus:border-b-[#5966FF]"
                       />
                     </div>
                   </div>
@@ -358,7 +359,7 @@ const MobileRecharge = () => {
                     <button
                       onClick={() => handleRecharge}
                       type="submit"
-                      className="mt-2 btn btn-[#303640] btn-sm w-full  rounded-lg border-none "
+                      className="mt-2 btn bg-[#181818] w-full  rounded-lg border-none "
                     >
                       {isLoading ? <ButtonSpinner /> : "CONFIRM"}
                     </button>
@@ -368,20 +369,9 @@ const MobileRecharge = () => {
             </div>
           </div>
         </div>
-        <div className="CARD-3">
-          <div className="card lg:w-80 w-72 h-48 bg-white text-primary-content mx-auto shadow-lg">
-            <div className="card-body">
-              <h1 className="font-bold text-xl text-[#303640] opacity-50">
-                Total Overview
-              </h1>
-              <h1 className="font-bold text-3xl text-gray-900">
-                ${userDetails?.balance}.00
-              </h1>
-            </div>
-          </div>
-        </div>
       </div>
-      <div className="mt-6">
+      <div className="lg:mt-12 md:mt-10 mt-10">
+        <h1 className="text-xl text-[#5966FF] mb-3 font-semibold">History</h1>
         <RechargeHistory />
       </div>
     </div>

@@ -34,6 +34,11 @@ const Login = () => {
       navigate(from, { replace: true });
     } else if (isError) {
       toast.error(error, { id: "APHA" });
+    if (!isLoading && isSuccess) {
+      toast.success("Login Success!", {id:"ALPHA"});
+      navigate(from, { replace: true });
+    }else if(isError){
+      toast.error(error, {id:"ALPHA"});
     }
   }, [email, isLoading, isSuccess, isError, error, navigate, from, token])
 

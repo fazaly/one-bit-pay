@@ -66,7 +66,7 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
 
                     </div>
                 </div>
-                <div className="flex w-3/12 justify-between">
+                <div className="flex w-3/12 justify-between bg-white">
                     <div className="dropdown dropdown-end">
                         <label tabIndex={0} className="btn btn-ghost btn-circle">
                             <div className="indicator">
@@ -74,7 +74,7 @@ const DashBoardNavbar = ({ notifi, setNotifi, userDetail }) => {
                             </div>
                         </label>
                         <div tabIndex={0} className="mt-3 card card-compact dropdown-content w-72 shadow">
-                            <div className="card-body">
+                            <div className="card-body bg-white shadow-lg">
                                 {
                                     transactions?.slice(0, 6).map((transactionsData) => <NotificationLog transactionsData={transactionsData}></NotificationLog>)
                                 }
