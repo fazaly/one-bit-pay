@@ -46,6 +46,7 @@ import ForbidenAdmin from "../Pages/ErrorPage/ForbidenAdmin";
 import TermsAndConditions from "../Pages/TermsAndConditions/TermsAndConditions";
 import History from "../AgentDashboard/History/History";
 import News from "../Pages/News/News";
+import Withdraw2 from "../Dashbord/Withdraw/Withdraw2";
 
 export const router = createBrowserRouter([
   {
@@ -141,7 +142,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/withdraw",
-        element: <Withdraw></Withdraw>,
+        // element: <Withdraw></Withdraw>,
+        element: <Withdraw2/>
       },
       {
         path: "/dashboard/applyForAgent",

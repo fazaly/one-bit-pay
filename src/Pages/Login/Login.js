@@ -29,11 +29,11 @@ const Login = () => {
   const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
-    if (!isLoading && isSuccess && token) {
-      toast.success("Login Success!", {id:"APHA"});
+    if (!isLoading && isSuccess) {
+      toast.success("Login Success!", {id:"ALPHA"});
       navigate(from, { replace: true });
     }else if(isError){
-      toast.error(error, {id:"APHA"});
+      toast.error(error, {id:"ALPHA"});
     }
   },[email, isLoading, isSuccess, isError, error, navigate, from, token])
 

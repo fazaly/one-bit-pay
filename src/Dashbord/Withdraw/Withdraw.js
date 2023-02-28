@@ -1,12 +1,16 @@
-import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
-import { useSelector } from 'react-redux';
-import Typewriter from 'typewriter-effect';
-import ButtonSpinner from '../../Components/ButtonSpinner/ButtonSpinner';
-import SendMoneyHistory from '../../Components/TransactionHistory/SendMoneyHistory';
-import { useGetTransactionHistoryQuery, useGetUserLoggedinDetailsQuery, useWithdrawMutation } from '../../features/api/apiSlice';
-import WithdrawHistory from './WithdrawHistory';
+import { format } from "date-fns";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import Typewriter from "typewriter-effect";
+import ButtonSpinner from "../../Components/ButtonSpinner/ButtonSpinner";
+import SendMoneyHistory from "../../Components/TransactionHistory/SendMoneyHistory";
+import {
+  useGetTransactionHistoryQuery,
+  useGetUserLoggedinDetailsQuery,
+  useWithdrawMutation,
+} from "../../features/api/apiSlice";
+import WithdrawHistory from "./WithdrawHistory";
 
 const Withdraw = () => {
   const email = useSelector((state) => state.auth.email);
@@ -42,8 +46,6 @@ const Withdraw = () => {
     }
   }, [isSuccess, isError]);
 
-
-
   const handleWithdraw = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -56,7 +58,7 @@ const Withdraw = () => {
       agentEmail,
       amount: parseInt(amount),
       time,
-      type: "Withdraw"
+      type: "Withdraw",
     };
 
     withdraw(WithdrawInfo);
@@ -65,7 +67,7 @@ const Withdraw = () => {
   }
 
   return (
-    <div className='pt-10'>
+    <div className="pt-10">
       <div className="flex gap-4 lg:flex-row flex-col justify-center items-center">
         <div className="card lg:w-80 w-72 h-40 bg-white text-primary-content shadow-xl shadow-slate-200 hover:shadow-2xl hover:shadow-slate-500">
           <div className="flex items-center justify-center h-screen flex-col">
@@ -131,16 +133,14 @@ const Withdraw = () => {
           </div>
         </div>
       </div>
+
       <div className="mt-4">
         <div className="card bg-white text-primary-content shadow-lg">
           <div>
             <h1 className="font-bold text-xl text-[#5966FF] opacity-100 p-6">
               History
             </h1>
-            <SendMoneyHistory
-              email={email}
-              type={"withdraw"}
-            />
+            <SendMoneyHistory email={email} type={"withdraw"} />
           </div>
         </div>
       </div>

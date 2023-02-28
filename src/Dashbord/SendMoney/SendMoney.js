@@ -68,6 +68,9 @@ const SendMoney = () => {
       toast.error("Enter Valid Email");
     } else if (receiverEmail !== email && userDetails?.balance > 10 && userDetails.role === "user") {
       sendMoney(sendMoneyInfo);
+      setTimeout(() => {
+        form.reset();
+      }, 3000);
     }
   };
 
